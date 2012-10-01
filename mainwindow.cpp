@@ -10,8 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     if(QSystemTrayIcon::isSystemTrayAvailable())
     {
-        trayIconMenu->addMenu("Bacon");
+        trayIcon=new QSystemTrayIcon(this);
+        trayIconMenu=new QMenu(this);
+        trayIconMenu->addAction("Show");
+        trayIconMenu->addAction("Quit");
         trayIcon->setContextMenu(trayIconMenu);
+        trayIcon->setIcon(QIcon("Icons/1349069370_Alarm_Clock.png"));
+        trayIcon->setToolTip("QTalarm");
         trayIcon->show();
     }else{
         //Error out and quit
