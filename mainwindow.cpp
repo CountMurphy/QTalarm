@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QAction *QAquit=new QAction("&Quit",this);
 
         trayIconMenu->addAction(QAshow);
+        trayIconMenu->addSeparator();
         trayIconMenu->addAction(QAquit);
         trayIcon->setContextMenu(trayIconMenu);
         trayIcon->setIcon(QIcon("Icons/1349069370_Alarm_Clock.png"));
