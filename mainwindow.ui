@@ -17,8 +17,8 @@
    <string>QTalarm</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/new/icons/Icons/1349069370_Alarm_Clock.png</normaloff>:/new/icons/Icons/1349069370_Alarm_Clock.png</iconset>
+   <iconset resource="Icons.qrc">
+    <normaloff>:/new/icons/Clock.png</normaloff>:/new/icons/Clock.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>608</width>
-     <height>33</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -115,6 +115,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="Icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
