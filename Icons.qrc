@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/new/icons">
-        <file>Icons/1349069370_Alarm_Clock.png</file>
+        <file alias="Clock.png">Icons/1349069370_Alarm_Clock.png</file>
     </qresource>
 </RCC>

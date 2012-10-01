@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIconMenu->addSeparator();
         trayIconMenu->addAction(QAquit);
         trayIcon->setContextMenu(trayIconMenu);
-        trayIcon->setIcon(QIcon("Icons/1349069370_Alarm_Clock.png"));
+        trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
         trayIcon->setToolTip("QTalarm");
         trayIcon->show();
 
