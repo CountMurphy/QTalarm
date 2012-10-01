@@ -20,7 +20,9 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
-    void quit();
+
+private slots:
+    void ShowWindow();
 };
 
 #endif // MAINWINDOW_H
