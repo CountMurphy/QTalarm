@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+ #include <QCloseEvent>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,9 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
         //set up slots
         connect(QAquit,SIGNAL(triggered()),qApp,SLOT(quit()));
-
-
         connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
+        connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
     }else{
         //Error out and quit
         QMessageBox::critical(this,"Abort","Unsupported Desktop Environment.  Exiting");
@@ -39,6 +39,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent * event)
+{
+    event->ignore();
+    this->hide();
+}
+
+void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
+{
+    if(Reason==QSystemTrayIcon::DoubleClick)
+    {
+        ShowWindow();
+    }
+}
 
 void MainWindow::ShowWindow()
 {
