@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui phonon
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    timer.cpp
+    timer.cpp \
+    alarm.cpp
 
 HEADERS  += mainwindow.h \
-    timer.h
+    timer.h \
+    alarm.h
 
 FORMS    += mainwindow.ui
 

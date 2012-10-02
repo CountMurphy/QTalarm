@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "timer.h"
+#include "alarm.h"
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QTimeEdit>
@@ -76,6 +77,8 @@ void MainWindow::SetWDTime()
     {
         TimeKeeper->SetWDTime(ui->WD_Edit->time());
     }
+    Alarm *alarm=new Alarm(this);
+    alarm->Start();
 }
 
 void MainWindow::SetWETime()
