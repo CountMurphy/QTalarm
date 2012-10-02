@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    timer.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    timer.h
 
 FORMS    += mainwindow.ui
 

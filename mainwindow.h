@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
- #include <QSystemTrayIcon>
-
+#include <QSystemTrayIcon>
 #include <QMainWindow>
+#include "timer.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,10 +21,14 @@ private:
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
     void closeEvent(QCloseEvent*);
+    Timer *TimeKeeper;
 
 private slots:
     void ShowWindow();
     void ShowWindow(QSystemTrayIcon::ActivationReason);
+    void SetWDTime();
+    void SetWETime();
+    void SetCustomTime();
 };
 
 #endif // MAINWINDOW_H

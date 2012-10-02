@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "timer.h"
 #include <QMessageBox>
- #include <QCloseEvent>
+#include <QCloseEvent>
+#include <QTimeEdit>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     if(QSystemTrayIcon::isSystemTrayAvailable())
     {
+
+        //Call Time keeper
+        TimeKeeper=new Timer(this);
+        TimeKeeper->StartTimer();
+
         trayIcon=new QSystemTrayIcon(this);
         trayIconMenu=new QMenu(this);
         QAction *QAshow=new QAction("&Show",this);
@@ -28,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(QAquit,SIGNAL(triggered()),qApp,SLOT(quit()));
         connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
         connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
+        connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
+        connect(ui->WE_edit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
+        connect(ui->Cust_Edit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
+
     }else{
         //Error out and quit
         QMessageBox::critical(this,"Abort","Unsupported Desktop Environment.  Exiting");
@@ -57,4 +68,31 @@ void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
 void MainWindow::ShowWindow()
 {
     this->show();
+}
+
+void MainWindow::SetWDTime()
+{
+    if(ui->chkWeekDays->isChecked())
+    {
+        TimeKeeper->SetWDTime(ui->WD_Edit->time());
+    }
+}
+
+void MainWindow::SetWETime()
+{
+    if(ui->chkWeekEnd->isChecked())
+    {
+        TimeKeeper->SetWETime(ui->WE_edit->time());
+    }
+}
+
+void MainWindow::SetCustomTime()
+{
+    if(ui->chkCustom->isChecked())
+    {
+        QDateTime tempTime;
+        tempTime.setTime(ui->Cust_Edit->time());
+        tempTime.setDate(ui->calendarWidget->selectedDate());
+        TimeKeeper->SetCustomTime(tempTime);
+    }
 }

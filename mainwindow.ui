@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>608</width>
-    <height>355</height>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,6 +93,29 @@
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QCheckBox" name="chkCustom">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>270</y>
+      <width>95</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>CheckBox</string>
+    </property>
+   </widget>
+   <widget class="QTimeEdit" name="Cust_Edit">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>270</y>
+      <width>118</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -100,7 +123,7 @@
      <x>0</x>
      <y>0</y>
      <width>608</width>
-     <height>21</height>
+     <height>33</height>
     </rect>
    </property>
   </widget>
