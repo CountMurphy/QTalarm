@@ -3,13 +3,14 @@
 
 #include <QObject>
 #include <QDateTime>
+#include "alarm.h"
 
 class Timer : public QObject
 {
     Q_OBJECT
 public:
     static Timer* Instance();
-    void StartTimer();
+    void StartTimer(Alarm*);
     explicit Timer(QObject *parent = 0);
     void SetWDTime(QTime);
     void SetWETime(QTime);
@@ -18,6 +19,7 @@ private:
     QTime _WDAlarm;
     QTime _WEAlarm;
     QDateTime _CustomAlarm;
+    Alarm *CurAlarm;
 signals:
     
 private slots:

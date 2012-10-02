@@ -2,10 +2,10 @@
 #include "ui_mainwindow.h"
 #include "timer.h"
 #include "alarm.h"
+#include "fileio.h"
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QTimeEdit>
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,10 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     if(QSystemTrayIcon::isSystemTrayAvailable())
     {
-
         //Call Time keeper
         TimeKeeper=new Timer(this);
-        TimeKeeper->StartTimer();
+        CurAlarm=new Alarm(this);
+        TimeKeeper->StartTimer(CurAlarm);
 
         trayIcon=new QSystemTrayIcon(this);
         trayIconMenu=new QMenu(this);
@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->show();
 
         //set up slots
-        connect(QAquit,SIGNAL(triggered()),qApp,SLOT(quit()));
+        connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
         connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
         connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
         connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
@@ -62,6 +62,7 @@ void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
 {
     if(Reason==QSystemTrayIcon::DoubleClick)
     {
+        this->CurAlarm->Stop();
         ShowWindow();
     }
 }
@@ -77,8 +78,7 @@ void MainWindow::SetWDTime()
     {
         TimeKeeper->SetWDTime(ui->WD_Edit->time());
     }
-    Alarm *alarm=new Alarm(this);
-    alarm->Start();
+    this->CurAlarm->Start();
 }
 
 void MainWindow::SetWETime()
@@ -98,4 +98,10 @@ void MainWindow::SetCustomTime()
         tempTime.setDate(ui->calendarWidget->selectedDate());
         TimeKeeper->SetCustomTime(tempTime);
     }
+}
+
+void MainWindow::Quit()
+{
+    FileIO::DelExtracted();
+    qApp->quit();
 }

@@ -22,6 +22,7 @@ private:
     QMenu *trayIconMenu;
     void closeEvent(QCloseEvent*);
     Timer *TimeKeeper;
+    Alarm *CurAlarm;
 
 private slots:
     void ShowWindow();
@@ -29,6 +30,7 @@ private slots:
     void SetWDTime();
     void SetWETime();
     void SetCustomTime();
+    void Quit();
 };
 
 #endif // MAINWINDOW_H

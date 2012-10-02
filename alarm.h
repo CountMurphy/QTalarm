@@ -2,6 +2,8 @@
 #define ALARM_H
 
 #include <QObject>
+#include <QString>
+#include <phonon/MediaObject>
 
 class Alarm : public QObject
 {
@@ -9,10 +11,15 @@ class Alarm : public QObject
 public:
     explicit Alarm(QObject *parent = 0);
     void Start();
+    void Stop();
+private:
+    Phonon::MediaObject* media;
+    QString Path;
     
 signals:
     
 public slots:
+    void RepeatAllTheThings();
     
 };
 

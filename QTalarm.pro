@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     timer.cpp \
-    alarm.cpp
+    alarm.cpp \
+    fileio.cpp
 
 HEADERS  += mainwindow.h \
     timer.h \
-    alarm.h
+    alarm.h \
+    fileio.h
 
 FORMS    += mainwindow.ui
 

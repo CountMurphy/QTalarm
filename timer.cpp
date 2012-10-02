@@ -7,8 +7,9 @@ Timer::Timer(QObject *parent) :
 {
 }
 
-void Timer::StartTimer()
+void Timer::StartTimer(Alarm *MainAlarm)
 {
+    this->CurAlarm=MainAlarm;
     QTimer *timer=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(AlarmCheck()));
     timer->start(30000);
