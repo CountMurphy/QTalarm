@@ -11,11 +11,11 @@ Alarm::Alarm(QObject *parent) :
 {
     media = new Phonon::MediaObject(this);
     Phonon::createPath(media, new Phonon::AudioOutput(Phonon::MusicCategory, this));
+    
+    this->Path="/tmp/QTalarmTmp.wav";
     #ifdef Q_WS_WIN
+	//Override Path if Windows
         this->Path="C:\\Users\\cgugas\\Desktop\\QTalarmTmp.wav";
-    #endif
-    #ifdef Q_WS_X11
-        this->Path="/tmp/QTalarmTmp.wav";
     #endif
     media->setCurrentSource(Phonon::MediaSource(this->Path));
     this->_isPlaying=false;
