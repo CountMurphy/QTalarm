@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
         connect(ui->WE_edit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
         connect(ui->Cust_Edit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
+        connect(ui->chkWeekDays,SIGNAL(clicked(bool)),TimeKeeper,SLOT(ToggleWD(bool)));
+        connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),TimeKeeper,SLOT(ToggleWE(bool)));
 
     }else{
         //Error out and quit
@@ -78,7 +80,6 @@ void MainWindow::SetWDTime()
     {
         TimeKeeper->SetWDTime(ui->WD_Edit->time());
     }
-    this->CurAlarm->Start();
 }
 
 void MainWindow::SetWETime()

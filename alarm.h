@@ -12,9 +12,11 @@ public:
     explicit Alarm(QObject *parent = 0);
     void Start();
     void Stop();
+    bool isPlaying();
 private:
     Phonon::MediaObject* media;
     QString Path;
+    bool _isPlaying;
     
 signals:
     

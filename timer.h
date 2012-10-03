@@ -9,7 +9,6 @@ class Timer : public QObject
 {
     Q_OBJECT
 public:
-    static Timer* Instance();
     void StartTimer(Alarm*);
     explicit Timer(QObject *parent = 0);
     void SetWDTime(QTime);
@@ -20,8 +19,13 @@ private:
     QTime _WEAlarm;
     QDateTime _CustomAlarm;
     Alarm *CurAlarm;
+    bool _WDEnabled;
+    bool _WEEnabled;
 signals:
     
+public slots:
+    void ToggleWD(bool);
+    void ToggleWE(bool);
 private slots:
     void AlarmCheck();
 };

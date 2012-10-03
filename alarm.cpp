@@ -18,6 +18,7 @@ Alarm::Alarm(QObject *parent) :
         this->Path="/tmp/QTalarmTmp.wav";
     #endif
     media->setCurrentSource(Phonon::MediaSource(this->Path));
+    this->_isPlaying=false;
 }
 
 void Alarm::Start()
@@ -25,14 +26,21 @@ void Alarm::Start()
     FileIO::ExtractAudio();
     media->play();
     connect(media,SIGNAL(aboutToFinish()),this,SLOT(RepeatAllTheThings()));
+    this->_isPlaying=true;
 }
 
 void Alarm::Stop()
 {
     media->stop();
+    this->_isPlaying=false;
 }
 
 void Alarm::RepeatAllTheThings()
 {
     media->enqueue(this->Path);
+}
+
+bool Alarm::isPlaying()
+{
+    return this->_isPlaying;
 }
