@@ -1,5 +1,6 @@
 #include "fileio.h"
 #include <QFile>
+#include <QDir>
 
 FileIO::FileIO(QObject *parent) :
     QObject(parent)
@@ -8,16 +9,8 @@ FileIO::FileIO(QObject *parent) :
 
 bool FileIO::ExtractAudio()
 {
-    #ifdef Q_WS_WIN
-    //win code
-    if(QFile::copy(":/new/sounds/alarm.wav", "C:\\Users\\cgugas\\Desktop\\QTalarmTmp.wav"))
-    {
-       return true;
-    }
-    #endif
-
     //Must be a unix if this is reached
-    if(QFile::copy(":/new/sounds/alarm.wav","/tmp/QTalarmTmp.wav"))
+    if(QFile::copy(":/new/sounds/alarm.wav", QDir::tempPath()+"/QTalarm.wav"))
     {
         return true;
     }
@@ -26,10 +19,7 @@ bool FileIO::ExtractAudio()
 
 bool FileIO::DelExtracted()
 {
-    #ifdef Q_WS_WIN
-    return QFile::remove("C:\\Users\\cgugas\\Desktop\\QTalarmTmp.wav");
-    #endif
-    return QFile::remove("/tmp/QTalarmTmp.wav");
+    return QFile::remove(QDir::tempPath()+"/QTalarm.wav");
 }
 
 bool FileIO::ReadConfig()

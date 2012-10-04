@@ -4,6 +4,7 @@
 #include <phonon/MediaObject>
 #include <phonon/MediaSource>
 #include <QString>
+#include <QDir>
 
 
 Alarm::Alarm(QObject *parent) :
@@ -12,11 +13,7 @@ Alarm::Alarm(QObject *parent) :
     media = new Phonon::MediaObject(this);
     Phonon::createPath(media, new Phonon::AudioOutput(Phonon::MusicCategory, this));
     
-    this->Path="/tmp/QTalarmTmp.wav";
-    #ifdef Q_WS_WIN
-	//Override Path if Windows
-        this->Path="C:\\Users\\cgugas\\Desktop\\QTalarmTmp.wav";
-    #endif
+    this->Path=QDir::tempPath()+"/QTalarm.wav";
     media->setCurrentSource(Phonon::MediaSource(this->Path));
     this->_isPlaying=false;
 }
