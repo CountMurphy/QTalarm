@@ -50,7 +50,7 @@
    <widget class="QTimeEdit" name="WD_Edit">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>150</x>
       <y>230</y>
       <width>118</width>
       <height>31</height>
@@ -60,8 +60,8 @@
    <widget class="QTimeEdit" name="WE_edit">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>230</y>
+      <x>150</x>
+      <y>270</y>
       <width>118</width>
       <height>31</height>
      </rect>
@@ -70,8 +70,8 @@
    <widget class="QCheckBox" name="chkWeekEnd">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>230</y>
+      <x>40</x>
+      <y>270</y>
       <width>95</width>
       <height>26</height>
      </rect>
@@ -96,21 +96,21 @@
    <widget class="QCheckBox" name="chkCustom">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>270</y>
-      <width>95</width>
+      <x>40</x>
+      <y>310</y>
+      <width>121</width>
       <height>26</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string>Custom Date:</string>
     </property>
    </widget>
    <widget class="QTimeEdit" name="Cust_Edit">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>270</y>
+      <x>150</x>
+      <y>310</y>
       <width>118</width>
       <height>31</height>
      </rect>
@@ -123,7 +123,7 @@
      <x>0</x>
      <y>0</y>
      <width>608</width>
-     <height>33</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
