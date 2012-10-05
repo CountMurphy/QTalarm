@@ -2,17 +2,26 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QDate>
+#include "schedule.h"
+#include "schedulecollection.h"
+#include "fileio.h"
 
-Timer::Timer(QObject *parent) :
+Timer::Timer(QObject *parent,ScheduleCollection *Collection) :
     QObject(parent)
 {
-    this->_WDEnabled=false;
-    this->_WEEnabled=false;
+    for(int i=0;i<5;i++)
+    {
+        this->_Schedules[i]=Collection->GetSchedule(i);
+        if(this->_Schedules[i]==NULL)
+        {
+            this->_Schedules[i]=new Schedule(this);
+        }
+    }
 }
 
 void Timer::StartTimer(Alarm *MainAlarm)
 {
-    this->CurAlarm=MainAlarm;
+    this->_CurAlarm=MainAlarm;
     QTimer *timer=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(AlarmCheck()));
     timer->start(10000);
@@ -21,55 +30,48 @@ void Timer::StartTimer(Alarm *MainAlarm)
 void Timer::AlarmCheck()
 {
     //Compare saved times with now time
-    if(!this->CurAlarm->isPlaying())
+    if(!this->_CurAlarm->isPlaying())
     {
-        QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
-        switch(RightNow.date().dayOfWeek())
+        for(int i=0;i<5;i++)
         {
+
+            QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
+            switch(RightNow.date().dayOfWeek())
+            {
             case 1:
             case 2:
             case 3:
             case 4:
             case 5:
                 //WeekDay Alarms
-                if(this->_WDEnabled && this->_WDAlarm.hour()==RightNow.time().hour() && this->_WDAlarm.minute()==RightNow.time().minute())
+                if(this->_Schedules[i]->GetWDEnabled() && this->_Schedules[i]->GetWD().hour()==RightNow.time().hour() &&
+                        this->_Schedules[i]->GetWD().minute()==RightNow.time().minute())
                 {
                     //Set Condtion One!
-                    this->CurAlarm->Start();
+                    this->_CurAlarm->Start();
                 }
                 break;
             default:
                 //WeekEnds
-                if(this->_WEEnabled && this->_WEAlarm.hour()==RightNow.time().hour() && this->_WEAlarm.minute()==RightNow.time().minute())
+                if(this->_Schedules[i]->GetWEEnabled() && this->_Schedules[i]->GetWE().hour()==RightNow.time().hour() &&
+                        this->_Schedules[i]->GetWE().minute()==RightNow.time().minute())
                 {
                     //Set Condtion One!
-                    this->CurAlarm->Start();
+                    this->_CurAlarm->Start();
                 }
+            }
+            //Check for Custom Date Alarms
+            if(this->_Schedules[i]->GetCustomEnabled() && this->_Schedules[i]->GetCustom().date()==RightNow.date() &&
+                    this->_Schedules[i]->GetCustom().time().minute()==RightNow.time().minute()
+                    && this->_Schedules[i]->GetCustom().time().hour()==RightNow.time().hour())
+            {
+                //Set Conditon One!
+                this->_CurAlarm->Start();
+            }
         }
     }
 }
 
-void Timer::SetWDTime(QTime WDTime)
-{
-    this->_WDAlarm=WDTime;
-}
 
-void Timer::SetWETime(QTime WETime)
-{
-    this->_WEAlarm=WETime;
-}
 
-void Timer::SetCustomTime(QDateTime CustomAlarm)
-{
-    this->_CustomAlarm=CustomAlarm;
-}
 
-void Timer::ToggleWD(bool value)
-{
-    this->_WDEnabled= value;
-}
-
-void Timer::ToggleWE(bool value)
-{
-    this->_WEEnabled= value;
-}

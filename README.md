@@ -11,7 +11,6 @@ ToDo List:
 
 -snooze feature
 
--add 5 alarms schedule --may need to rename alarm class
 
 -calendar custom date alarms
 
@@ -19,4 +18,3 @@ ToDo List:
 
 -windows bugs, file location + del
 
--config support

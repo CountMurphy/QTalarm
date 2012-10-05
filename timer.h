@@ -4,28 +4,22 @@
 #include <QObject>
 #include <QDateTime>
 #include "alarm.h"
+#include "schedule.h"
+#include "schedulecollection.h"
 
 class Timer : public QObject
 {
     Q_OBJECT
 public:
     void StartTimer(Alarm*);
-    explicit Timer(QObject *parent = 0);
-    void SetWDTime(QTime);
-    void SetWETime(QTime);
-    void SetCustomTime(QDateTime);
+    explicit Timer(QObject *parent = 0,ScheduleCollection* Collection=0);
+
 private:
-    QTime _WDAlarm;
-    QTime _WEAlarm;
-    QDateTime _CustomAlarm;
-    Alarm *CurAlarm;
-    bool _WDEnabled;
-    bool _WEEnabled;
+    Alarm *_CurAlarm;
+    Schedule *_Schedules[5];
+
 signals:
     
-public slots:
-    void ToggleWD(bool);
-    void ToggleWE(bool);
 private slots:
     void AlarmCheck();
 };

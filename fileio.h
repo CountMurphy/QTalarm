@@ -1,7 +1,10 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
+#include "schedulecollection.h"
+#include "schedule.h"
 #include <QObject>
+#include <QSettings>
 
 class FileIO : public QObject
 {
@@ -10,7 +13,10 @@ public:
     explicit FileIO(QObject *parent = 0);
     static bool ExtractAudio();
     static bool DelExtracted();
-    static bool ReadConfig();
+    Schedule* LoadConfig(int);
+    bool Save(ScheduleCollection*);
+private:
+    QSettings _Settings;
 signals:
     
 public slots:

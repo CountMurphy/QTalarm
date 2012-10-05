@@ -20,9 +20,13 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
-    void closeEvent(QCloseEvent*);
     Timer *TimeKeeper;
     Alarm *CurAlarm;
+    ScheduleCollection *_Schedules;
+    int _CurrentAlarm;
+
+    void closeEvent(QCloseEvent*);
+    void ShowActiveAlarm(Schedule*);
 
 private slots:
     void ShowWindow();
@@ -30,6 +34,10 @@ private slots:
     void SetWDTime();
     void SetWETime();
     void SetCustomTime();
+    void ToggleWD(bool);
+    void ToggleWE(bool);
+    void ToggleCust(bool);
+    void SetAlarmNumber();
     void Quit();
 };
 

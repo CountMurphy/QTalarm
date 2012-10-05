@@ -16,12 +16,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     timer.cpp \
     alarm.cpp \
-    fileio.cpp
+    fileio.cpp \
+    schedule.cpp \
+    schedulecollection.cpp
 
 HEADERS  += mainwindow.h \
     timer.h \
     alarm.h \
-    fileio.h
+    fileio.h \
+    schedule.h \
+    schedulecollection.h
 
 FORMS    += mainwindow.ui
 
