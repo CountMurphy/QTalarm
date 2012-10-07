@@ -163,8 +163,8 @@ void MainWindow::SetAlarmNumber()
 void MainWindow::ShowActiveAlarm(Schedule *Active)
 {
     ui->chkWeekDays->setChecked(Active->GetWDEnabled());
-    ui->WD_Edit->setTime(Active->GetWD())
-            ;
+    ui->WD_Edit->setTime(Active->GetWD());
+
     ui->chkWeekEnd->setChecked(Active->GetWEEnabled());
     ui->WE_edit->setTime(Active->GetWE());
 

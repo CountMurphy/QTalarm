@@ -8,6 +8,9 @@ Schedule::Schedule(QObject *parent) :
     this->_WDEnabled=false;
     this->_WEEnabled=false;
     this->_CustomEnabled=false;
+    this->_WDAlarm.setHMS(0,0,0,0);
+    this->_WEAlarm.setHMS(0,0,0,0);
+    this->_CustomAlarm.time().setHMS(0,0,0,0);
 }
 
 

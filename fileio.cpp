@@ -40,6 +40,18 @@ Schedule* FileIO::LoadConfig(int index)
     QTime WETime=this->_Settings.value(Index+"WETime").toTime();
     bool CustEnabled=this->_Settings.value(Index+"CustEnabled").toBool();
     QDateTime CustTime=this->_Settings.value(Index+"CustTime").toDateTime();
+    if(WDTime.isNull())
+    {
+        WDTime.setHMS(0,0,0,0);
+    }
+    if(WETime.isNull())
+    {
+        WETime.setHMS(0,0,0,0);
+    }
+    if(CustTime.isNull())
+    {
+        CustTime.time().setHMS(0,0,0,0);
+    }
     Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime);
     return Sched;
 }
