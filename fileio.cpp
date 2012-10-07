@@ -35,9 +35,9 @@ Schedule* FileIO::LoadConfig(int index)
     QString Index;
     Index.setNum(index);
     bool WDEnabled=this->_Settings.value(Index+"WDEnabled").toBool();
-    QTime WDTime=this->_Settings.value(Index+"WDTime").toDateTime().time();
+    QTime WDTime=this->_Settings.value(Index+"WDTime").toTime();
     bool WEEnabled=this->_Settings.value(Index+"WEEnabled").toBool();
-    QTime WETime=this->_Settings.value(Index+"WETime").toDateTime().time();
+    QTime WETime=this->_Settings.value(Index+"WETime").toTime();
     bool CustEnabled=this->_Settings.value(Index+"CustEnabled").toBool();
     QDateTime CustTime=this->_Settings.value(Index+"CustTime").toDateTime();
     Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime);
