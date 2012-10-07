@@ -7,14 +7,11 @@ A handy alarm clock Program written in QT.
 
 ToDo List:
 
--alter timer to become a singleton
-
 -snooze feature
-
 
 -calendar custom date alarms
 
 -analog clock on main page to right of calendar
 
--windows bugs, file location + del
+-windows bugs 
 
