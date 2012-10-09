@@ -27,6 +27,7 @@ private:
 
     void closeEvent(QCloseEvent*);
     void ShowActiveAlarm(Schedule*);
+    void SetupClock();
 
 private slots:
     void ShowWindow();
@@ -39,6 +40,7 @@ private slots:
     void ToggleCust(bool);
     void SetAlarmNumber();
     void Quit();
+    void UpdateClock();
 };
 
 #endif // MAINWINDOW_H

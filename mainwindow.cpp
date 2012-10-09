@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QTimeEdit>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
         ui->Alm1->setChecked(true);
         SetAlarmNumber();
+        SetupClock();
+
 
         //set up slots
         connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
@@ -55,7 +58,6 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
 
-
     }else{
         //Error out and quit
         QMessageBox::critical(this,"Abort","Unsupported Desktop Environment.  Exiting");
@@ -72,6 +74,14 @@ void MainWindow::closeEvent(QCloseEvent * event)
 {
     event->ignore();
     this->hide();
+}
+
+void MainWindow::SetupClock()
+{
+    //Set up fancy clock
+    QTimer *CurrentTime=new QTimer(this);
+    connect(CurrentTime,SIGNAL(timeout()),this,SLOT(UpdateClock()));
+    CurrentTime->start(500);
 }
 
 void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
@@ -170,4 +180,9 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
 
     ui->chkCustom->setChecked(Active->GetCustomEnabled());
     ui->Cust_Edit->setTime(Active->GetCustom().time());
+}
+
+void MainWindow::UpdateClock()
+{
+    ui->Clock->setText(QTime::currentTime().toString("h:m:s ap"));
 }
