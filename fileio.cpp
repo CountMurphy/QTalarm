@@ -51,6 +51,7 @@ Schedule* FileIO::LoadConfig(int index)
     if(CustTime.isNull())
     {
         CustTime.time().setHMS(0,0,0,0);
+        CustTime.setDate(QDateTime::currentDateTime().date());
     }
     Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime);
     return Sched;

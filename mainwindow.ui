@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>608</width>
-    <height>376</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
      <rect>
       <x>150</x>
       <y>230</y>
-      <width>118</width>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -62,7 +62,7 @@
      <rect>
       <x>150</x>
       <y>270</y>
-      <width>118</width>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -104,16 +104,6 @@
     </property>
     <property name="text">
      <string>Custom Date:</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="Cust_Edit">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>310</y>
-      <width>118</width>
-      <height>31</height>
-     </rect>
     </property>
    </widget>
    <widget class="QRadioButton" name="Alm1">
@@ -205,6 +195,16 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QDateTimeEdit" name="Cust_Edit">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>310</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -212,7 +212,7 @@
      <x>0</x>
      <y>0</y>
      <width>608</width>
-     <height>33</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>

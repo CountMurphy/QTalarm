@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->chkWeekDays,SIGNAL(clicked(bool)),this,SLOT(ToggleWD(bool)));
         connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
+        connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomTime()));
 
     }else{
         //Error out and quit
@@ -112,8 +113,13 @@ void MainWindow::SetWETime()
 
 void MainWindow::SetCustomTime()
 {
+    //Update date on display
+    ui->Cust_Edit->setDate(ui->calendarWidget->selectedDate());
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->SetCust(ui->Cust_Edit->dateTime());
+    QDateTime CustomDateTime;
+    CustomDateTime.setTime(ui->Cust_Edit->time());
+    CustomDateTime.setDate(ui->calendarWidget->selectedDate());
+    Active->SetCust(CustomDateTime);
 }
 
 void MainWindow::ToggleWD(bool isEnabled)
@@ -180,6 +186,7 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
 
     ui->chkCustom->setChecked(Active->GetCustomEnabled());
     ui->Cust_Edit->setTime(Active->GetCustom().time());
+    ui->Cust_Edit->setDateTime(Active->GetCustom());
 }
 
 void MainWindow::UpdateClock()
