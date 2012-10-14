@@ -16,7 +16,6 @@ FileIO::FileIO(QObject *parent) :
 
 bool FileIO::ExtractAudio()
 {
-    //Must be a unix if this is reached
     if(QFile::copy(":/new/sounds/alarm.wav", QDir::tempPath()+"/QTalarm.wav"))
     {
         return true;
@@ -40,6 +39,8 @@ Schedule* FileIO::LoadConfig(int index)
     QTime WETime=this->_Settings.value(Index+"WETime").toTime();
     bool CustEnabled=this->_Settings.value(Index+"CustEnabled").toBool();
     QDateTime CustTime=this->_Settings.value(Index+"CustTime").toDateTime();
+    bool CustSoundEnabled=this->_Settings.value(Index+"CustomSoundEnabled").toBool();
+    QString CustSound=this->_Settings.value(Index+"CustomSound").toString();
     if(WDTime.isNull())
     {
         WDTime.setHMS(0,0,0,0);
@@ -53,7 +54,7 @@ Schedule* FileIO::LoadConfig(int index)
         CustTime.time().setHMS(0,0,0,0);
         CustTime.setDate(QDateTime::currentDateTime().date());
     }
-    Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime);
+    Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime,CustSoundEnabled,CustSound);
     return Sched;
 }
 
@@ -72,6 +73,8 @@ bool FileIO::Save(ScheduleCollection *Collection)
             this->_Settings.setValue(Index+"WETime",Sched->GetWE());
             this->_Settings.setValue(Index+"CustEnabled",Sched->GetCustomEnabled());
             this->_Settings.setValue(Index+"CustTime",Sched->GetCustom());
+            this->_Settings.setValue(Index+"CustomSoundEnabled",Sched->GetCustomSoundEnabled());
+            this->_Settings.setValue(Index+"CustomSound",Sched->GetCustomSound());
             this->_Settings.sync();
         }
     }

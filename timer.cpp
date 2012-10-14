@@ -34,7 +34,11 @@ void Timer::AlarmCheck()
     {
         for(int i=0;i<5;i++)
         {
-
+            //Set custom Sound path if specified
+            if(this->_Schedules[i]->GetCustomSoundEnabled())
+            {
+                this->_CurAlarm->SetCustomPath(this->_Schedules[i]->GetCustomSound());
+            }
             QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
             switch(RightNow.date().dayOfWeek())
             {
@@ -48,7 +52,7 @@ void Timer::AlarmCheck()
                         this->_Schedules[i]->GetWD().minute()==RightNow.time().minute())
                 {
                     //Set Condtion One!
-                    this->_CurAlarm->Start();
+                    this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
                 }
                 break;
             default:
@@ -57,7 +61,7 @@ void Timer::AlarmCheck()
                         this->_Schedules[i]->GetWE().minute()==RightNow.time().minute())
                 {
                     //Set Condtion One!
-                    this->_CurAlarm->Start();
+                    this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
                 }
             }
             //Check for Custom Date Alarms
@@ -66,7 +70,7 @@ void Timer::AlarmCheck()
                     && this->_Schedules[i]->GetCustom().time().hour()==RightNow.time().hour())
             {
                 //Set Conditon One!
-                this->_CurAlarm->Start();
+                this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
             }
         }
     }

@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QTimeEdit>
 #include <QTimer>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -57,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->chkWeekDays,SIGNAL(clicked(bool)),this,SLOT(ToggleWD(bool)));
         connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
+        connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
+
         connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomTime()));
 
     }else{
@@ -187,9 +190,26 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
     ui->chkCustom->setChecked(Active->GetCustomEnabled());
     ui->Cust_Edit->setTime(Active->GetCustom().time());
     ui->Cust_Edit->setDateTime(Active->GetCustom());
+    ui->chkSounds->setChecked(Active->GetCustomSoundEnabled());
+    ui->txtSoundPath->setText(Active->GetCustomSound());
 }
 
 void MainWindow::UpdateClock()
 {
     ui->Clock->setText(QTime::currentTime().toString("h:m:s ap"));
+}
+
+
+void MainWindow::OpenDiaglog(bool isChecked)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Active->SetCustomSoundEnabled(isChecked);
+    if(isChecked)
+    {
+        QString AlarmLocation = QFileDialog::getOpenFileName(this,"Select Alarm File",QDir::homePath());
+        Active->SetCustomSound(AlarmLocation);
+        ui->txtSoundPath->setText(AlarmLocation);
+    }else{
+        ui->txtSoundPath->setText("");
+    }
 }

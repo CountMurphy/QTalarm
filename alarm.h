@@ -10,12 +10,15 @@ class Alarm : public QObject
     Q_OBJECT
 public:
     explicit Alarm(QObject *parent = 0);
-    void Start();
+    void Start(bool);
     void Stop();
     bool isPlaying();
+    void SetCustomPath(QString);
 private:
     Phonon::MediaObject* media;
-    QString Path;
+    QString _DefaultPath;
+    QString _CustPath;
+    bool _UsingCustomPath;
     bool _isPlaying;
     
 signals:

@@ -41,6 +41,7 @@ private slots:
     void SetAlarmNumber();
     void Quit();
     void UpdateClock();
+    void OpenDiaglog(bool);
 };
 
 #endif // MAINWINDOW_H

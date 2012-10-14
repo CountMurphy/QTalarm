@@ -13,14 +13,21 @@ Alarm::Alarm(QObject *parent) :
     media = new Phonon::MediaObject(this);
     Phonon::createPath(media, new Phonon::AudioOutput(Phonon::MusicCategory, this));
     
-    this->Path=QDir::tempPath()+"/QTalarm.wav";
-    media->setCurrentSource(Phonon::MediaSource(this->Path));
+    this->_DefaultPath=QDir::tempPath()+"/QTalarm.wav";
     this->_isPlaying=false;
 }
 
-void Alarm::Start()
+void Alarm::Start(bool useCustom)
 {
-    FileIO::ExtractAudio();
+    if(useCustom)
+    {
+        media->setCurrentSource(Phonon::MediaSource(this->_CustPath));
+        this->_UsingCustomPath=true;
+    }else{
+     FileIO::ExtractAudio();
+     media->setCurrentSource(Phonon::MediaSource(this->_DefaultPath));
+     this->_UsingCustomPath=false;
+    }
     media->play();
     connect(media,SIGNAL(aboutToFinish()),this,SLOT(RepeatAllTheThings()));
     this->_isPlaying=true;
@@ -34,10 +41,20 @@ void Alarm::Stop()
 
 void Alarm::RepeatAllTheThings()
 {
-    media->enqueue(this->Path);
+    if(this->_UsingCustomPath)
+    {
+        media->enqueue(this->_CustPath);
+    }else{
+        media->enqueue(this->_DefaultPath);
+    }
 }
 
 bool Alarm::isPlaying()
 {
     return this->_isPlaying;
+}
+
+void Alarm::SetCustomPath(QString CustPath)
+{
+    this->_CustPath=CustPath;
 }
