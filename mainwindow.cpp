@@ -82,7 +82,7 @@ void MainWindow::closeEvent(QCloseEvent * event)
 
 void MainWindow::SetupClock()
 {
-    //Set up fancy clock
+    //Set up clock display
     QTimer *CurrentTime=new QTimer(this);
     connect(CurrentTime,SIGNAL(timeout()),this,SLOT(UpdateClock()));
     CurrentTime->start(500);
