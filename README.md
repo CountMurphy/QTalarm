@@ -9,9 +9,6 @@ ToDo List:
 
 -snooze feature
 
--calendar custom date alarms
-
--analog clock on main page to right of calendar
 
 -windows bugs 
 
