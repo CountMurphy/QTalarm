@@ -3,12 +3,26 @@ QTalarm
 
 A handy alarm clock Program written in QT.
 
-*This is a beta release.  At present only weekday and weekend alarms work.  More features to come
+Compile Instrustions for Linux and Mac:
+  Type: "qmake", "make", and then "make clean"
 
-ToDo List:
+Windows users will have to compile the program with the QT creator IDE (or download the binaries off the downloads page)
 
--snooze feature
+Features
+========
+
+-Up to 15 Customizable alarms
+
+-Can wake up using the default sound, or any of audio / video file of your choosing.
+
+-Custom Date alarms
+
+-Completely Cross plateform
 
 
--windows bugs 
+Licensing
+==========
+GPL V3
 
+
+Please Report any bugs to the github page at https://github.com/CountMurphy/QTalarm
