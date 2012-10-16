@@ -196,7 +196,7 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
 
 void MainWindow::UpdateClock()
 {
-    ui->Clock->setText(QTime::currentTime().toString("h:m:s ap"));
+    ui->Clock->setText(QTime::currentTime().toString("h:mm:ss ap"));
 }
 
 
