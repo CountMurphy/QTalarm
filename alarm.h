@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <phonon/MediaObject>
+#include <QTimer>
 
 class Alarm : public QObject
 {
@@ -18,6 +19,9 @@ private:
     Phonon::MediaObject* media;
     QString _DefaultPath;
     QString _CustPath;
+
+    QTimer *_Pause;
+
     bool _UsingCustomPath;
     bool _isPlaying;
     
@@ -25,6 +29,7 @@ signals:
     
 public slots:
     void RepeatAllTheThings();
+    void Resume();
     
 };
 

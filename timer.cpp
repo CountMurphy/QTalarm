@@ -24,7 +24,7 @@ void Timer::StartTimer(Alarm *MainAlarm)
     this->_CurAlarm=MainAlarm;
     QTimer *timer=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(AlarmCheck()));
-    timer->start(10000);
+    timer->start(1000);
 }
 
 void Timer::AlarmCheck()
