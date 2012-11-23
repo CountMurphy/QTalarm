@@ -54,6 +54,10 @@ Schedule* FileIO::LoadConfig(int index)
         CustTime.time().setHMS(0,0,0,0);
         CustTime.setDate(QDateTime::currentDateTime().date());
     }
+    if(CustSoundEnabled==false)
+    {
+        CustSound="";
+    }
     Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime,CustSoundEnabled,CustSound);
     return Sched;
 }
