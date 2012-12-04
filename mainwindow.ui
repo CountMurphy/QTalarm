@@ -243,6 +243,19 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="TestBtn">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>270</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Test</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -250,7 +263,7 @@
      <x>0</x>
      <y>0</y>
      <width>637</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

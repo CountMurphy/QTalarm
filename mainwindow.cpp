@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
         connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
+        connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
 
         connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomTime()));
 
@@ -211,5 +212,23 @@ void MainWindow::OpenDiaglog(bool isChecked)
         ui->txtSoundPath->setText(AlarmLocation);
     }else{
         ui->txtSoundPath->setText("");
+    }
+}
+
+void MainWindow::TestAlarm()
+{
+    if(ui->TestBtn->text()=="Test")
+    {
+        if(ui->chkSounds->isChecked())
+        {
+            this->CurAlarm->SetCustomPath(ui->txtSoundPath->text());
+            this->CurAlarm->Start(true);
+        }else{
+            this->CurAlarm->Start(false);
+        }
+        ui->TestBtn->setText("Stop");
+    }else{
+        this->CurAlarm->Stop();
+        ui->TestBtn->setText("Test");
     }
 }
