@@ -18,16 +18,19 @@ SOURCES += main.cpp\
     alarm.cpp \
     fileio.cpp \
     schedule.cpp \
-    schedulecollection.cpp
+    schedulecollection.cpp \
+    aboutdialog.cpp
 
 HEADERS  += mainwindow.h \
     timer.h \
     alarm.h \
     fileio.h \
     schedule.h \
-    schedulecollection.h
+    schedulecollection.h \
+    aboutdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    aboutdialog.ui
 
 RESOURCES += \
     Icons.qrc

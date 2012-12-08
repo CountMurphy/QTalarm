@@ -4,6 +4,7 @@
 #include "alarm.h"
 #include "fileio.h"
 #include "schedulecollection.h"
+#include "aboutdialog.h"
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QTimeEdit>
@@ -47,6 +48,9 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
         connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
         connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
+        connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(Quit()));
+        connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
+        connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
         connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
         connect(ui->WE_edit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
         connect(ui->Cust_Edit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
@@ -231,4 +235,10 @@ void MainWindow::TestAlarm()
         this->CurAlarm->Stop();
         ui->TestBtn->setText("Test");
     }
+}
+
+void MainWindow::ShowAbout()
+{
+    AboutDialog *aboutbox=new AboutDialog(this);
+    aboutbox->show();
 }
