@@ -32,7 +32,7 @@ void Alarm::Start(bool useCustom)
      this->_UsingCustomPath=false;
     }
     media->play();
-    connect(media,SIGNAL(aboutToFinish()),this,SLOT(RepeatAllTheThings()));
+    connect(media,SIGNAL(finished()),this,SLOT(RepeatAllTheThings()));
     this->_isPlaying=true;
 }
 
@@ -46,10 +46,11 @@ void Alarm::RepeatAllTheThings()
 {
     if(this->_UsingCustomPath)
     {
-        media->enqueue(this->_CustPath);
+        media->setCurrentSource(Phonon::MediaSource(this->_CustPath));
     }else{
-        media->enqueue(this->_DefaultPath);
+        media->setCurrentSource(Phonon::MediaSource(this->_DefaultPath));
     }
+    media->play();
 }
 
 bool Alarm::isPlaying()
