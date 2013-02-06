@@ -97,13 +97,13 @@ void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
 {
     if(Reason==QSystemTrayIcon::DoubleClick)
     {
-        this->CurAlarm->Stop();
         ShowWindow();
     }
 }
 
 void MainWindow::ShowWindow()
 {
+    this->CurAlarm->Stop();
     this->show();
 }
 
