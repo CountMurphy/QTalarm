@@ -103,7 +103,10 @@ void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
 
 void MainWindow::ShowWindow()
 {
-    this->CurAlarm->Stop();
+    if(this->CurAlarm->isPlaying())
+    {
+        this->CurAlarm->Stop();
+    }
     this->show();
 }
 

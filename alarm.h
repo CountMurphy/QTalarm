@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QString>
-#include <phonon/MediaObject>
+#include <QMediaPlayer>
 #include <QTimer>
 
 class Alarm : public QObject
@@ -16,9 +16,10 @@ public:
     bool isPlaying();
     void SetCustomPath(QString);
 private:
-    Phonon::MediaObject* media;
+    QMediaPlayer * media;
     QString _DefaultPath;
     QString _CustPath;
+    bool _ManualStop;
 
     QTimer *_Pause;
 
@@ -28,7 +29,7 @@ private:
 signals:
     
 public slots:
-    void RepeatAllTheThings();
+    void RepeatAllTheThings(QMediaPlayer::State);
     void Resume();
     
 };
