@@ -50,21 +50,27 @@
    <widget class="QTimeEdit" name="WD_Edit">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>150</x>
       <y>230</y>
-      <width>151</width>
+      <width>171</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="displayFormat">
+     <string>HH:mm:ss:AP</string>
     </property>
    </widget>
    <widget class="QTimeEdit" name="WE_edit">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>150</x>
       <y>270</y>
-      <width>151</width>
+      <width>171</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="displayFormat">
+     <string>HH:mm:ss:AP</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="chkWeekEnd">
@@ -161,11 +167,14 @@
    <widget class="QDateTimeEdit" name="Cust_Edit">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>150</x>
       <y>310</y>
-      <width>151</width>
+      <width>171</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="displayFormat">
+     <string>d MMM yyyy HH:mm:ss:AP</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="chkSounds">
@@ -192,6 +201,12 @@
       <width>261</width>
       <height>201</height>
      </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <property name="title">
      <string>Current Time:</string>
@@ -263,7 +278,7 @@
      <x>0</x>
      <y>0</y>
      <width>658</width>
-     <height>27</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
