@@ -14,7 +14,6 @@ Alarm::Alarm(QObject *parent) :
     this->_DefaultPath=QDir::tempPath()+"/QTalarm.wav";
     this->_isPlaying=false;
     this->_Pause=new QTimer(this);
-    this->_ManualStop=false;
 
     connect(this->_Pause,SIGNAL(timeout()),this,SLOT(Resume()));
 }
@@ -31,20 +30,19 @@ void Alarm::Start(bool useCustom)
      this->_UsingCustomPath=false;
     }
     media->play();
-    connect(media,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(RepeatAllTheThings(QMediaPlayer::State)));
+    connect(media,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT(RepeatAllTheThings(QMediaPlayer::MediaStatus)));
     this->_isPlaying=true;
 }
 
 void Alarm::Stop()
 {
-    this->_ManualStop=true;
     media->stop();
     this->_Pause->start(60000);
 }
 
-void Alarm::RepeatAllTheThings(QMediaPlayer::State state)
+void Alarm::RepeatAllTheThings(QMediaPlayer::MediaStatus state)
 {
-    if(state==QMediaPlayer::StoppedState && this->_ManualStop==false)
+    if(state==QMediaPlayer::EndOfMedia)
     {
         if(this->_UsingCustomPath)
         {
