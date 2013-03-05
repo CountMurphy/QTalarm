@@ -9,7 +9,6 @@ Alarm::Alarm(QObject *parent) :
     QObject(parent)
 {
     media = new QMediaPlayer(this);
-    media->setVolume(25);
     
     this->_DefaultPath=QDir::tempPath()+"/QTalarm.wav";
     this->_isPlaying=false;
@@ -68,4 +67,10 @@ void Alarm::Resume()
 {
     this->_isPlaying=false;
     this->_Pause->stop();
+}
+
+
+void Alarm::SetVolume(int Volume)
+{
+    media->setVolume(Volume);
 }

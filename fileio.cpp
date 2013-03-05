@@ -89,3 +89,16 @@ bool FileIO::Save(ScheduleCollection *Collection)
 
     return true;
 }
+
+
+int FileIO::LoadVolume()
+{
+    QSettings settings;
+    return settings.value("Volume").toInt();
+}
+
+void FileIO::SaveVolume(int vol)
+{
+    QSettings settings;
+    settings.setValue("Volume",vol);
+}

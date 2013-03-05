@@ -15,6 +15,8 @@ public:
     static bool DelExtracted();
     Schedule* LoadConfig(int);
     bool Save(ScheduleCollection*);
+    static int LoadVolume();
+    static void SaveVolume(int);
 private:
     QSettings _Settings;
 signals:

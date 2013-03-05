@@ -34,3 +34,4 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     Icons.qrc
+CONFIG += precompile_header

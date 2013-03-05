@@ -271,6 +271,32 @@
      <string>Test</string>
     </property>
    </widget>
+   <widget class="QSlider" name="VolumeSlider">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>330</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>310</y>
+      <width>52</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Volume:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

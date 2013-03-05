@@ -30,6 +30,7 @@ signals:
 public slots:
     void RepeatAllTheThings(QMediaPlayer::MediaStatus);
     void Resume();
+    void SetVolume(int);
     
 };
 

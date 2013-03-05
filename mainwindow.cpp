@@ -10,6 +10,8 @@
 #include <QTimeEdit>
 #include <QTimer>
 #include <QFileDialog>
+#include <QSlider>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,10 +23,16 @@ MainWindow::MainWindow(QWidget *parent) :
         //Create / load Schedule
         _Schedules=new ScheduleCollection(this);
         _Schedules->LoadSchedules();
+
         //Call Time keeper
         TimeKeeper=new Timer(this,_Schedules);
         CurAlarm=new Alarm(this);
         TimeKeeper->StartTimer(CurAlarm);
+
+        //Set Volume
+        int Volume = FileIO::LoadVolume();
+        ui->VolumeSlider->setValue(Volume<=0? 50:Volume);
+        CurAlarm->SetVolume(ui->VolumeSlider->value());
 
         trayIcon=new QSystemTrayIcon(this);
         trayIconMenu=new QMenu(this);
@@ -64,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
         connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
         connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
+        connect(ui->VolumeSlider,SIGNAL(valueChanged(int)),CurAlarm,SLOT(SetVolume(int)));
 
         connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomTime()));
 
@@ -155,6 +164,7 @@ void MainWindow::Quit()
 {
     this->_Schedules->Save();
     FileIO::DelExtracted();
+    FileIO::SaveVolume(ui->VolumeSlider->value());
     qApp->quit();
 }
 
