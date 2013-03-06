@@ -275,7 +275,7 @@
     <property name="geometry">
      <rect>
       <x>430</x>
-      <y>330</y>
+      <y>340</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -287,14 +287,14 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>310</y>
-      <width>52</width>
-      <height>13</height>
+      <x>470</x>
+      <y>320</y>
+      <width>111</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Volume:</string>
+     <string>Master Volume:</string>
     </property>
    </widget>
   </widget>
