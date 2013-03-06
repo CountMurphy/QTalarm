@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="displayFormat">
-     <string>HH:mm:ss:AP</string>
+     <string>hh:mm:ss:AP</string>
     </property>
    </widget>
    <widget class="QTimeEdit" name="WE_edit">
@@ -70,7 +70,7 @@
      </rect>
     </property>
     <property name="displayFormat">
-     <string>HH:mm:ss:AP</string>
+     <string>hh:mm:ss:AP</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="chkWeekEnd">
@@ -174,7 +174,7 @@
      </rect>
     </property>
     <property name="displayFormat">
-     <string>d MMM yyyy HH:mm:ss:AP</string>
+     <string>d MMM yyyy hh:mm:ss:AP</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="chkSounds">
