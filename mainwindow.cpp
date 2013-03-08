@@ -116,6 +116,7 @@ void MainWindow::ShowWindow()
     {
         this->CurAlarm->Stop();
     }
+    ui->TestBtn->setText("Test");
     this->show();
 }
 
