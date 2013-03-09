@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <QFileDialog>
 #include <QSlider>
+#include <QSystemTrayIcon>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
         trayIcon->setToolTip("QTalarm");
         trayIcon->show();
+	trayIcon->setVisible(false);	
+	trayIcon->setVisible(true);	
 
         ui->Alm1->setChecked(true);
         SetAlarmNumber();
