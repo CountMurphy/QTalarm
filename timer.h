@@ -17,6 +17,7 @@ public:
 private:
     Alarm *_CurAlarm;
     Schedule *_Schedules[5];
+    void SetCustomSound(int);
 
 signals:
     

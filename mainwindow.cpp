@@ -5,6 +5,7 @@
 #include "fileio.h"
 #include "schedulecollection.h"
 #include "aboutdialog.h"
+#include "snooze.h"
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QTimeEdit>
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     if(QSystemTrayIcon::isSystemTrayAvailable())
     {
         //Create / load Schedule
@@ -48,13 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->setToolTip("QTalarm");
         trayIcon->show();
 
-
         ui->Alm1->setChecked(true);
         SetAlarmNumber();
         SetupClock();
 
 
-        //set up slots
+        //set up ui slots
         connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
         connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
         connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
@@ -78,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
         connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomTime()));
 
+
     }else{
         //Error out and quit
         QMessageBox::critical(this,"Abort","Unsupported Desktop Environment.  Exiting");
@@ -100,7 +102,7 @@ void MainWindow::SetupClock()
 {
     //Set up clock display
     QTimer *CurrentTime=new QTimer(this);
-    connect(CurrentTime,SIGNAL(timeout()),this,SLOT(UpdateClock()));
+    connect(CurrentTime,SIGNAL(timeout()),this,SLOT(timeCheck()));
     CurrentTime->start(500);
 }
 
@@ -191,7 +193,7 @@ void MainWindow::SetAlarmNumber()
     }else{
         Index=4;
     }
-     this->_CurrentAlarm=Index;
+    this->_CurrentAlarm=Index;
 
     //display Active
 
@@ -213,6 +215,12 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
     ui->Cust_Edit->setDateTime(Active->GetCustom());
     ui->chkSounds->setChecked(Active->GetCustomSoundEnabled());
     ui->txtSoundPath->setText(Active->GetCustomSound());
+}
+
+void MainWindow::timeCheck()
+{
+    UpdateClock();
+    SnoozeMenuCheck();
 }
 
 void MainWindow::UpdateClock()
@@ -257,4 +265,16 @@ void MainWindow::ShowAbout()
 {
     AboutDialog *aboutbox=new AboutDialog(this);
     aboutbox->show();
+}
+
+
+void MainWindow::SnoozeMenuCheck()
+{
+    if(this->CurAlarm->isPlaying() && this->CurAlarm->canResume && ui->TestBtn->text()=="Test")
+    {
+        //Create Snooze Menu object
+        snooze *snMenu=new snooze(this,CurAlarm);
+        snMenu->show();
+        this->CurAlarm->canResume=false;
+    }
 }

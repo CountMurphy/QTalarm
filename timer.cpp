@@ -30,15 +30,10 @@ void Timer::StartTimer(Alarm *MainAlarm)
 void Timer::AlarmCheck()
 {
     //Compare saved times with now time
-    if(!this->_CurAlarm->isPlaying())
+    if(!this->_CurAlarm->isPlaying() && this->_CurAlarm->canResume)
     {
         for(int i=0;i<5;i++)
         {
-            //Set custom Sound path if specified
-            if(this->_Schedules[i]->GetCustomSoundEnabled())
-            {
-                this->_CurAlarm->SetCustomPath(this->_Schedules[i]->GetCustomSound());
-            }
             QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
             switch(RightNow.date().dayOfWeek())
             {
@@ -51,6 +46,7 @@ void Timer::AlarmCheck()
                 if(this->_Schedules[i]->GetWDEnabled() && this->_Schedules[i]->GetWD().hour()==RightNow.time().hour() &&
                         this->_Schedules[i]->GetWD().minute()==RightNow.time().minute())
                 {
+                    SetCustomSound(i);
                     //Set Condtion One!
                     this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
                 }
@@ -60,6 +56,7 @@ void Timer::AlarmCheck()
                 if(this->_Schedules[i]->GetWEEnabled() && this->_Schedules[i]->GetWE().hour()==RightNow.time().hour() &&
                         this->_Schedules[i]->GetWE().minute()==RightNow.time().minute())
                 {
+                    SetCustomSound(i);
                     //Set Condtion One!
                     this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
                 }
@@ -69,6 +66,7 @@ void Timer::AlarmCheck()
                     this->_Schedules[i]->GetCustom().time().minute()==RightNow.time().minute()
                     && this->_Schedules[i]->GetCustom().time().hour()==RightNow.time().hour())
             {
+                SetCustomSound(i);
                 //Set Conditon One!
                 this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
             }
@@ -77,5 +75,11 @@ void Timer::AlarmCheck()
 }
 
 
-
-
+void Timer::SetCustomSound(int i)
+{
+    //Set custom Sound path if specified
+    if(this->_Schedules[i]->GetCustomSoundEnabled())
+    {
+        this->_CurAlarm->SetCustomPath(this->_Schedules[i]->GetCustomSound());
+    }
+}

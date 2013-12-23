@@ -23,11 +23,13 @@ private:
     Timer *TimeKeeper;
     Alarm *CurAlarm;
     ScheduleCollection *_Schedules;
+
     int _CurrentAlarm;
 
     void closeEvent(QCloseEvent*);
     void ShowActiveAlarm(Schedule*);
     void SetupClock();
+    void UpdateClock();
 
 private slots:
     void ShowWindow();
@@ -40,10 +42,11 @@ private slots:
     void ToggleCust(bool);
     void SetAlarmNumber();
     void Quit();
-    void UpdateClock();
     void OpenDiaglog(bool);
     void TestAlarm();
     void ShowAbout();
+    void SnoozeMenuCheck();
+    void timeCheck();
 };
 
 #endif // MAINWINDOW_H

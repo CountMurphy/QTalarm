@@ -23,7 +23,13 @@ AboutDialog::AboutDialog(QWidget *parent) :
     InfoText.append("\n");
     ui->lblInfo->setText(InfoText);
     ui->lbllink->setOpenExternalLinks(true);
-    ui->lbllink->setText("<a href=https://github.com/CountMurphy/QTalarm>https://github.com/CountMurphy/QTalarm</a>");
+
+    QString linkText;
+    linkText.append("<a href=http://random-hackery.net>Homepage</a>");
+    linkText.append("\n");
+    linkText.append("\n");
+    linkText.append("<a href=https://github.com/CountMurphy/QTalarm>Git hub</a>");
+    ui->lbllink->setText(linkText);
 }
 
 AboutDialog::~AboutDialog()

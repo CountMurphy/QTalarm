@@ -13,6 +13,7 @@ Alarm::Alarm(QObject *parent) :
     this->_DefaultPath=QDir::tempPath()+"/QTalarm.wav";
     this->_isPlaying=false;
     this->_Pause=new QTimer(this);
+    this->canResume=true;
 
     connect(this->_Pause,SIGNAL(timeout()),this,SLOT(Resume()));
 }
@@ -22,11 +23,11 @@ void Alarm::Start(bool useCustom)
     if(useCustom)
     {
         media->setMedia(QUrl::fromLocalFile(this->_CustPath));
-        this->_UsingCustomPath=true;
+        this->UsingCustomPath=true;
     }else{
-     FileIO::ExtractAudio();
-     media->setMedia(QUrl::fromLocalFile(this->_DefaultPath));
-     this->_UsingCustomPath=false;
+        FileIO::ExtractAudio();
+        media->setMedia(QUrl::fromLocalFile(this->_DefaultPath));
+        this->UsingCustomPath=false;
     }
     media->play();
     connect(media,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT(RepeatAllTheThings(QMediaPlayer::MediaStatus)));
@@ -37,17 +38,18 @@ void Alarm::Stop()
 {
     media->stop();
     this->_Pause->start(60000);
+    this->_isPlaying=false;
 }
 
 void Alarm::RepeatAllTheThings(QMediaPlayer::MediaStatus state)
 {
     if(state==QMediaPlayer::EndOfMedia)
     {
-        if(this->_UsingCustomPath)
+        if(this->UsingCustomPath)
         {
-             media->setMedia(QUrl::fromLocalFile(this->_CustPath));
+            media->setMedia(QUrl::fromLocalFile(this->_CustPath));
         }else{
-             media->setMedia(QUrl::fromLocalFile(this->_DefaultPath));
+            media->setMedia(QUrl::fromLocalFile(this->_DefaultPath));
         }
         media->play();
     }
@@ -65,7 +67,7 @@ void Alarm::SetCustomPath(QString CustPath)
 
 void Alarm::Resume()
 {
-    this->_isPlaying=false;
+    this->canResume=true;
     this->_Pause->stop();
 }
 
@@ -74,3 +76,4 @@ void Alarm::SetVolume(int Volume)
 {
     media->setVolume(Volume);
 }
+

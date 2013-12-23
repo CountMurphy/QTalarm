@@ -14,7 +14,9 @@ public:
     void Start(bool);
     void Stop();
     bool isPlaying();
+    bool canResume;
     void SetCustomPath(QString);
+    bool UsingCustomPath;
 private:
     QMediaPlayer * media;
     QString _DefaultPath;
@@ -22,7 +24,6 @@ private:
 
     QTimer *_Pause;
 
-    bool _UsingCustomPath;
     bool _isPlaying;
     
 signals:
