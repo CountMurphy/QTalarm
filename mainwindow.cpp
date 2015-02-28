@@ -47,8 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
         trayIcon->setToolTip("QTalarm");
         trayIcon->show();
-	trayIcon->setVisible(false);	
-	trayIcon->setVisible(true);	
+
 
         ui->Alm1->setChecked(true);
         SetAlarmNumber();
@@ -107,7 +106,7 @@ void MainWindow::SetupClock()
 
 void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
 {
-    if(Reason==QSystemTrayIcon::DoubleClick)
+    if(Reason==QSystemTrayIcon::DoubleClick || Reason==QSystemTrayIcon::Trigger)
     {
         ShowWindow();
     }
