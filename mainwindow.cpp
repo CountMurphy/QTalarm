@@ -237,7 +237,7 @@ void MainWindow::OpenDiaglog(bool isChecked)
 
 void MainWindow::TestAlarm()
 {
-    if(ui->TestBtn->text()=="Test")
+    if(ui->TestBtn->text()=="Test" || ui->TestBtn->text()=="&Test")
     {
         if(ui->chkSounds->isChecked())
         {
