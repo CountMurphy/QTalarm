@@ -270,7 +270,7 @@ void MainWindow::ShowAbout()
 
 void MainWindow::SnoozeMenuCheck()
 {
-    if(this->CurAlarm->isPlaying() && this->CurAlarm->canResume && ui->TestBtn->text()=="Test")
+    if(this->CurAlarm->isPlaying() && this->CurAlarm->canResume && (ui->TestBtn->text()=="Test" || ui->TestBtn->text()=="&Test"))
     {
         //Create Snooze Menu object
         snooze *snMenu=new snooze(this,CurAlarm);
