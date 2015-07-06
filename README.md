@@ -8,6 +8,8 @@ Compile Instrustions for Linux and Mac:
 
 Windows users will have to compile the program with the QT creator IDE (or download the binaries off the downloads page)
 
+Screen shots and more information on the [offical web page!](https://random-hackery.net/qtalarm)
+
 Features
 ========
 
