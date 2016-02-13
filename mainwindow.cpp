@@ -126,18 +126,30 @@ void MainWindow::ShowWindow()
 
 void MainWindow::SetWDTime()
 {
+    if(ui->WD_Edit->time().hour()>12)
+    {
+        PMWarning();
+    }
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
     Active->SetWD(ui->WD_Edit->time());
 }
 
 void MainWindow::SetWETime()
 {
+    if(ui->WE_edit->time().hour()>12)
+    {
+        PMWarning();
+    }
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
     Active->SetWE(ui->WE_edit->time());
 }
 
 void MainWindow::SetCustomTime()
 {
+    if(ui->Cust_Edit->time().hour()>12)
+    {
+        PMWarning();
+    }
     //Update date on display
     ui->Cust_Edit->setDate(ui->calendarWidget->selectedDate());
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
@@ -277,4 +289,10 @@ void MainWindow::SnoozeMenuCheck()
         snMenu->show();
         this->CurAlarm->canResume=false;
     }
+}
+
+
+void MainWindow::PMWarning()
+{
+    QMessageBox::warning(this,"Time Verification","Your selected time is set for PM. If you intended to wake in the morning, now is your chance to fix it");
 }

@@ -30,6 +30,7 @@ private:
     void ShowActiveAlarm(Schedule*);
     void SetupClock();
     void UpdateClock();
+    void PMWarning();
 
 private slots:
     void ShowWindow();
