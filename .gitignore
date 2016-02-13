@@ -1,0 +1,7 @@
+QTalarm.pro.user
+qrc_*
+QTalarm
+Makefile
+moc_*
+ui_*
+*.o
