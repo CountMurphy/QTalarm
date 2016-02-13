@@ -5,6 +5,7 @@
 #include "fileio.h"
 #include "schedulecollection.h"
 #include "aboutdialog.h"
+#include "settingdialog.h"
 #include "snooze.h"
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -301,5 +302,6 @@ void MainWindow::PMWarning()
 
 void MainWindow::ShowSettings()
 {
-
+    SettingDialog *settingsPage=new SettingDialog(this);
+    settingsPage->show();
 }

@@ -28,6 +28,12 @@ int main(int argc, char *argv[])
     a.setApplicationName("QTalarm");
     a.setOrganizationName("QTalarm");
     MainWindow w;
-    w.show();
+    if(FileIO::LoadWindowShow())
+    {
+        w.show();
+    }else{
+        w.show();
+        w.hide();
+    }
     return a.exec();
 }

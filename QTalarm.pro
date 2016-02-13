@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     schedule.cpp \
     schedulecollection.cpp \
     aboutdialog.cpp \
-    snooze.cpp
+    snooze.cpp \
+    settingdialog.cpp
 
 HEADERS  += mainwindow.h \
     timer.h \
@@ -29,11 +30,13 @@ HEADERS  += mainwindow.h \
     schedule.h \
     schedulecollection.h \
     aboutdialog.h \
-    snooze.h
+    snooze.h \
+    settingdialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
-    snooze.ui
+    snooze.ui \
+    settingdialog.ui
 
 RESOURCES += \
     Icons.qrc
