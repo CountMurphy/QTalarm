@@ -17,6 +17,8 @@ public:
     bool Save(ScheduleCollection*);
     static int LoadVolume();
     static void SaveVolume(int);
+    static bool LoadWindowShow();
+    static void SaveWindowShow(bool);
 private:
     QSettings _Settings;
 signals:

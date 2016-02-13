@@ -109,7 +109,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Alarm1</string>
+     <string>Alar&amp;m1</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="Alm2">
@@ -122,7 +122,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Alarm2</string>
+     <string>Alarm&amp;2</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="Alm3">
@@ -135,7 +135,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Alarm3</string>
+     <string>Alarm&amp;3</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="Alm4">
@@ -148,7 +148,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Alarm4</string>
+     <string>Alarm&amp;4</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="Alm5">
@@ -161,7 +161,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Alarm5</string>
+     <string>Alarm&amp;5</string>
     </property>
    </widget>
    <widget class="QDateTimeEdit" name="Cust_Edit">
@@ -304,18 +304,20 @@
      <x>0</x>
      <y>0</y>
      <width>658</width>
-     <height>18</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
-     <string>About</string>
+     <string>Abo&amp;ut</string>
     </property>
     <addaction name="actionAbout_QT"/>
     <addaction name="actionAbout_QTalam"/>
@@ -334,17 +336,22 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
   </action>
   <action name="actionAbout_QT">
    <property name="text">
-    <string>About QT</string>
+    <string>&amp;About QT</string>
    </property>
   </action>
   <action name="actionAbout_QTalam">
    <property name="text">
-    <string>About QTalam</string>
+    <string>About &amp;QTalam</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

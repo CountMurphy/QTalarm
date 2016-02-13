@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(Quit()));
         connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
         connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
+        connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(ShowSettings()));
         connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
         connect(ui->WE_edit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
         connect(ui->Cust_Edit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
@@ -295,4 +296,10 @@ void MainWindow::SnoozeMenuCheck()
 void MainWindow::PMWarning()
 {
     QMessageBox::warning(this,"Time Verification","Your selected time is set for PM. If you intended to wake in the morning, now is your chance to fix it");
+}
+
+
+void MainWindow::ShowSettings()
+{
+
 }

@@ -102,3 +102,16 @@ void FileIO::SaveVolume(int vol)
     QSettings settings;
     settings.setValue("Volume",vol);
 }
+
+bool FileIO::LoadWindowShow()
+{
+    QSettings settings; //not sure why other methods use static settings. May have to refactor
+    return settings.value("ShowWindowDefault").toBool();
+}
+
+
+void FileIO::SaveWindowShow(bool showWindow)
+{
+    QSettings settings;
+    settings.setValue("ShowWindowDefault",showWindow);
+}

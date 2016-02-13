@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "mainwindow.h"
+#include "fileio.h"
 
 
 /*
@@ -28,6 +29,5 @@ int main(int argc, char *argv[])
     a.setOrganizationName("QTalarm");
     MainWindow w;
     w.show();
-    w.hide();
     return a.exec();
 }

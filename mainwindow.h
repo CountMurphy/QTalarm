@@ -48,6 +48,7 @@ private slots:
     void ShowAbout();
     void SnoozeMenuCheck();
     void timeCheck();
+    void ShowSettings();
 };
 
 #endif // MAINWINDOW_H
