@@ -115,3 +115,16 @@ void FileIO::SaveWindowShow(bool showWindow)
     QSettings settings;
     settings.setValue("ShowWindowDefault",showWindow);
 }
+
+
+bool FileIO::isMilTime()
+{
+    QSettings settings;
+    return settings.value("isMilTime").toBool();
+}
+
+void FileIO::SaveTimeMode(bool isMilTime)
+{
+    QSettings settings;
+    settings.setValue("isMilTime",isMilTime);
+}

@@ -44,7 +44,7 @@
    <property name="title">
     <string>Time</string>
    </property>
-   <widget class="QRadioButton" name="radioButton">
+   <widget class="QRadioButton" name="plebTime">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -57,7 +57,7 @@
      <string>A&amp;M / PM</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_2">
+   <widget class="QRadioButton" name="milTime">
     <property name="geometry">
      <rect>
       <x>30</x>

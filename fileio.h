@@ -19,6 +19,8 @@ public:
     static void SaveVolume(int);
     static bool LoadWindowShow();
     static void SaveWindowShow(bool);
+    static bool isMilTime();
+    static void SaveTimeMode(bool isMilTime);
 private:
     QSettings _Settings;
 signals:

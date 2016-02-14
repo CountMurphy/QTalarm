@@ -2,11 +2,15 @@
 #include "ui_settingdialog.h"
 #include "fileio.h"
 
-SettingDialog::SettingDialog(QWidget *parent) :
+SettingDialog::SettingDialog(QWidget *parent,bool *isMilTime) :
     QDialog(parent),
     ui(new Ui::SettingDialog)
 {
     ui->setupUi(this);
+    //default button
+    _isMilTime=isMilTime;
+    ui->plebTime->setChecked(!*_isMilTime);
+    ui->milTime->setChecked(*_isMilTime);
 
     ui->defaultShow->setChecked(FileIO::LoadWindowShow());
 
@@ -22,4 +26,7 @@ SettingDialog::~SettingDialog()
 void SettingDialog::Save()
 {
     FileIO::SaveWindowShow(ui->defaultShow->isChecked());
+    *_isMilTime=ui->milTime->isChecked();
+    FileIO::SaveTimeMode(*_isMilTime);
+    this->deleteLater();
 }

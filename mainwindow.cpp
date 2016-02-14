@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
         _Schedules=new ScheduleCollection(this);
         _Schedules->LoadSchedules();
 
+        _isMilTime=FileIO::isMilTime();
+        _prevTimeWasMil=_isMilTime;
+        displayTimeMode();
+
         //Call Time keeper
         TimeKeeper=new Timer(this,_Schedules);
         CurAlarm=new Alarm(this);
@@ -128,7 +132,7 @@ void MainWindow::ShowWindow()
 
 void MainWindow::SetWDTime()
 {
-    if(ui->WD_Edit->time().hour()>12)
+    if(ui->WD_Edit->time().hour()>12 && !_isMilTime)
     {
         PMWarning();
     }
@@ -138,7 +142,7 @@ void MainWindow::SetWDTime()
 
 void MainWindow::SetWETime()
 {
-    if(ui->WE_edit->time().hour()>12)
+    if(ui->WE_edit->time().hour()>12 && !_isMilTime)
     {
         PMWarning();
     }
@@ -148,7 +152,7 @@ void MainWindow::SetWETime()
 
 void MainWindow::SetCustomTime()
 {
-    if(ui->Cust_Edit->time().hour()>12)
+    if(ui->Cust_Edit->time().hour()>12 && !_isMilTime)
     {
         PMWarning();
     }
@@ -235,11 +239,21 @@ void MainWindow::timeCheck()
 {
     UpdateClock();
     SnoozeMenuCheck();
+    if(_isMilTime!=_prevTimeWasMil)
+    {
+        _prevTimeWasMil=_isMilTime;
+        displayTimeMode();
+    }
 }
 
 void MainWindow::UpdateClock()
 {
-    ui->Clock->setText(QTime::currentTime().toString("h:mm:ss ap"));
+    if(_isMilTime)
+    {
+        ui->Clock->setText(QTime::currentTime().toString("H:mm:ss"));
+    }else{
+        ui->Clock->setText(QTime::currentTime().toString("h:mm:ss ap"));
+    }
 }
 
 
@@ -302,6 +316,21 @@ void MainWindow::PMWarning()
 
 void MainWindow::ShowSettings()
 {
-    SettingDialog *settingsPage=new SettingDialog(this);
+    SettingDialog *settingsPage=new SettingDialog(this,&_isMilTime);
     settingsPage->show();
+}
+
+void MainWindow::displayTimeMode()
+{
+    if(_isMilTime)
+    {
+        ui->WD_Edit->setDisplayFormat("H:mm:ss");
+        ui->WE_edit->setDisplayFormat("H:mm:ss");
+        ui->Cust_Edit->setDisplayFormat("d MMM yyyy HH:mm:ss");
+    }else{
+        ui->WD_Edit->setDisplayFormat("h:mm:ss ap");
+        ui->WE_edit->setDisplayFormat("h:mm:ss ap");
+        ui->Cust_Edit->setDisplayFormat("d MMM yyyy hh:mm:ss ap");
+
+    }
 }

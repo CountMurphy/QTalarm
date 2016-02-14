@@ -25,6 +25,9 @@ private:
     ScheduleCollection *_Schedules;
 
     int _CurrentAlarm;
+    bool _isMilTime;
+    bool _prevTimeWasMil;
+    void displayTimeMode();
 
     void closeEvent(QCloseEvent*);
     void ShowActiveAlarm(Schedule*);
