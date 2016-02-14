@@ -27,6 +27,7 @@ private:
     int _CurrentAlarm;
     bool _isMilTime;
     bool _prevTimeWasMil;
+    bool _WarnOnPm;
     void displayTimeMode();
 
     void closeEvent(QCloseEvent*);

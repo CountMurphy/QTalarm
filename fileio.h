@@ -21,6 +21,8 @@ public:
     static void SaveWindowShow(bool);
     static bool isMilTime();
     static void SaveTimeMode(bool isMilTime);
+    static bool LoadWarnOnPm();
+    static void SaveWarnOnPm(bool);
 private:
     QSettings _Settings;
 signals:

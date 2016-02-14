@@ -128,3 +128,16 @@ void FileIO::SaveTimeMode(bool isMilTime)
     QSettings settings;
     settings.setValue("isMilTime",isMilTime);
 }
+
+
+bool FileIO::LoadWarnOnPm()
+{
+    QSettings settings;
+    return settings.value("WarnOnPm").toBool();
+}
+
+void FileIO::SaveWarnOnPm(bool warn)
+{
+    QSettings settings;
+    settings.setValue("WarnOnPm",warn);
+}

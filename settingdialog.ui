@@ -96,6 +96,19 @@
      <string>Show Window on Load</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="WarnBox">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>70</y>
+      <width>141</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Warn on Pm alarms</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
