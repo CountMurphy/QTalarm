@@ -30,6 +30,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     linkText.append("\n");
     linkText.append("<a href=https://github.com/CountMurphy/QTalarm>Git hub</a>");
     ui->lbllink->setText(linkText);
+    ui->lblVersion->setText("Version: "+this->version);
 }
 
 AboutDialog::~AboutDialog()
