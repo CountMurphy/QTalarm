@@ -16,7 +16,7 @@ FileIO::FileIO(QObject *parent) :
 
 bool FileIO::ExtractAudio()
 {
-    if(QFile::copy(":/new/sounds/alarm.wav", QDir::tempPath()+"/QTalarm.wav"))
+    if(QFile::copy(":/new/sounds/alarm.ogg", QDir::tempPath()+"/QTalarm.ogg"))
     {
         return true;
     }
@@ -25,7 +25,7 @@ bool FileIO::ExtractAudio()
 
 bool FileIO::DelExtracted()
 {
-    return QFile::remove(QDir::tempPath()+"/QTalarm.wav");
+    return QFile::remove(QDir::tempPath()+"/QTalarm.ogg");
 }
 
 Schedule* FileIO::LoadConfig(int index)
