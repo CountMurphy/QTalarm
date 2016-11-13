@@ -3,6 +3,6 @@
         <file alias="Clock.png">Icons/1349069370_Alarm_Clock.png</file>
     </qresource>
     <qresource prefix="/new/sounds">
-        <file alias="alarm.wav">Sounds/condition_one.wav</file>
+        <file alias="alarm.wav">Sounds/condition_one.ogg</file>
     </qresource>
 </RCC>
