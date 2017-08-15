@@ -5,6 +5,7 @@
 #include "schedule.h"
 #include <QObject>
 #include <QSettings>
+#include <QList>
 
 class FileIO : public QObject
 {
@@ -13,7 +14,7 @@ public:
     explicit FileIO(QObject *parent = 0);
     static bool ExtractAudio();
     static bool DelExtracted();
-    Schedule* LoadConfig(int);
+    QList<Schedule> LoadConfig();
     bool Save(ScheduleCollection*);
     static int LoadVolume();
     static void SaveVolume(int);

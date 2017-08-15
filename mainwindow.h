@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include <QSystemTrayIcon>
 #include <QMainWindow>
+#include <QDialogButtonBox>
 #include "timer.h"
 
 namespace Ui {
@@ -39,7 +40,8 @@ private:
 private slots:
     void ShowWindow();
     void ShowWindow(QSystemTrayIcon::ActivationReason);
-    void SetWDTime();
+//    void SetWDTime();
+    void AddRemoveAlarm(QAbstractButton*);
     void SetWETime();
     void SetCustomTime();
     void ToggleWD(bool);

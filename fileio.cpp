@@ -7,6 +7,7 @@
 #include <QString>
 #include <QDateTime>
 #include <QTime>
+#include <QList>
 
 FileIO::FileIO(QObject *parent) :
     QObject(parent)
@@ -28,9 +29,10 @@ bool FileIO::DelExtracted()
     return QFile::remove(QDir::tempPath()+"/QTalarm.ogg");
 }
 
-Schedule* FileIO::LoadConfig(int index)
+//TODO needs to know how many there were, else loop 5 times
+QList<Schedule> FileIO::LoadConfig()//index was passed here
 {
-    Schedule *Sched=new Schedule(this);
+    Schedule Sched;
     QString Index;
     Index.setNum(index);
     bool WDEnabled=this->_Settings.value(Index+"WDEnabled").toBool();

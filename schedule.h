@@ -30,6 +30,7 @@ public:
     QTime GetWE();
     QDateTime GetCustom();
     QString GetCustomSound();
+    int Index;
 
 private:
     QTime _WDAlarm;

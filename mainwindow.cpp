@@ -12,9 +12,10 @@
 #include <QTimeEdit>
 #include <QTimer>
 #include <QFileDialog>
+#include <QDialogButtonBox>
 #include <QSlider>
 #include <QSystemTrayIcon>
-
+#include <QListWidgetItem>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
         int Volume = FileIO::LoadVolume();
         ui->VolumeSlider->setValue(Volume<=0? 50:Volume);
         CurAlarm->SetVolume(ui->VolumeSlider->value());
+        ui->listAlmBtn->button(QDialogButtonBox::Ok)->setText("Add");
+        ui->listAlmBtn->button(QDialogButtonBox::Cancel)->setText("Remove");
 
         trayIcon=new QSystemTrayIcon(this);
         trayIconMenu=new QMenu(this);
@@ -56,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->setToolTip("QTalarm");
         trayIcon->show();
 
-        ui->Alm1->setChecked(true);
+        //ui->Alm1->setChecked(true);
         SetAlarmNumber();
         SetupClock();
 
@@ -69,16 +72,17 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
         connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
         connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(ShowSettings()));
-        connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
-        connect(ui->WE_edit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
-        connect(ui->Cust_Edit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
-        connect(ui->Alm1,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-        connect(ui->Alm2,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-        connect(ui->Alm3,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-        connect(ui->Alm4,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-        connect(ui->Alm5,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-        connect(ui->chkWeekDays,SIGNAL(clicked(bool)),this,SLOT(ToggleWD(bool)));
-        connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
+//        connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
+        connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
+        connect(ui->CustEdit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
+        connect(ui->listAlmBtn,SIGNAL(clicked(QAbstractButton*)),this,SLOT(AddRemoveAlarm(QAbstractButton*)));
+//        connect(ui->Alm1,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
+//        connect(ui->Alm2,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
+//        connect(ui->Alm3,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
+//        connect(ui->Alm4,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
+//        connect(ui->Alm5,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
+//        connect(ui->chkWeekDays,SIGNAL(clicked(bool)),this,SLOT(ToggleWD(bool)));
+//        connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
         connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
         connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
@@ -131,37 +135,37 @@ void MainWindow::ShowWindow()
     this->show();
 }
 
-void MainWindow::SetWDTime()
-{
-    if(ui->WD_Edit->time().hour()>12 && !_isMilTime && _WarnOnPm)
-    {
-        PMWarning();
-    }
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->SetWD(ui->WD_Edit->time());
-}
+//void MainWindow::SetWDTime()
+//{
+//    if(ui->WD_Edit->time().hour()>12 && !_isMilTime && _WarnOnPm)
+//    {
+//        PMWarning();
+//    }
+//    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+//    Active->SetWD(ui->WD_Edit->time());
+//}
 
 void MainWindow::SetWETime()
 {
-    if(ui->WE_edit->time().hour()>12 && !_isMilTime && _WarnOnPm)
+    if(ui->timeEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
     {
         PMWarning();
     }
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->SetWE(ui->WE_edit->time());
+    Active->SetWE(ui->timeEdit->time());
 }
 
 void MainWindow::SetCustomTime()
 {
-    if(ui->Cust_Edit->time().hour()>12 && !_isMilTime && _WarnOnPm)
+    if(ui->CustEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
     {
         PMWarning();
     }
     //Update date on display
-    ui->Cust_Edit->setDate(ui->calendarWidget->selectedDate());
+    ui->CustEdit->setDate(ui->calendarWidget->selectedDate());
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
     QDateTime CustomDateTime;
-    CustomDateTime.setTime(ui->Cust_Edit->time());
+    CustomDateTime.setTime(ui->CustEdit->time());
     CustomDateTime.setDate(ui->calendarWidget->selectedDate());
     Active->SetCust(CustomDateTime);
 }
@@ -192,46 +196,61 @@ void MainWindow::Quit()
     qApp->quit();
 }
 
+void MainWindow::AddRemoveAlarm(QAbstractButton *button)
+{
+    if(button->text()=="&Add")
+    {
+        int alarmCount = ui->listWidget->count();
+        alarmCount++;
+        QListWidgetItem *newAlarm = new QListWidgetItem("Alarm "+QString::number(alarmCount));
+        ui->listWidget->addItem(newAlarm);
+        //TODO: create new alarm
+    }
+    else if(button->text()=="&Remove")
+    {
+    }
+}
+
 
 void MainWindow::SetAlarmNumber()
 {
-    Schedule *ActiveSchedule;
-    int Index;
-    if(ui->Alm1->isChecked())
-    {
-        Index=0;
-    }else if(ui->Alm2->isChecked())
-    {
-        Index=1;
-    }else if(ui->Alm3->isChecked())
-    {
-        Index=2;
-    }else if(ui->Alm4->isChecked())
-    {
-        Index=3;
-    }else{
-        Index=4;
-    }
-    this->_CurrentAlarm=Index;
+//    Schedule *ActiveSchedule;
+//    int Index;
+//    if(ui->Alm1->isChecked())
+//    {
+//        Index=0;
+//    }else if(ui->Alm2->isChecked())
+//    {
+//        Index=1;
+//    }else if(ui->Alm3->isChecked())
+//    {
+//        Index=2;
+//    }else if(ui->Alm4->isChecked())
+//    {
+//        Index=3;
+//    }else{
+//        Index=4;
+//    }
+//    this->_CurrentAlarm=Index;
 
-    //display Active
+//    //display Active
 
-    ActiveSchedule=this->_Schedules->GetSchedule(Index);
-    ShowActiveAlarm(ActiveSchedule);
+//    ActiveSchedule=this->_Schedules->GetSchedule(Index);
+//    ShowActiveAlarm(ActiveSchedule);
 }
 
 
 void MainWindow::ShowActiveAlarm(Schedule *Active)
 {
-    ui->chkWeekDays->setChecked(Active->GetWDEnabled());
-    ui->WD_Edit->setTime(Active->GetWD());
+//    ui->chkWeekDays->setChecked(Active->GetWDEnabled());
+//    ui->WD_Edit->setTime(Active->GetWD());
 
-    ui->chkWeekEnd->setChecked(Active->GetWEEnabled());
-    ui->WE_edit->setTime(Active->GetWE());
+//    ui->chkWeekEnd->setChecked(Active->GetWEEnabled());
+    ui->timeEdit->setTime(Active->GetWE());
 
     ui->chkCustom->setChecked(Active->GetCustomEnabled());
-    ui->Cust_Edit->setTime(Active->GetCustom().time());
-    ui->Cust_Edit->setDateTime(Active->GetCustom());
+    ui->CustEdit->setTime(Active->GetCustom().time());
+    ui->CustEdit->setDateTime(Active->GetCustom());
     ui->chkSounds->setChecked(Active->GetCustomSoundEnabled());
     ui->txtSoundPath->setText(Active->GetCustomSound());
 }
@@ -325,13 +344,11 @@ void MainWindow::displayTimeMode()
 {
     if(_isMilTime)
     {
-        ui->WD_Edit->setDisplayFormat("H:mm:ss");
-        ui->WE_edit->setDisplayFormat("H:mm:ss");
-        ui->Cust_Edit->setDisplayFormat("d MMM yyyy HH:mm:ss");
+        ui->timeEdit->setDisplayFormat("H:mm:ss");
+        ui->CustEdit->setDisplayFormat("d MMM yyyy HH:mm:ss");
     }else{
-        ui->WD_Edit->setDisplayFormat("h:mm:ss ap");
-        ui->WE_edit->setDisplayFormat("h:mm:ss ap");
-        ui->Cust_Edit->setDisplayFormat("d MMM yyyy hh:mm:ss ap");
+        ui->timeEdit->setDisplayFormat("h:mm:ss ap");
+        ui->CustEdit->setDisplayFormat("d MMM yyyy hh:mm:ss ap");
 
     }
 }

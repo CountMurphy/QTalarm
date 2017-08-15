@@ -3,17 +3,18 @@
 
 #include "schedule.h"
 #include <QObject>
+#include <QList>
 
 class ScheduleCollection : public QObject
 {
     Q_OBJECT
 public:
     explicit ScheduleCollection(QObject *parent = 0);
-    Schedule* GetSchedule(int);
+    Schedule GetSchedule(int);
     void LoadSchedules();
     void Save();
 private:
-    Schedule *_Collection[5];
+    QList<Schedule> _Collection;
 signals:
     
 public slots:
