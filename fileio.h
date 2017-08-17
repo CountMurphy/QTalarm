@@ -14,7 +14,7 @@ public:
     explicit FileIO(QObject *parent = 0);
     static bool ExtractAudio();
     static bool DelExtracted();
-    QList<Schedule> LoadConfig();
+    QList<Schedule *> LoadConfig();
     bool Save(ScheduleCollection*);
     static int LoadVolume();
     static void SaveVolume(int);

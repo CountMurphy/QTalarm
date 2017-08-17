@@ -30,9 +30,9 @@ bool FileIO::DelExtracted()
 }
 
 //TODO needs to know how many there were, else loop 5 times
-QList<Schedule> FileIO::LoadConfig()//index was passed here
+QList<Schedule*> FileIO::LoadConfig()//index was passed here
 {
-    Schedule Sched;
+    Schedule *Sched;
     QString Index;
     Index.setNum(index);
     bool WDEnabled=this->_Settings.value(Index+"WDEnabled").toBool();

@@ -135,52 +135,68 @@ void MainWindow::ShowWindow()
     this->show();
 }
 
-//void MainWindow::SetWDTime()
-//{
-//    if(ui->WD_Edit->time().hour()>12 && !_isMilTime && _WarnOnPm)
-//    {
-//        PMWarning();
-//    }
-//    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-//    Active->SetWD(ui->WD_Edit->time());
-//}
-
-void MainWindow::SetWETime()
+void MainWindow::SetTime()
 {
     if(ui->timeEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
     {
         PMWarning();
     }
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->SetWE(ui->timeEdit->time());
+    Active->SetTime(ui->timeEdit->time());
 }
 
-void MainWindow::SetCustomTime()
+void MainWindow::SetCustomDate()
 {
-    if(ui->CustEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
-    {
-        PMWarning();
-    }
+//    if(ui->CustEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
+//    {
+//        PMWarning();
+//    }
     //Update date on display
     ui->CustEdit->setDate(ui->calendarWidget->selectedDate());
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    QDateTime CustomDateTime;
-    CustomDateTime.setTime(ui->CustEdit->time());
-    CustomDateTime.setDate(ui->calendarWidget->selectedDate());
-    Active->SetCust(CustomDateTime);
+    Active->SetTime(ui->timeEdit->time());
+    QDate CustomDate=ui->calendarWidget->selectedDate();
+    Active->SetCust(CustomDate);
 }
 
-void MainWindow::ToggleWD(bool isEnabled)
+//Is this block redundant? yes. yes it is. TODO: fix one day
+void MainWindow::ToggleMon(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->SetWDEnabled(isEnabled);
+    Active->setMonEnabled(isEnabled);
 }
 
-void MainWindow::ToggleWE(bool isEnabled)
+void MainWindow::ToggleTue(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->SetWEEnabled(isEnabled);
+    Active->setTueEnabled(isEnabled);
 }
+void MainWindow::ToggleWed(bool isEnabled)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Active->setWedEnabled(isEnabled);
+}
+void MainWindow::ToggleThur(bool isEnabled)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Active->setThurEnabled(isEnabled);
+}
+void MainWindow::ToggleFri(bool isEnabled)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Active->setFriEnabled(isEnabled);
+}
+void MainWindow::ToggleSat(bool isEnabled)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Active->setSatEnabled(isEnabled);
+}
+void MainWindow::ToggleSun(bool isEnabled)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Active->setSunEnabled(isEnabled);
+}
+
 
 void MainWindow::ToggleCust(bool isEnabled)
 {
@@ -246,7 +262,7 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
 //    ui->WD_Edit->setTime(Active->GetWD());
 
 //    ui->chkWeekEnd->setChecked(Active->GetWEEnabled());
-    ui->timeEdit->setTime(Active->GetWE());
+    ui->timeEdit->setTime(Active->GetTime());
 
     ui->chkCustom->setChecked(Active->GetCustomEnabled());
     ui->CustEdit->setTime(Active->GetCustom().time());

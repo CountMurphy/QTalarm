@@ -110,3 +110,73 @@ QString Schedule::GetCustomSound()
 {
     return this->_CustomSound;
 }
+
+bool Schedule::MonEnabled() const
+{
+    return _MonEnabled;
+}
+
+void Schedule::setMonEnabled(bool MonEnabled)
+{
+    _MonEnabled = MonEnabled;
+}
+
+bool Schedule::TueEnabled() const
+{
+    return _TueEnabled;
+}
+
+void Schedule::setTueEnabled(bool TueEnabled)
+{
+    _TueEnabled = TueEnabled;
+}
+
+bool Schedule::WedEnabled() const
+{
+    return _WedEnabled;
+}
+
+void Schedule::setWedEnabled(bool WedEnabled)
+{
+    _WedEnabled = WedEnabled;
+}
+
+bool Schedule::ThurEnabled() const
+{
+    return _ThurEnabled;
+}
+
+void Schedule::setThurEnabled(bool ThurEnabled)
+{
+    _ThurEnabled = ThurEnabled;
+}
+
+bool Schedule::FriEnabled() const
+{
+    return _FriEnabled;
+}
+
+void Schedule::setFriEnabled(bool FriEnabled)
+{
+    _FriEnabled = FriEnabled;
+}
+
+bool Schedule::SatEnabled() const
+{
+    return _SatEnabled;
+}
+
+void Schedule::setSatEnabled(bool SatEnabled)
+{
+    _SatEnabled = SatEnabled;
+}
+
+bool Schedule::SunEnabled() const
+{
+    return _SunEnabled;
+}
+
+void Schedule::setSunEnabled(bool SunEnabled)
+{
+    _SunEnabled = SunEnabled;
+}

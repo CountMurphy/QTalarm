@@ -25,9 +25,9 @@ void ScheduleCollection::LoadSchedules()
 //    }
 }
 
-Schedule ScheduleCollection::GetSchedule(int Index)
+Schedule* ScheduleCollection::GetSchedule(int Index)
 {
-    return this->_Collection[Index];
+    return &_Collection[Index];
 }
 
 void ScheduleCollection::Save()

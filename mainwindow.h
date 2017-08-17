@@ -40,12 +40,16 @@ private:
 private slots:
     void ShowWindow();
     void ShowWindow(QSystemTrayIcon::ActivationReason);
-//    void SetWDTime();
     void AddRemoveAlarm(QAbstractButton*);
-    void SetWETime();
-    void SetCustomTime();
-    void ToggleWD(bool);
-    void ToggleWE(bool);
+    void SetTime();
+    void SetCustomDate();
+    void ToggleMon(bool);
+    void ToggleTue(bool);
+    void ToggleWed(bool);
+    void ToggleThur(bool);
+    void ToggleFri(bool);
+    void ToggleSat(bool);
+    void ToggleSun(bool);
     void ToggleCust(bool);
     void SetAlarmNumber();
     void Quit();
