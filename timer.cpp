@@ -9,14 +9,15 @@
 Timer::Timer(QObject *parent,ScheduleCollection *Collection) :
     QObject(parent)
 {
-    for(int i=0;i<5;i++)
-    {
-        this->_Schedules[i]=Collection->GetSchedule(i);
-        if(this->_Schedules[i]==NULL)
-        {
-            this->_Schedules[i]=new Schedule(this);
-        }
-    }
+//    for(int i=0;i<5;i++)
+//    {
+//        this->_Schedules[i]=Collection->GetSchedule(i);
+//        if(this->_Schedules[i]==NULL)
+//        {
+//            this->_Schedules[i]=new Schedule(this);
+//        }
+//    }
+    this->_Schedules=Collection->GetScheduleList();
 }
 
 void Timer::StartTimer(Alarm *MainAlarm)
@@ -32,7 +33,8 @@ void Timer::AlarmCheck()
     //Compare saved times with now time
     if(!this->_CurAlarm->isPlaying() && this->_CurAlarm->canResume)
     {
-        for(int i=0;i<5;i++)
+        Schedule *cur_sche;
+        foreach(cur_sche,this->_Schedules)
         {
             QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
             switch(RightNow.date().dayOfWeek())
@@ -43,12 +45,12 @@ void Timer::AlarmCheck()
             case 4:
             case 5:
                 //WeekDay Alarms
-                if(this->_Schedules[i]->GetWDEnabled() && this->_Schedules[i]->GetWD().hour()==RightNow.time().hour() &&
-                        this->_Schedules[i]->GetWD().minute()==RightNow.time().minute())
+                if(cur_sche->GetWDEnabled() && this->cur_sche->GetWD().hour()==RightNow.time().hour() &&
+                        this->cur_sche->GetWD().minute()==RightNow.time().minute())
                 {
                     SetCustomSound(i);
                     //Set Condtion One!
-                    this->_CurAlarm->Start(this->_Schedules[i]->GetCustomSoundEnabled());
+                    this->_CurAlarm->Start(this->cur_sche->GetCustomSoundEnabled());
                 }
                 break;
             default:

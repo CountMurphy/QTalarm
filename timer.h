@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QList>
 #include "alarm.h"
 #include "schedule.h"
 #include "schedulecollection.h"
@@ -16,7 +17,7 @@ public:
 
 private:
     Alarm *_CurAlarm;
-    Schedule *_Schedules[5];
+    QList<Schedule *> _Schedules;
     void SetCustomSound(int);
 
 signals:

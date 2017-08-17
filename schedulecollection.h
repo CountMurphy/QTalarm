@@ -11,6 +11,8 @@ class ScheduleCollection : public QObject
 public:
     explicit ScheduleCollection(QObject *parent = 0);
     Schedule* GetSchedule(int);
+    QList<Schedule*> GetScheduleList();
+    int GetCount();
     void LoadSchedules();
     void Save();
 private:
