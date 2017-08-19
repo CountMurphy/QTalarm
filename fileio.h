@@ -26,6 +26,7 @@ public:
     static void SaveWarnOnPm(bool);
 private:
     QSettings _Settings;
+    QList<Schedule*> LegacyRead();
 signals:
     
 public slots:

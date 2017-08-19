@@ -32,6 +32,12 @@ bool FileIO::DelExtracted()
 //TODO needs to know how many there were, else loop 5 times
 QList<Schedule*> FileIO::LoadConfig()//index was passed here
 {
+    //Legacy save file check
+    if(this->_Settings.value("AlarmCount").isNull())
+    {
+        return LegacyRead();
+    }
+
     Schedule *Sched;
     QString Index;
     Index.setNum(index);
@@ -72,6 +78,7 @@ bool FileIO::Save(ScheduleCollection *Collection)
         Schedule *currentSche;
         int index=0;
 
+        this->_Settings.setValue("AlarmCount",SchedList.count());
         foreach(currentSche,SchedList)
         {
             QString IndexStr;
@@ -149,4 +156,79 @@ void FileIO::SaveWarnOnPm(bool warn)
 {
     QSettings settings;
     settings.setValue("WarnOnPm",warn);
+}
+
+//to be removed in future versions
+QList<Schedule*> FileIO::LegacyRead()
+{
+    QList<Schedule*> convertedSche;
+
+    for(int index=0;index<5;index++)
+    {
+        Schedule *newSche=new Schedule;
+
+        QString Index;
+        Index.setNum(index);
+        if(this->_Settings.value(Index+"WDEnabled").toBool())
+        {
+            newSche->setMonEnabled(true);
+            newSche->setTueEnabled(true);
+            newSche->setWedEnabled(true);
+            newSche->setThurEnabled(true);
+            newSche->setFriEnabled(true);
+
+            if(this->_Settings.value(Index+"WDTime").toTime().isNull())
+            {
+                QTime emptyTime;
+                emptyTime.setHMS(0,0,0,0);
+                newSche->SetTime(emptyTime);
+            }
+            else
+            {
+                newSche->SetTime(this->_Settings.value(Index+"WDTime").toTime());
+            }
+        }
+
+        if(this->_Settings.value(Index+"WEEnabled").toBool())
+        {
+            newSche->setSatEnabled(true);
+            newSche->setSunEnabled(true);
+
+            if(this->_Settings.value(Index+"WETime").toTime().isNull())
+            {
+                QTime emptyTime;
+                emptyTime.setHMS(0,0,0,0);
+                newSche->SetTime(emptyTime);
+            }
+            else
+            {
+                newSche->SetTime(this->_Settings.value(Index+"WETime").toTime());
+            }
+        }
+
+        if(this->_Settings.value(Index+"CustEnabled").toBool())
+        {
+            if(this->_Settings.value(Index+"CustTime").toDateTime().isNull())
+            {
+                QTime emptyTime;
+                emptyTime.setHMS(0,0,0,0);
+                newSche->SetTime(emptyTime);
+            }else
+            {
+                newSche->SetTime(this->_Settings.value(Index+"CustTime").toTime());
+            }
+        }
+
+        newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+        newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+
+        if(newSche->GetCustomSoundEnabled()==false)
+        {
+            newSche->SetCustomSound("");
+        }
+
+        convertedSche.append(newSche);
+    }
+    return convertedSche;
+
 }
