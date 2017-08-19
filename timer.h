@@ -18,7 +18,6 @@ public:
 private:
     Alarm *_CurAlarm;
     QList<Schedule *> _Schedules;
-    void SetCustomSound(int);
 
 signals:
     
