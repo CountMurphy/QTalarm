@@ -163,38 +163,38 @@ void MainWindow::SetCustomDate()
 void MainWindow::ToggleMon(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setMonEnabled(isEnabled);
+    Active->setIsMonEnabled(isEnabled);
 }
 
 void MainWindow::ToggleTue(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setTueEnabled(isEnabled);
+    Active->setIsTueEnabled(isEnabled);
 }
 void MainWindow::ToggleWed(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setWedEnabled(isEnabled);
+    Active->setIsWedEnabled(isEnabled);
 }
 void MainWindow::ToggleThur(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setThurEnabled(isEnabled);
+    Active->setIsThurEnabled(isEnabled);
 }
 void MainWindow::ToggleFri(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setFriEnabled(isEnabled);
+    Active->setIsFriEnabled(isEnabled);
 }
 void MainWindow::ToggleSat(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setSatEnabled(isEnabled);
+    Active->setIsSatEnabled(isEnabled);
 }
 void MainWindow::ToggleSun(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
-    Active->setSunEnabled(isEnabled);
+    Active->setIsSunEnabled(isEnabled);
 }
 
 

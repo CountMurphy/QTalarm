@@ -6,63 +6,44 @@
 Schedule::Schedule(QObject *parent) :
     QObject(parent)
 {
-    this->_WDEnabled=false;
-    this->_WEEnabled=false;
-    this->_CustomEnabled=false;
-    this->_WDAlarm.setHMS(0,0,0,0);
-    this->_WEAlarm.setHMS(0,0,0,0);
-    this->_CustomAlarm.time().setHMS(0,0,0,0);
-    this->_CustomSoundEnabled=false;
-    this->_CustomSound="";
-}
+    this->setIsMonEnabled(false);
+    this->setIsTueEnabled(false);
+    this->setIsWedEnabled(false);
+    this->setIsThurEnabled(false);
+    this->setIsFriEnabled(false);
+    this->setIsSatEnabled(false);
+    this->setIsSunEnabled(false);
 
-
-void Schedule::SetSchedule(bool CustomEnabled,QDateTime CustTime,bool WDEnabled,QTime WDTime,bool WEEnabled,QTime WETime,
-                           bool CustomSoundEnabled,QString CustomSoundPath)
-{
-    this->_CustomEnabled=CustomEnabled;
-    this->_CustomAlarm=CustTime;
-    this->_WDEnabled=WDEnabled;
-    this->_WDAlarm=WDTime;
-    this->_WEEnabled=WEEnabled;
-    this->_WEAlarm=WETime;
-    this->_CustomSoundEnabled=CustomSoundEnabled;
-    this->_CustomSound=CustomSoundPath;
-}
-
-void Schedule::SetWDEnabled(bool isEnabled)
-{
-    this->_WDEnabled=isEnabled;
-}
-
-void Schedule::SetWEEnabled(bool isEnabled)
-{
-    this->_WEEnabled=isEnabled;
+    this->SetCustEnabled(false);
+    this->SetTime(QTime::fromMSecsSinceStartOfDay(0));
+    this->SetCustomSound("");
+    this->SetCustomSoundEnabled(false);
 }
 
 void Schedule::SetCustEnabled(bool isEnabled)
 {
-    this->_CustomEnabled=isEnabled;
+    this->setIsCustomEnabled(isEnabled);
 }
 
 void Schedule::SetCustomSoundEnabled(bool isEnabled)
 {
-    this->_CustomSoundEnabled=isEnabled;
+    this->SetCustomSoundEnabled(isEnabled);
 }
 
-void Schedule::SetWD(QTime Time)
+void Schedule::SetTime(QTime time)
 {
-    this->_WDAlarm=Time;
+    this->_AlarmTime=time;
 }
 
-void Schedule::SetWE(QTime Time)
+QTime Schedule::GetTime()
 {
-    this->_WEAlarm=Time;
+    return this->_AlarmTime;
 }
 
-void Schedule::SetCust(QDateTime DateTime)
+
+void Schedule::SetCust(QDate Date)
 {
-    this->_CustomAlarm=DateTime;
+    this->_CustomAlarm=Date;
 }
 
 void Schedule::SetCustomSound(QString SoundPath)
@@ -70,37 +51,20 @@ void Schedule::SetCustomSound(QString SoundPath)
     this->_CustomSound=SoundPath;
 }
 
-bool Schedule::GetWDEnabled()
-{
-    return this->_WDEnabled;
-}
-
-bool Schedule::GetWEEnabled()
-{
-    return this->_WEEnabled;
-}
 
 bool Schedule::GetCustomEnabled()
 {
-    return this->_CustomEnabled;
+    return this->isCustomSoundEnabled();
 }
 
 bool Schedule::GetCustomSoundEnabled()
 {
-    return this->_CustomSoundEnabled;
+    return this->GetCustomSoundEnabled();
 }
 
-QTime Schedule::GetWD()
-{
-    return this->_WDAlarm;
-}
 
-QTime Schedule::GetWE()
-{
-    return this->_WEAlarm;
-}
 
-QDateTime Schedule::GetCustom()
+QDate Schedule::GetCustomDate()
 {
     return this->_CustomAlarm;
 }
@@ -111,72 +75,92 @@ QString Schedule::GetCustomSound()
     return this->_CustomSound;
 }
 
-bool Schedule::MonEnabled() const
+bool Schedule::isMonEnabled() const
 {
-    return _MonEnabled;
+    return _isMonEnabled;
 }
 
-void Schedule::setMonEnabled(bool MonEnabled)
+void Schedule::setIsMonEnabled(bool isMonEnabled)
 {
-    _MonEnabled = MonEnabled;
+    _isMonEnabled = isMonEnabled;
 }
 
-bool Schedule::TueEnabled() const
+bool Schedule::isTueEnabled() const
 {
-    return _TueEnabled;
+    return _isTueEnabled;
 }
 
-void Schedule::setTueEnabled(bool TueEnabled)
+void Schedule::setIsTueEnabled(bool isTueEnabled)
 {
-    _TueEnabled = TueEnabled;
+    _isTueEnabled = isTueEnabled;
 }
 
-bool Schedule::WedEnabled() const
+bool Schedule::isWedEnabled() const
 {
-    return _WedEnabled;
+    return _isWedEnabled;
 }
 
-void Schedule::setWedEnabled(bool WedEnabled)
+void Schedule::setIsWedEnabled(bool isWedEnabled)
 {
-    _WedEnabled = WedEnabled;
+    _isWedEnabled = isWedEnabled;
 }
 
-bool Schedule::ThurEnabled() const
+bool Schedule::isThurEnabled() const
 {
-    return _ThurEnabled;
+    return _isThurEnabled;
 }
 
-void Schedule::setThurEnabled(bool ThurEnabled)
+void Schedule::setIsThurEnabled(bool isThurEnabled)
 {
-    _ThurEnabled = ThurEnabled;
+    _isThurEnabled = isThurEnabled;
 }
 
-bool Schedule::FriEnabled() const
+bool Schedule::isFriEnabled() const
 {
-    return _FriEnabled;
+    return _isFriEnabled;
 }
 
-void Schedule::setFriEnabled(bool FriEnabled)
+void Schedule::setIsFriEnabled(bool isFriEnabled)
 {
-    _FriEnabled = FriEnabled;
+    _isFriEnabled = isFriEnabled;
 }
 
-bool Schedule::SatEnabled() const
+bool Schedule::isSatEnabled() const
 {
-    return _SatEnabled;
+    return _isSatEnabled;
 }
 
-void Schedule::setSatEnabled(bool SatEnabled)
+void Schedule::setIsSatEnabled(bool isSatEnabled)
 {
-    _SatEnabled = SatEnabled;
+    _isSatEnabled = isSatEnabled;
 }
 
-bool Schedule::SunEnabled() const
+bool Schedule::isSunEnabled() const
 {
-    return _SunEnabled;
+    return _isSunEnabled;
 }
 
-void Schedule::setSunEnabled(bool SunEnabled)
+void Schedule::setIsSunEnabled(bool isSunEnabled)
 {
-    _SunEnabled = SunEnabled;
+    _isSunEnabled = isSunEnabled;
+}
+
+bool Schedule::isCustomEnabled() const
+{
+    return _isCustomEnabled;
+}
+
+void Schedule::setIsCustomEnabled(bool isCustomEnabled)
+{
+    _isCustomEnabled = isCustomEnabled;
+}
+
+bool Schedule::isCustomSoundEnabled() const
+{
+    return _isCustomSoundEnabled;
+}
+
+void Schedule::setIsCustomSoundEnabled(bool isCustomSoundEnabled)
+{
+    _isCustomSoundEnabled = isCustomSoundEnabled;
 }

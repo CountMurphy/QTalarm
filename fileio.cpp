@@ -29,8 +29,7 @@ bool FileIO::DelExtracted()
     return QFile::remove(QDir::tempPath()+"/QTalarm.ogg");
 }
 
-//TODO needs to know how many there were, else loop 5 times
-QList<Schedule*> FileIO::LoadConfig()//index was passed here
+QList<Schedule*> FileIO::LoadConfig()
 {
     //Legacy save file check
     if(this->_Settings.value("AlarmCount").isNull())
@@ -38,36 +37,44 @@ QList<Schedule*> FileIO::LoadConfig()//index was passed here
         return LegacyRead();
     }
 
-    Schedule *Sched;
-    QString Index;
-    Index.setNum(index);
-    bool WDEnabled=this->_Settings.value(Index+"WDEnabled").toBool();
-    QTime WDTime=this->_Settings.value(Index+"WDTime").toTime();
-    bool WEEnabled=this->_Settings.value(Index+"WEEnabled").toBool();
-    QTime WETime=this->_Settings.value(Index+"WETime").toTime();
-    bool CustEnabled=this->_Settings.value(Index+"CustEnabled").toBool();
-    QDateTime CustTime=this->_Settings.value(Index+"CustTime").toDateTime();
-    bool CustSoundEnabled=this->_Settings.value(Index+"CustomSoundEnabled").toBool();
-    QString CustSound=this->_Settings.value(Index+"CustomSound").toString();
-    if(WDTime.isNull())
+    QList<Schedule*> scheduleList;
+    QString indexStr;
+
+    for(int index=0;index<this->_Settings.value("AlarmCount").toInt();index++)
     {
-        WDTime.setHMS(0,0,0,0);
+        Schedule *sched;
+
+        indexStr.setNum(index);
+
+        sched->SetTime(this->_Settings.value(indexStr+"Time").toTime());
+        if(sched->GetTime().isNull())
+        {
+            QTime reset;
+            reset.setHMS(0,0,0,0);
+            sched->SetTime(reset);
+        }
+
+        sched->setIsMonEnabled(this->_Settings.value(indexStr+"MonEnabled").toBool());
+        sched->setIsTueEnabled(this->_Settings.value(indexStr+"TueEnabled").toBool());
+        sched->setIsWedEnabled(this->_Settings.value(indexStr+"WedEnabled").toBool());
+        sched->setIsThurEnabled(this->_Settings.value(indexStr+"ThurEnabled").toBool());
+        sched->setIsFriEnabled(this->_Settings.value(indexStr+"FriEnabled").toBool());
+        sched->setIsSatEnabled(this->_Settings.value(indexStr+"SatEnabled").toBool());
+        sched->setIsSunEnabled(this->_Settings.value(indexStr+"SunEnabled").toBool());
+
+        sched->SetCustEnabled(this->_Settings.value(indexStr+"CustEnabled").toBool());
+        sched->SetCust(this->_Settings.value(indexStr+"CustDate").toDate());
+
+        sched->SetCustomSoundEnabled(this->_Settings.value(indexStr+"CustomSoundEnabled").toBool());
+        sched->SetCustomSound(this->_Settings.value(indexStr+"CustomSound").toString());
+
+//        if(CustSoundEnabled==false)
+//        {
+//            CustSound="";
+//        }
+        scheduleList.append(sched);
     }
-    if(WETime.isNull())
-    {
-        WETime.setHMS(0,0,0,0);
-    }
-    if(CustTime.isNull())
-    {
-        CustTime.time().setHMS(0,0,0,0);
-        CustTime.setDate(QDateTime::currentDateTime().date());
-    }
-    if(CustSoundEnabled==false)
-    {
-        CustSound="";
-    }
-    Sched->SetSchedule(CustEnabled,CustTime,WDEnabled,WDTime,WEEnabled,WETime,CustSoundEnabled,CustSound);
-    return Sched;
+    return scheduleList;
 }
 
 bool FileIO::Save(ScheduleCollection *Collection)
@@ -171,11 +178,11 @@ QList<Schedule*> FileIO::LegacyRead()
         Index.setNum(index);
         if(this->_Settings.value(Index+"WDEnabled").toBool())
         {
-            newSche->setMonEnabled(true);
-            newSche->setTueEnabled(true);
-            newSche->setWedEnabled(true);
-            newSche->setThurEnabled(true);
-            newSche->setFriEnabled(true);
+            newSche->setIsMonEnabled(true);
+            newSche->setIsTueEnabled(true);
+            newSche->setIsWedEnabled(true);
+            newSche->setIsThurEnabled(true);
+            newSche->setIsFriEnabled(true);
 
             if(this->_Settings.value(Index+"WDTime").toTime().isNull())
             {
@@ -191,8 +198,8 @@ QList<Schedule*> FileIO::LegacyRead()
 
         if(this->_Settings.value(Index+"WEEnabled").toBool())
         {
-            newSche->setSatEnabled(true);
-            newSche->setSunEnabled(true);
+            newSche->setIsSatEnabled(true);
+            newSche->setIsSunEnabled(true);
 
             if(this->_Settings.value(Index+"WETime").toTime().isNull())
             {

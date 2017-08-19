@@ -27,11 +27,16 @@ void ScheduleCollection::LoadSchedules()
 
 Schedule* ScheduleCollection::GetSchedule(int Index)
 {
-    return &_Collection[Index];
+    return _Collection[Index];
 }
 
 void ScheduleCollection::Save()
 {
     FileIO * configIO=new FileIO(this);
     configIO->Save(this);
+}
+
+QList<Schedule*> ScheduleCollection::GetScheduleList()
+{
+    return this->_Collection;
 }

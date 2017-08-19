@@ -11,7 +11,6 @@ class Schedule : public QObject
     Q_OBJECT
 public:
     explicit Schedule(QObject *parent = 0);
-    void SetSchedule(bool,QDateTime,bool,QTime,bool,QTime,bool,QString);
     void SetCustEnabled(bool);
     void SetTime(QTime);
     void SetCust(QDate);
@@ -27,39 +26,45 @@ public:
     int Index;
 
     bool isMonEnabled() const;
-    void setMonEnabled(bool MonEnabled);
+    void setIsMonEnabled(bool isMonEnabled);
 
     bool isTueEnabled() const;
-    void setTueEnabled(bool TueEnabled);
+    void setIsTueEnabled(bool isTueEnabled);
 
     bool isWedEnabled() const;
-    void setWedEnabled(bool WedEnabled);
+    void setIsWedEnabled(bool isWedEnabled);
 
     bool isThurEnabled() const;
-    void setThurEnabled(bool ThurEnabled);
+    void setIsThurEnabled(bool isThurEnabled);
 
     bool isFriEnabled() const;
-    void setFriEnabled(bool FriEnabled);
+    void setIsFriEnabled(bool isFriEnabled);
 
     bool isSatEnabled() const;
-    void setSatEnabled(bool SatEnabled);
+    void setIsSatEnabled(bool isSatEnabled);
 
     bool isSunEnabled() const;
-    void setSunEnabled(bool SunEnabled);
+    void setIsSunEnabled(bool isSunEnabled);
+
+    bool isCustomEnabled() const;
+    void setIsCustomEnabled(bool isCustomEnabled);
+
+    bool isCustomSoundEnabled() const;
+    void setIsCustomSoundEnabled(bool isCustomSoundEnabled);
 
 private:
     QTime _AlarmTime;
     QDate _CustomAlarm;
     QString _CustomSound;
-    bool _MonEnabled;
-    bool _TueEnabled;
-    bool _WedEnabled;
-    bool _ThurEnabled;
-    bool _FriEnabled;
-    bool _SatEnabled;
-    bool _SunEnabled;
-    bool _CustomEnabled;
-    bool _CustomSoundEnabled;
+    bool _isMonEnabled;
+    bool _isTueEnabled;
+    bool _isWedEnabled;
+    bool _isThurEnabled;
+    bool _isFriEnabled;
+    bool _isSatEnabled;
+    bool _isSunEnabled;
+    bool _isCustomEnabled;
+    bool _isCustomSoundEnabled;
     
 signals:
     
