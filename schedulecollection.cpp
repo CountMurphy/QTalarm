@@ -40,3 +40,8 @@ QList<Schedule*> ScheduleCollection::GetScheduleList()
 {
     return this->_Collection;
 }
+
+int ScheduleCollection::GetCount()
+{
+    return this->_Collection.count();
+}

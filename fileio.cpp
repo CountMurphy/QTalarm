@@ -61,6 +61,7 @@ QList<Schedule*> FileIO::LoadConfig()
         sched->setIsFriEnabled(this->_Settings.value(indexStr+"FriEnabled").toBool());
         sched->setIsSatEnabled(this->_Settings.value(indexStr+"SatEnabled").toBool());
         sched->setIsSunEnabled(this->_Settings.value(indexStr+"SunEnabled").toBool());
+        sched->setName(this->_Settings.value((indexStr+"Name")).toString());
 
         sched->SetCustEnabled(this->_Settings.value(indexStr+"CustEnabled").toBool());
         sched->SetCust(this->_Settings.value(indexStr+"CustDate").toDate());
@@ -102,6 +103,7 @@ bool FileIO::Save(ScheduleCollection *Collection)
             this->_Settings.setValue(IndexStr+"CustDate",currentSche->GetCustomDate());
             this->_Settings.setValue(IndexStr+"CustomSoundEnabled",currentSche->GetCustomSoundEnabled());
             this->_Settings.setValue(IndexStr+"CustomSound",currentSche->GetCustomSound());
+            this->_Settings.setValue(IndexStr+"Name",currentSche->Name());
             this->_Settings.sync();
         }
     }
@@ -169,20 +171,23 @@ void FileIO::SaveWarnOnPm(bool warn)
 QList<Schedule*> FileIO::LegacyRead()
 {
     QList<Schedule*> convertedSche;
+    int alarmIteration=1;
 
     for(int index=0;index<5;index++)
     {
-        Schedule *newSche=new Schedule;
 
         QString Index;
         Index.setNum(index);
         if(this->_Settings.value(Index+"WDEnabled").toBool())
         {
+            Schedule *newSche=new Schedule;
             newSche->setIsMonEnabled(true);
             newSche->setIsTueEnabled(true);
             newSche->setIsWedEnabled(true);
             newSche->setIsThurEnabled(true);
             newSche->setIsFriEnabled(true);
+            newSche->setName("Alarm "+QString::number(alarmIteration));
+            alarmIteration++;
 
             if(this->_Settings.value(Index+"WDTime").toTime().isNull())
             {
@@ -194,12 +199,19 @@ QList<Schedule*> FileIO::LegacyRead()
             {
                 newSche->SetTime(this->_Settings.value(Index+"WDTime").toTime());
             }
+
+            newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+            newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+            convertedSche.append(newSche);
         }
 
         if(this->_Settings.value(Index+"WEEnabled").toBool())
         {
+            Schedule *newSche=new Schedule;
             newSche->setIsSatEnabled(true);
             newSche->setIsSunEnabled(true);
+            newSche->setName("Alarm "+QString::number(alarmIteration));
+            alarmIteration++;
 
             if(this->_Settings.value(Index+"WETime").toTime().isNull())
             {
@@ -211,10 +223,15 @@ QList<Schedule*> FileIO::LegacyRead()
             {
                 newSche->SetTime(this->_Settings.value(Index+"WETime").toTime());
             }
+
+            newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+            newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+            convertedSche.append(newSche);
         }
 
         if(this->_Settings.value(Index+"CustEnabled").toBool())
         {
+            Schedule *newSche=new Schedule;
             if(this->_Settings.value(Index+"CustTime").toDateTime().isNull())
             {
                 QTime emptyTime;
@@ -224,17 +241,17 @@ QList<Schedule*> FileIO::LegacyRead()
             {
                 newSche->SetTime(this->_Settings.value(Index+"CustTime").toTime());
             }
+            newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+            newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+            convertedSche.append(newSche);
         }
 
-        newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
-        newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
 
-        if(newSche->GetCustomSoundEnabled()==false)
-        {
-            newSche->SetCustomSound("");
-        }
+//        if(newSche->GetCustomSoundEnabled()==false)
+//        {
+//            newSche->SetCustomSound("");
+//        }
 
-        convertedSche.append(newSche);
     }
     return convertedSche;
 

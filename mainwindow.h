@@ -36,6 +36,7 @@ private:
     void SetupClock();
     void UpdateClock();
     void PMWarning();
+    void PopulateListWidget();
 
 private slots:
     void ShowWindow();

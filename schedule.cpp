@@ -164,3 +164,13 @@ void Schedule::setIsCustomSoundEnabled(bool isCustomSoundEnabled)
 {
     _isCustomSoundEnabled = isCustomSoundEnabled;
 }
+
+QString Schedule::Name() const
+{
+    return _name;
+}
+
+void Schedule::setName(const QString &name)
+{
+    _name = name;
+}

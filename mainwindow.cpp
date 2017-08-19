@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
         //Create / load Schedule
         _Schedules=new ScheduleCollection(this);
         _Schedules->LoadSchedules();
+        PopulateListWidget();
 
         _isMilTime=FileIO::isMilTime();
         _WarnOnPm=FileIO::LoadWarnOnPm();
@@ -72,8 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
         connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
         connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(ShowSettings()));
-//        connect(ui->WD_Edit,SIGNAL(editingFinished()),this,SLOT(SetWDTime()));
-        connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetWETime()));
+        connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetTime()));
         connect(ui->CustEdit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
         connect(ui->listAlmBtn,SIGNAL(clicked(QAbstractButton*)),this,SLOT(AddRemoveAlarm(QAbstractButton*)));
 //        connect(ui->Alm1,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
@@ -218,13 +218,13 @@ void MainWindow::AddRemoveAlarm(QAbstractButton *button)
     {
         int alarmCount = ui->listWidget->count();
         alarmCount++;
-        QListWidgetItem *newAlarm = new QListWidgetItem("Alarm "+QString::number(alarmCount));
-        ui->listWidget->addItem(newAlarm);
-        //TODO: create new alarm
+//        QListWidgetItem *newAlarm = new QListWidgetItem("Alarm "+QString::number(alarmCount));
     }
     else if(button->text()=="&Remove")
     {
     }
+    ui->listWidget->clear();
+    PopulateListWidget();
 }
 
 
@@ -366,5 +366,14 @@ void MainWindow::displayTimeMode()
         ui->timeEdit->setDisplayFormat("h:mm:ss ap");
         ui->CustEdit->setDisplayFormat("d MMM yyyy hh:mm:ss ap");
 
+    }
+}
+
+void MainWindow::PopulateListWidget()
+{
+    Schedule *sche;
+    foreach(sche,this->_Schedules->GetScheduleList())
+    {
+        ui->listWidget->addItem(sche->Name());
     }
 }
