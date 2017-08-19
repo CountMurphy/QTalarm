@@ -78,12 +78,11 @@ void Timer::AlarmCheck()
                 }
             }
             //Check for Custom Date Alarms
-            if(cur_sche->GetCustomEnabled() && cur_sche->GetCustom().date()==RightNow.date() &&
-                    cur_sche->GetCustom().time().minute()==RightNow.time().minute()
-                    && cur_sche->GetCustom().time().hour()==RightNow.time().hour())
+            if(cur_sche->GetCustomEnabled() && cur_sche->GetCustomDate()==RightNow.date() &&
+                    cur_sche->GetTime().minute()==RightNow.time().minute()
+                    && cur_sche->GetTime().hour()==RightNow.time().hour())
             {
-                //Set Conditon One!
-                this->_CurAlarm->Start(cur_sche->GetCustomSoundEnabled());
+                soundAlarm=true;
             }
 
             if(soundAlarm)
