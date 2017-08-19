@@ -27,7 +27,7 @@ void Schedule::SetCustEnabled(bool isEnabled)
 
 void Schedule::SetCustomSoundEnabled(bool isEnabled)
 {
-    this->SetCustomSoundEnabled(isEnabled);
+    this->_isCustomSoundEnabled=isEnabled;
 }
 
 void Schedule::SetTime(QTime time)
@@ -59,7 +59,7 @@ bool Schedule::GetCustomEnabled()
 
 bool Schedule::GetCustomSoundEnabled()
 {
-    return this->GetCustomSoundEnabled();
+    return this->_isCustomSoundEnabled;
 }
 
 
