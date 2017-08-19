@@ -265,8 +265,8 @@ void MainWindow::ShowActiveAlarm(Schedule *Active)
     ui->timeEdit->setTime(Active->GetTime());
 
     ui->chkCustom->setChecked(Active->GetCustomEnabled());
-    ui->CustEdit->setTime(Active->GetCustom().time());
-    ui->CustEdit->setDateTime(Active->GetCustom());
+    ui->CustEdit->setTime(Active->GetTime());
+    ui->CustEdit->setDate(Active->GetCustomDate());
     ui->chkSounds->setChecked(Active->GetCustomSoundEnabled());
     ui->txtSoundPath->setText(Active->GetCustomSound());
 }

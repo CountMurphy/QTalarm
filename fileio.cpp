@@ -68,19 +68,26 @@ bool FileIO::Save(ScheduleCollection *Collection)
 {
     try
     {
-        for(int i=0;i<5;i++)
+        QList<Schedule*> SchedList=Collection->GetScheduleList();
+        Schedule *currentSche;
+        int index=0;
+
+        foreach(currentSche,SchedList)
         {
-            Schedule *Sched=Collection->GetSchedule(i);
-            QString Index;
-            Index.setNum(i);
-            this->_Settings.setValue(Index+"WDEnabled",Sched->GetWDEnabled());
-            this->_Settings.setValue(Index+"WDTime",Sched->GetWD());
-            this->_Settings.setValue(Index+"WEEnabled",Sched->GetWEEnabled());
-            this->_Settings.setValue(Index+"WETime",Sched->GetWE());
-            this->_Settings.setValue(Index+"CustEnabled",Sched->GetCustomEnabled());
-            this->_Settings.setValue(Index+"CustTime",Sched->GetCustom());
-            this->_Settings.setValue(Index+"CustomSoundEnabled",Sched->GetCustomSoundEnabled());
-            this->_Settings.setValue(Index+"CustomSound",Sched->GetCustomSound());
+            QString IndexStr;
+            IndexStr.setNum(index);
+            this->_Settings.setValue(IndexStr+"MonEnabled",currentSche->isMonEnabled());
+            this->_Settings.setValue(IndexStr+"TueEnabled",currentSche->isTueEnabled());
+            this->_Settings.setValue(IndexStr+"WedEnabled",currentSche->isWedEnabled());
+            this->_Settings.setValue(IndexStr+"ThurEnabled",currentSche->isThurEnabled());
+            this->_Settings.setValue(IndexStr+"FriEnabled",currentSche->isFriEnabled());
+            this->_Settings.setValue(IndexStr+"SatEnabled",currentSche->isSatEnabled());
+            this->_Settings.setValue(IndexStr+"SunEnabled",currentSche->isSunEnabled());
+            this->_Settings.setValue(IndexStr+"Time",currentSche->GetTime());
+            this->_Settings.setValue(IndexStr+"CustEnabled",currentSche->GetCustomEnabled());
+            this->_Settings.setValue(IndexStr+"CustDate",currentSche->GetCustomDate());
+            this->_Settings.setValue(IndexStr+"CustomSoundEnabled",currentSche->GetCustomSoundEnabled());
+            this->_Settings.setValue(IndexStr+"CustomSound",currentSche->GetCustomSound());
             this->_Settings.sync();
         }
     }

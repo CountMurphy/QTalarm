@@ -22,7 +22,7 @@ public:
     bool GetCustomSoundEnabled();
 
     QTime GetTime();
-    QDateTime GetCustom();
+    QDate GetCustomDate();
     QString GetCustomSound();
     int Index;
 
