@@ -42,7 +42,7 @@ QList<Schedule*> FileIO::LoadConfig()
 
     for(int index=0;index<this->_Settings.value("AlarmCount").toInt();index++)
     {
-        Schedule *sched;
+        Schedule *sched=new Schedule(this);
 
         indexStr.setNum(index);
 
@@ -105,6 +105,7 @@ bool FileIO::Save(ScheduleCollection *Collection)
             this->_Settings.setValue(IndexStr+"CustomSound",currentSche->GetCustomSound());
             this->_Settings.setValue(IndexStr+"Name",currentSche->Name());
             this->_Settings.sync();
+            index++;
         }
     }
     catch(...)
