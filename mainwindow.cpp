@@ -8,6 +8,8 @@
 #include "settingdialog.h"
 #include "snooze.h"
 #include <QMessageBox>
+#include <QCheckBox>
+#include <QLabel>
 #include <QCloseEvent>
 #include <QTimeEdit>
 #include <QTimer>
@@ -29,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
         _Schedules=new ScheduleCollection(this);
         _Schedules->LoadSchedules();
         PopulateListWidget();
+        DisablePanelIfNoSelection();
 
         _isMilTime=FileIO::isMilTime();
         _WarnOnPm=FileIO::LoadWarnOnPm();
@@ -60,8 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->setToolTip("QTalarm");
         trayIcon->show();
 
-        //ui->Alm1->setChecked(true);
-        SetAlarmNumber();
+        ui->txtSoundPath->setText("");
         SetupClock();
 
 
@@ -76,19 +78,20 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetTime()));
         connect(ui->CustEdit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
         connect(ui->listAlmBtn,SIGNAL(clicked(QAbstractButton*)),this,SLOT(AddRemoveAlarm(QAbstractButton*)));
-//        connect(ui->Alm1,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-//        connect(ui->Alm2,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-//        connect(ui->Alm3,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-//        connect(ui->Alm4,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-//        connect(ui->Alm5,SIGNAL(clicked()),this,SLOT(SetAlarmNumber()));
-//        connect(ui->chkWeekDays,SIGNAL(clicked(bool)),this,SLOT(ToggleWD(bool)));
-//        connect(ui->chkWeekEnd,SIGNAL(clicked(bool)),this,SLOT(ToggleWE(bool)));
+        connect(ui->listWidget,SIGNAL(currentRowChanged(int)),this,SLOT(ShowActiveAlarm(int)));
+        connect(ui->chkMon,SIGNAL(clicked(bool)),this,SLOT(ToggleMon(bool)));
+        connect(ui->chkTues,SIGNAL(clicked(bool)),this,SLOT(ToggleTue(bool)));
+        connect(ui->chkWed,SIGNAL(clicked(bool)),this,SLOT(ToggleWed(bool)));
+        connect(ui->chkThurs,SIGNAL(clicked(bool)),this,SLOT(ToggleThur(bool)));
+        connect(ui->chkFri,SIGNAL(clicked(bool)),this,SLOT(ToggleFri(bool)));
+        connect(ui->chkSat,SIGNAL(clicked(bool)),this,SLOT(ToggleSat(bool)));
+        connect(ui->chkSun,SIGNAL(clicked(bool)),this,SLOT(ToggleSun(bool)));
         connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
         connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
         connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
         connect(ui->VolumeSlider,SIGNAL(valueChanged(int)),CurAlarm,SLOT(SetVolume(int)));
 
-        connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomTime()));
+        connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomDate()));
 
 
     }else{
@@ -141,66 +144,61 @@ void MainWindow::SetTime()
     {
         PMWarning();
     }
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetTime(ui->timeEdit->time());
 }
 
 void MainWindow::SetCustomDate()
 {
-//    if(ui->CustEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
-//    {
-//        PMWarning();
-//    }
-    //Update date on display
+    //Update date on the display
     ui->CustEdit->setDate(ui->calendarWidget->selectedDate());
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetTime(ui->timeEdit->time());
     QDate CustomDate=ui->calendarWidget->selectedDate();
     Active->SetCust(CustomDate);
 }
 
-//Is this block redundant? yes. yes it is. TODO: fix one day
 void MainWindow::ToggleMon(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsMonEnabled(isEnabled);
 }
 
 void MainWindow::ToggleTue(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsTueEnabled(isEnabled);
 }
 void MainWindow::ToggleWed(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsWedEnabled(isEnabled);
 }
 void MainWindow::ToggleThur(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsThurEnabled(isEnabled);
 }
 void MainWindow::ToggleFri(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsFriEnabled(isEnabled);
 }
 void MainWindow::ToggleSat(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsSatEnabled(isEnabled);
 }
 void MainWindow::ToggleSun(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsSunEnabled(isEnabled);
 }
 
 
 void MainWindow::ToggleCust(bool isEnabled)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetCustEnabled(isEnabled);
 }
 
@@ -216,59 +214,45 @@ void MainWindow::AddRemoveAlarm(QAbstractButton *button)
 {
     if(button->text()=="&Add")
     {
-        int alarmCount = ui->listWidget->count();
-        alarmCount++;
-//        QListWidgetItem *newAlarm = new QListWidgetItem("Alarm "+QString::number(alarmCount));
+        Schedule *scheToAdd=new Schedule(this);
+        scheToAdd->setName("New Alarm");
+        this->_Schedules->AddSchedule(scheToAdd);
+        ui->listWidget->addItem(scheToAdd->Name());
     }
     else if(button->text()=="&Remove")
     {
+        this->_lastDeletedIndex=ui->listWidget->currentRow();
+        this->_Schedules->removeScheduleByIndex(ui->listWidget->currentRow());
+        PopulateListWidget();
     }
-    ui->listWidget->clear();
-    PopulateListWidget();
 }
 
 
-void MainWindow::SetAlarmNumber()
+
+void MainWindow::ShowActiveAlarm(int index)
 {
-//    Schedule *ActiveSchedule;
-//    int Index;
-//    if(ui->Alm1->isChecked())
-//    {
-//        Index=0;
-//    }else if(ui->Alm2->isChecked())
-//    {
-//        Index=1;
-//    }else if(ui->Alm3->isChecked())
-//    {
-//        Index=2;
-//    }else if(ui->Alm4->isChecked())
-//    {
-//        Index=3;
-//    }else{
-//        Index=4;
-//    }
-//    this->_CurrentAlarm=Index;
+        DisablePanelIfNoSelection();
+    if(index==-1)
+    {
+        //in the middle of a list clear. Running further will cause seg fault
+        return;
+    }
+    Schedule *active=this->_Schedules->GetSchedule(index);
+    ui->timeEdit->setTime(active->GetTime());
 
-//    //display Active
+    ui->chkCustom->setChecked(active->GetCustomEnabled());
+    ui->CustEdit->setTime(active->GetTime());
+    ui->CustEdit->setDate(active->GetCustomDate());
+    ui->chkSounds->setChecked(active->GetCustomSoundEnabled());
+    ui->txtSoundPath->setText(active->GetCustomSound());
 
-//    ActiveSchedule=this->_Schedules->GetSchedule(Index);
-//    ShowActiveAlarm(ActiveSchedule);
-}
-
-
-void MainWindow::ShowActiveAlarm(Schedule *Active)
-{
-//    ui->chkWeekDays->setChecked(Active->GetWDEnabled());
-//    ui->WD_Edit->setTime(Active->GetWD());
-
-//    ui->chkWeekEnd->setChecked(Active->GetWEEnabled());
-    ui->timeEdit->setTime(Active->GetTime());
-
-    ui->chkCustom->setChecked(Active->GetCustomEnabled());
-    ui->CustEdit->setTime(Active->GetTime());
-    ui->CustEdit->setDate(Active->GetCustomDate());
-    ui->chkSounds->setChecked(Active->GetCustomSoundEnabled());
-    ui->txtSoundPath->setText(Active->GetCustomSound());
+    ui->chkMon->setChecked(active->isMonEnabled());
+    ui->chkTues->setChecked(active->isTueEnabled());
+    ui->chkWed->setChecked(active->isWedEnabled());
+    ui->chkThurs->setChecked(active->isThurEnabled());
+    ui->chkFri->setChecked(active->isFriEnabled());
+    ui->chkSat->setChecked(active->isSatEnabled());
+    ui->chkSun->setChecked(active->isSunEnabled());
 }
 
 void MainWindow::timeCheck()
@@ -295,7 +279,7 @@ void MainWindow::UpdateClock()
 
 void MainWindow::OpenDiaglog(bool isChecked)
 {
-    Schedule *Active=this->_Schedules->GetSchedule(this->_CurrentAlarm);
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetCustomSoundEnabled(isChecked);
     if(isChecked)
     {
@@ -371,9 +355,55 @@ void MainWindow::displayTimeMode()
 
 void MainWindow::PopulateListWidget()
 {
+    ui->listWidget->clear();
     Schedule *sche;
     foreach(sche,this->_Schedules->GetScheduleList())
     {
         ui->listWidget->addItem(sche->Name());
+    }
+    ui->listWidget->setCurrentRow(this->_lastDeletedIndex);
+}
+
+void MainWindow::DisablePanelIfNoSelection()
+{
+    if(ui->listWidget->currentRow()==-1)
+    {
+        ui->chkCustom->setEnabled(false);
+        ui->chkFri->setEnabled(false);
+        ui->chkMon->setEnabled(false);
+        ui->chkSat->setEnabled(false);
+        ui->chkSounds->setEnabled(false);
+        ui->chkSun->setEnabled(false);
+        ui->chkThurs->setEnabled(false);
+        ui->chkTues->setEnabled(false);
+        ui->chkWed->setEnabled(false);
+        ui->CustEdit->setEnabled(false);
+        ui->timeEdit->setEnabled(false);
+
+        ui->chkCustom->setChecked(false);
+        ui->chkFri->setChecked(false);
+        ui->chkMon->setChecked(false);
+        ui->chkSat->setChecked(false);
+        ui->chkSounds->setChecked(false);
+        ui->chkSun->setChecked(false);
+        ui->chkThurs->setChecked(false);
+        ui->chkTues->setChecked(false);
+        ui->chkWed->setChecked(false);
+        ui->txtSoundPath->setText("");
+
+    }
+    else
+    {
+        ui->chkCustom->setEnabled(true);
+        ui->chkFri->setEnabled(true);
+        ui->chkMon->setEnabled(true);
+        ui->chkSat->setEnabled(true);
+        ui->chkSounds->setEnabled(true);
+        ui->chkSun->setEnabled(true);
+        ui->chkThurs->setEnabled(true);
+        ui->chkTues->setEnabled(true);
+        ui->chkWed->setEnabled(true);
+        ui->CustEdit->setEnabled(true);
+        ui->timeEdit->setEnabled(true);
     }
 }

@@ -75,6 +75,19 @@ void Timer::AlarmCheck()
                         soundAlarm=true;
                     }
                     break;
+                case 6:
+                    if(cur_sche->isSatEnabled())
+                    {
+                        soundAlarm=true;
+                    }
+                    break;
+                case 7:
+                    if(cur_sche->isSunEnabled())
+                    {
+                        soundAlarm=true;
+                    }
+                    break;
+
                 }
             }
             //Check for Custom Date Alarms

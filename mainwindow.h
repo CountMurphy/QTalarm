@@ -3,6 +3,7 @@
 #include <QSystemTrayIcon>
 #include <QMainWindow>
 #include <QDialogButtonBox>
+#include <QListWidgetItem>
 #include "timer.h"
 
 namespace Ui {
@@ -25,21 +26,22 @@ private:
     Alarm *CurAlarm;
     ScheduleCollection *_Schedules;
 
-    int _CurrentAlarm;
+    int _lastDeletedIndex;
     bool _isMilTime;
     bool _prevTimeWasMil;
     bool _WarnOnPm;
     void displayTimeMode();
 
     void closeEvent(QCloseEvent*);
-    void ShowActiveAlarm(Schedule*);
     void SetupClock();
     void UpdateClock();
     void PMWarning();
     void PopulateListWidget();
+    void DisablePanelIfNoSelection();
 
 private slots:
     void ShowWindow();
+    void ShowActiveAlarm(int index);
     void ShowWindow(QSystemTrayIcon::ActivationReason);
     void AddRemoveAlarm(QAbstractButton*);
     void SetTime();
@@ -52,7 +54,6 @@ private slots:
     void ToggleSat(bool);
     void ToggleSun(bool);
     void ToggleCust(bool);
-    void SetAlarmNumber();
     void Quit();
     void OpenDiaglog(bool);
     void TestAlarm();

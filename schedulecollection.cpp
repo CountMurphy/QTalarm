@@ -5,24 +5,12 @@
 #include <QSettings>
 
 ScheduleCollection::ScheduleCollection(QObject *parent) :
-    QObject(parent)
-{
-    //Initialize
-//    for(int i=0;i<5;i++)
-//    {
-//        this->_Collection[i]=new Schedule(this);
-//    }
-}
+    QObject(parent){}
 
-//not sure if this will even work
 void ScheduleCollection::LoadSchedules()
 {
     FileIO *config=new FileIO(this);
-//    Schedule item;
-//    foreach(item,this->_Collection)
-//    {
-        this->_Collection = config->LoadConfig();
-//    }
+    this->_Collection = config->LoadConfig();
 }
 
 Schedule* ScheduleCollection::GetSchedule(int Index)
@@ -44,4 +32,14 @@ QList<Schedule*> ScheduleCollection::GetScheduleList()
 int ScheduleCollection::GetCount()
 {
     return this->_Collection.count();
+}
+
+void ScheduleCollection::AddSchedule(Schedule *scheToAdd)
+{
+    this->_Collection.append(scheToAdd);
+}
+
+void ScheduleCollection::removeScheduleByIndex(int index)
+{
+    this->_Collection.removeAt(index);
 }

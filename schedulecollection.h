@@ -13,6 +13,8 @@ public:
     Schedule* GetSchedule(int);
     QList<Schedule*> GetScheduleList();
     int GetCount();
+    void AddSchedule(Schedule*);
+    void removeScheduleByIndex(int);
     void LoadSchedules();
     void Save();
 private:
