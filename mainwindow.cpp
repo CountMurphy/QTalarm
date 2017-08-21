@@ -47,8 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
         int Volume = FileIO::LoadVolume();
         ui->VolumeSlider->setValue(Volume<=0? 50:Volume);
         CurAlarm->SetVolume(ui->VolumeSlider->value());
-        ui->listAlmBtn->button(QDialogButtonBox::Ok)->setText("Add");
-        ui->listAlmBtn->button(QDialogButtonBox::Cancel)->setText("Remove");
+        ui->listAlmBtn->button(QDialogButtonBox::Ok)->setText("&Add");
+        ui->listAlmBtn->button(QDialogButtonBox::Cancel)->setText("&Remove");
 
         trayIcon=new QSystemTrayIcon(this);
         trayIconMenu=new QMenu(this);
