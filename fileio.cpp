@@ -203,6 +203,10 @@ QList<Schedule*> FileIO::LegacyRead()
 
             newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
             newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+            if(this->_Settings.value((Index+"CustomSoundEnabled")).toBool())
+            {
+                newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+            }
             convertedSche.append(newSche);
         }
 
@@ -227,6 +231,10 @@ QList<Schedule*> FileIO::LegacyRead()
 
             newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
             newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+            if(this->_Settings.value((Index+"CustomSoundEnabled")).toBool())
+            {
+                newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+            }
             convertedSche.append(newSche);
         }
 
@@ -242,10 +250,15 @@ QList<Schedule*> FileIO::LegacyRead()
             {
                 newSche->SetTime(this->_Settings.value(Index+"CustTime").toTime());
             }
-            newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
             newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+            if(this->_Settings.value((Index+"CustomSoundEnabled")).toBool())
+            {
+                newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+            }
             convertedSche.append(newSche);
         }
+
+
 
 
 //        if(newSche->GetCustomSoundEnabled()==false)
