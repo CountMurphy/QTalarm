@@ -54,7 +54,7 @@ void Schedule::SetCustomSound(QString SoundPath)
 
 bool Schedule::GetCustomEnabled()
 {
-    return this->isCustomSoundEnabled();
+    return this->isCustomEnabled();
 }
 
 bool Schedule::GetCustomSoundEnabled()
@@ -165,12 +165,27 @@ void Schedule::setIsCustomSoundEnabled(bool isCustomSoundEnabled)
     _isCustomSoundEnabled = isCustomSoundEnabled;
 }
 
-QString Schedule::Name() const
+QString Schedule::Name()
 {
-    return _name;
-}
+    QString name;
+    name=this->GetTime().toString()+"  ";
 
-void Schedule::setName(const QString &name)
-{
-    _name = name;
+    if(this->isMonEnabled())
+        name.append(" M");
+    if(this->isTueEnabled())
+        name.append(" T");
+    if(this->isWedEnabled())
+        name.append(" W");
+    if(this->isThurEnabled())
+        name.append(" Th");
+    if(this->isFriEnabled())
+        name.append(" F");
+    if(this->isSatEnabled())
+        name.append(" Sat");
+    if(this->isSunEnabled())
+        name.append(" Sun");
+    if(this->isCustomEnabled())
+        name.append("  "+this->_CustomAlarm.toString());
+
+    return name;
 }

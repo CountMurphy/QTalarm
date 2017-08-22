@@ -61,7 +61,6 @@ QList<Schedule*> FileIO::LoadConfig()
         sched->setIsFriEnabled(this->_Settings.value(indexStr+"FriEnabled").toBool());
         sched->setIsSatEnabled(this->_Settings.value(indexStr+"SatEnabled").toBool());
         sched->setIsSunEnabled(this->_Settings.value(indexStr+"SunEnabled").toBool());
-        sched->setName(this->_Settings.value((indexStr+"Name")).toString());
 
         sched->SetCustEnabled(this->_Settings.value(indexStr+"CustEnabled").toBool());
         sched->SetCust(this->_Settings.value(indexStr+"CustDate").toDate());
@@ -103,7 +102,6 @@ bool FileIO::Save(ScheduleCollection *Collection)
             this->_Settings.setValue(IndexStr+"CustDate",currentSche->GetCustomDate());
             this->_Settings.setValue(IndexStr+"CustomSoundEnabled",currentSche->GetCustomSoundEnabled());
             this->_Settings.setValue(IndexStr+"CustomSound",currentSche->GetCustomSound());
-            this->_Settings.setValue(IndexStr+"Name",currentSche->Name());
             this->_Settings.sync();
             index++;
         }
@@ -172,7 +170,6 @@ void FileIO::SaveWarnOnPm(bool warn)
 QList<Schedule*> FileIO::LegacyRead()
 {
     QList<Schedule*> convertedSche;
-    int alarmIteration=1;
 
     for(int index=0;index<5;index++)
     {
@@ -187,8 +184,6 @@ QList<Schedule*> FileIO::LegacyRead()
             newSche->setIsWedEnabled(true);
             newSche->setIsThurEnabled(true);
             newSche->setIsFriEnabled(true);
-            newSche->setName("Alarm "+QString::number(alarmIteration));
-            alarmIteration++;
 
             if(this->_Settings.value(Index+"WDTime").toTime().isNull())
             {
@@ -215,8 +210,6 @@ QList<Schedule*> FileIO::LegacyRead()
             Schedule *newSche=new Schedule;
             newSche->setIsSatEnabled(true);
             newSche->setIsSunEnabled(true);
-            newSche->setName("Alarm "+QString::number(alarmIteration));
-            alarmIteration++;
 
             if(this->_Settings.value(Index+"WETime").toTime().isNull())
             {

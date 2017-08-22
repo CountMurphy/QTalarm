@@ -38,6 +38,7 @@ private:
     void PMWarning();
     void PopulateListWidget();
     void DisablePanelIfNoSelection();
+    void UpdateListWidget();
 
 private slots:
     void ShowWindow();

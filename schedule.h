@@ -52,8 +52,7 @@ public:
     bool isCustomSoundEnabled() const;
     void setIsCustomSoundEnabled(bool isCustomSoundEnabled);
 
-    QString Name() const;
-    void setName(const QString &name);
+    QString Name();
 
 private:
     QTime _AlarmTime;
@@ -68,7 +67,6 @@ private:
     bool _isSunEnabled;
     bool _isCustomEnabled;
     bool _isCustomSoundEnabled;
-    QString _name;
     
 signals:
     

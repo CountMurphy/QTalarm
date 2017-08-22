@@ -146,6 +146,7 @@ void MainWindow::SetTime()
     }
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetTime(ui->timeEdit->time());
+    UpdateListWidget();
 }
 
 void MainWindow::SetCustomDate()
@@ -156,43 +157,52 @@ void MainWindow::SetCustomDate()
     Active->SetTime(ui->timeEdit->time());
     QDate CustomDate=ui->calendarWidget->selectedDate();
     Active->SetCust(CustomDate);
+    if(Active->isCustomEnabled())
+        UpdateListWidget();
 }
 
 void MainWindow::ToggleMon(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsMonEnabled(isEnabled);
+    UpdateListWidget();
 }
 
 void MainWindow::ToggleTue(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsTueEnabled(isEnabled);
+    UpdateListWidget();
 }
 void MainWindow::ToggleWed(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsWedEnabled(isEnabled);
+    UpdateListWidget();
 }
 void MainWindow::ToggleThur(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsThurEnabled(isEnabled);
+    UpdateListWidget();
 }
 void MainWindow::ToggleFri(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsFriEnabled(isEnabled);
+    UpdateListWidget();
 }
 void MainWindow::ToggleSat(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsSatEnabled(isEnabled);
+    UpdateListWidget();
 }
 void MainWindow::ToggleSun(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->setIsSunEnabled(isEnabled);
+    UpdateListWidget();
 }
 
 
@@ -200,6 +210,7 @@ void MainWindow::ToggleCust(bool isEnabled)
 {
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetCustEnabled(isEnabled);
+    UpdateListWidget();
 }
 
 void MainWindow::Quit()
@@ -215,9 +226,9 @@ void MainWindow::AddRemoveAlarm(QAbstractButton *button)
     if(button->text()=="&Add")
     {
         Schedule *scheToAdd=new Schedule(this);
-        scheToAdd->setName("New Alarm");
         this->_Schedules->AddSchedule(scheToAdd);
         ui->listWidget->addItem(scheToAdd->Name());
+        ui->listWidget->setCurrentRow(ui->listWidget->count()-1);
     }
     else if(button->text()=="&Remove")
     {
@@ -241,7 +252,6 @@ void MainWindow::ShowActiveAlarm(int index)
     ui->timeEdit->setTime(active->GetTime());
 
     ui->chkCustom->setChecked(active->GetCustomEnabled());
-    ui->CustEdit->setTime(active->GetTime());
     ui->CustEdit->setDate(active->GetCustomDate());
     ui->chkSounds->setChecked(active->GetCustomSoundEnabled());
     ui->txtSoundPath->setText(active->GetCustomSound());
@@ -406,4 +416,11 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->CustEdit->setEnabled(true);
         ui->timeEdit->setEnabled(true);
     }
+}
+
+void MainWindow::UpdateListWidget()
+{
+    int index=ui->listWidget->currentRow();
+    PopulateListWidget();
+    ui->listWidget->setCurrentRow(index);
 }
