@@ -64,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayIcon->show();
 
         ui->txtSoundPath->setText("");
+        ui->CustEdit->setDate(QDate::currentDate());
         SetupClock();
 
 
@@ -333,6 +334,7 @@ void MainWindow::SnoozeMenuCheck()
         //Create Snooze Menu object
         snooze *snMenu=new snooze(this,CurAlarm);
         snMenu->show();
+        this->hide();
         this->CurAlarm->canResume=false;
     }
 }
@@ -355,10 +357,10 @@ void MainWindow::displayTimeMode()
     if(_isMilTime)
     {
         ui->timeEdit->setDisplayFormat("H:mm:ss");
-        ui->CustEdit->setDisplayFormat("d MMM yyyy HH:mm:ss");
+        ui->CustEdit->setDisplayFormat("d MMM yyyy");
     }else{
         ui->timeEdit->setDisplayFormat("h:mm:ss ap");
-        ui->CustEdit->setDisplayFormat("d MMM yyyy hh:mm:ss ap");
+        ui->CustEdit->setDisplayFormat("d MMM yyyy");
 
     }
 }
