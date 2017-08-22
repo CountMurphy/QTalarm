@@ -5,7 +5,6 @@
 #include <QDateTime>
 #include <QList>
 #include "alarm.h"
-#include "schedule.h"
 #include "schedulecollection.h"
 
 class Timer : public QObject
@@ -17,7 +16,7 @@ public:
 
 private:
     Alarm *_CurAlarm;
-    QList<Schedule *> _Schedules;
+    ScheduleCollection *_Schedules;
 
 signals:
     

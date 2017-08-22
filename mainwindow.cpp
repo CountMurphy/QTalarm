@@ -18,6 +18,7 @@
 #include <QSlider>
 #include <QSystemTrayIcon>
 #include <QListWidgetItem>
+#include <QCalendarWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -264,6 +265,7 @@ void MainWindow::ShowActiveAlarm(int index)
     ui->chkFri->setChecked(active->isFriEnabled());
     ui->chkSat->setChecked(active->isSatEnabled());
     ui->chkSun->setChecked(active->isSunEnabled());
+    ui->calendarWidget->setSelectedDate(active->GetCustomDate());
 }
 
 void MainWindow::timeCheck()

@@ -16,6 +16,7 @@ Schedule::Schedule(QObject *parent) :
 
     this->SetCustEnabled(false);
     this->SetTime(QTime::fromMSecsSinceStartOfDay(0));
+    this->_CustomAlarm=QDate::currentDate();
     this->SetCustomSound("");
     this->SetCustomSoundEnabled(false);
 }

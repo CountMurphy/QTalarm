@@ -9,7 +9,7 @@
 Timer::Timer(QObject *parent,ScheduleCollection *Collection) :
     QObject(parent)
 {
-    this->_Schedules=Collection->GetScheduleList();
+    this->_Schedules=Collection;
 }
 
 void Timer::StartTimer(Alarm *MainAlarm)
@@ -26,7 +26,7 @@ void Timer::AlarmCheck()
     if(!this->_CurAlarm->isPlaying() && this->_CurAlarm->canResume)
     {
         Schedule *cur_sche;
-        foreach(cur_sche,this->_Schedules)
+        foreach(cur_sche,this->_Schedules->GetScheduleList())
         {
             if(cur_sche->GetCustomSoundEnabled())
             {
