@@ -11,7 +11,7 @@ class Alarm : public QObject
     Q_OBJECT
 public:
     explicit Alarm(QObject *parent = 0);
-    void Start(bool);
+    void Start(bool useCustom);
     void Stop();
     bool isPlaying();
     bool canResume;

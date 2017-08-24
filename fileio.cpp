@@ -196,11 +196,10 @@ QList<Schedule*> FileIO::LegacyRead()
                 newSche->SetTime(this->_Settings.value(Index+"WDTime").toTime());
             }
 
-            newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
-            newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
-            if(this->_Settings.value((Index+"CustomSoundEnabled")).toBool())
+            if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
             {
                 newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+                newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
             }
             convertedSche.append(newSche);
         }
@@ -222,11 +221,10 @@ QList<Schedule*> FileIO::LegacyRead()
                 newSche->SetTime(this->_Settings.value(Index+"WETime").toTime());
             }
 
-            newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
-            newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
-            if(this->_Settings.value((Index+"CustomSoundEnabled")).toBool())
+            if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
             {
-                newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+                newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+                newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
             }
             convertedSche.append(newSche);
         }
@@ -243,10 +241,10 @@ QList<Schedule*> FileIO::LegacyRead()
             {
                 newSche->SetTime(this->_Settings.value(Index+"CustTime").toTime());
             }
-            newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
-            if(this->_Settings.value((Index+"CustomSoundEnabled")).toBool())
+            if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
             {
-                newSche->SetCustEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
+                newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
+                newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
             }
             convertedSche.append(newSche);
         }

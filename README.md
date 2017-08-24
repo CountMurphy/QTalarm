@@ -13,13 +13,13 @@ Screen shots and more information on the [offical web page!](https://random-hack
 Features
 ========
 
--Up to 15 Customizable alarms
+- Unlimted number of customizable alarms
 
--Can wake up using the default sound, or any of audio / video file of your choosing.
+- Can wake up using the default sound, or any of audio / video file of your choosing.
 
--Custom Date alarms
+- Custom Date alarms
 
--Completely Cross plateform
+- Completely Cross plateform
 
 
 Licensing
