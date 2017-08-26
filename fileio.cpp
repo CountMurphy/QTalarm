@@ -68,10 +68,6 @@ QList<Schedule*> FileIO::LoadConfig()
         sched->SetCustomSoundEnabled(this->_Settings.value(indexStr+"CustomSoundEnabled").toBool());
         sched->SetCustomSound(this->_Settings.value(indexStr+"CustomSound").toString());
 
-//        if(CustSoundEnabled==false)
-//        {
-//            CustSound="";
-//        }
         scheduleList.append(sched);
     }
     return scheduleList;
@@ -129,7 +125,7 @@ void FileIO::SaveVolume(int vol)
 
 bool FileIO::LoadWindowShow()
 {
-    QSettings settings; //not sure why other methods use static settings. May have to refactor
+    QSettings settings;
     return settings.value("ShowWindowDefault").toBool();
 }
 
@@ -232,6 +228,7 @@ QList<Schedule*> FileIO::LegacyRead()
         if(this->_Settings.value(Index+"CustEnabled").toBool())
         {
             Schedule *newSche=new Schedule;
+            newSche->setIsCustomEnabled(true);
             if(this->_Settings.value(Index+"CustTime").toDateTime().isNull())
             {
                 QTime emptyTime;
@@ -239,7 +236,9 @@ QList<Schedule*> FileIO::LegacyRead()
                 newSche->SetTime(emptyTime);
             }else
             {
-                newSche->SetTime(this->_Settings.value(Index+"CustTime").toTime());
+                QDateTime val=this->_Settings.value(Index+"CustTime").toDateTime();
+                newSche->SetTime(val.time());
+                newSche->SetCust(val.date());
             }
             if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
             {
@@ -248,14 +247,6 @@ QList<Schedule*> FileIO::LegacyRead()
             }
             convertedSche.append(newSche);
         }
-
-
-
-
-//        if(newSche->GetCustomSoundEnabled()==false)
-//        {
-//            newSche->SetCustomSound("");
-//        }
 
     }
     return convertedSche;
