@@ -78,7 +78,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
     connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(ShowSettings()));
     connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetTime()));
-    connect(ui->CustEdit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
     connect(ui->listAlmBtn,SIGNAL(clicked(QAbstractButton*)),this,SLOT(AddRemoveAlarm(QAbstractButton*)));
     connect(ui->listWidget,SIGNAL(currentRowChanged(int)),this,SLOT(ShowActiveAlarm(int)));
     connect(ui->chkMon,SIGNAL(clicked(bool)),this,SLOT(ToggleMon(bool)));
