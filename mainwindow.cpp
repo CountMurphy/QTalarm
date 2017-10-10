@@ -27,6 +27,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->_supportsTray = QSystemTrayIcon::isSystemTrayAvailable();
+    if(!this->_supportsTray)
+    {
+        qInfo() << "No system tray detected. What a shitty DE"; //what is this 1993?
+    }
 
     //Create / load Schedule
     _Schedules=new ScheduleCollection(this);
