@@ -104,7 +104,12 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent * event)
 {
     event->ignore();
-    this->hide();
+    if(this->_supportsTray)
+    {
+        this->hide();
+    }else{
+        Quit();
+    }
 }
 
 void MainWindow::SetupClock()
@@ -329,7 +334,10 @@ void MainWindow::SnoozeMenuCheck()
         //Create Snooze Menu object
         snooze *snMenu=new snooze(this,CurAlarm);
         snMenu->show();
-        this->hide();
+        if(this->_supportsTray)
+        {
+            this->hide();
+        }
         this->CurAlarm->canResume=false;
     }
 }
