@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     a.setApplicationName("QTalarm");
     a.setOrganizationName("QTalarm");
     MainWindow w;
-    if(FileIO::LoadWindowShow())
+    if(FileIO::LoadWindowShow() || !QSystemTrayIcon::isSystemTrayAvailable())
     {
         w.show();
     }else{

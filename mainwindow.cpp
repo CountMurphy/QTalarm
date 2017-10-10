@@ -26,81 +26,74 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    if(QSystemTrayIcon::isSystemTrayAvailable())
-    {
-        //Create / load Schedule
-        _Schedules=new ScheduleCollection(this);
-        _Schedules->LoadSchedules();
-        PopulateListWidget();
-        DisablePanelIfNoSelection();
+    this->_supportsTray = QSystemTrayIcon::isSystemTrayAvailable();
 
-        _isMilTime=FileIO::isMilTime();
-        _WarnOnPm=FileIO::LoadWarnOnPm();
-        _prevTimeWasMil=_isMilTime;
-        displayTimeMode();
+    //Create / load Schedule
+    _Schedules=new ScheduleCollection(this);
+    _Schedules->LoadSchedules();
+    PopulateListWidget();
+    DisablePanelIfNoSelection();
 
-        //Call Time keeper
-        TimeKeeper=new Timer(this,_Schedules);
-        CurAlarm=new Alarm(this);
-        TimeKeeper->StartTimer(CurAlarm);
+    _isMilTime=FileIO::isMilTime();
+    _WarnOnPm=FileIO::LoadWarnOnPm();
+    _prevTimeWasMil=_isMilTime;
+    displayTimeMode();
 
-        //Set Volume
-        int Volume = FileIO::LoadVolume();
-        ui->VolumeSlider->setValue(Volume<=0? 50:Volume);
-        CurAlarm->SetVolume(ui->VolumeSlider->value());
-        ui->listAlmBtn->button(QDialogButtonBox::Ok)->setText("&Add");
-        ui->listAlmBtn->button(QDialogButtonBox::Cancel)->setText("&Remove");
+    //Call Time keeper
+    TimeKeeper=new Timer(this,_Schedules);
+    CurAlarm=new Alarm(this);
+    TimeKeeper->StartTimer(CurAlarm);
 
-        trayIcon=new QSystemTrayIcon(this);
-        trayIconMenu=new QMenu(this);
-        QAction *QAshow=new QAction("&Show",this);
-        QAction *QAquit=new QAction("&Quit",this);
+    //Set Volume
+    int Volume = FileIO::LoadVolume();
+    ui->VolumeSlider->setValue(Volume<=0? 50:Volume);
+    CurAlarm->SetVolume(ui->VolumeSlider->value());
+    ui->listAlmBtn->button(QDialogButtonBox::Ok)->setText("&Add");
+    ui->listAlmBtn->button(QDialogButtonBox::Cancel)->setText("&Remove");
 
-        trayIconMenu->addAction(QAshow);
-        trayIconMenu->addSeparator();
-        trayIconMenu->addAction(QAquit);
-        trayIcon->setContextMenu(trayIconMenu);
-        trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
-        trayIcon->setToolTip("QTalarm");
-        trayIcon->show();
+    trayIcon=new QSystemTrayIcon(this);
+    trayIconMenu=new QMenu(this);
+    QAction *QAshow=new QAction("&Show",this);
+    QAction *QAquit=new QAction("&Quit",this);
 
-        ui->txtSoundPath->setText("");
-        ui->CustEdit->setDate(QDate::currentDate());
-        SetupClock();
+    trayIconMenu->addAction(QAshow);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(QAquit);
+    trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
+    trayIcon->setToolTip("QTalarm");
+    trayIcon->show();
 
-
-        //set up ui slots
-        connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
-        connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
-        connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
-        connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(Quit()));
-        connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-        connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
-        connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(ShowSettings()));
-        connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetTime()));
-        connect(ui->CustEdit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
-        connect(ui->listAlmBtn,SIGNAL(clicked(QAbstractButton*)),this,SLOT(AddRemoveAlarm(QAbstractButton*)));
-        connect(ui->listWidget,SIGNAL(currentRowChanged(int)),this,SLOT(ShowActiveAlarm(int)));
-        connect(ui->chkMon,SIGNAL(clicked(bool)),this,SLOT(ToggleMon(bool)));
-        connect(ui->chkTues,SIGNAL(clicked(bool)),this,SLOT(ToggleTue(bool)));
-        connect(ui->chkWed,SIGNAL(clicked(bool)),this,SLOT(ToggleWed(bool)));
-        connect(ui->chkThurs,SIGNAL(clicked(bool)),this,SLOT(ToggleThur(bool)));
-        connect(ui->chkFri,SIGNAL(clicked(bool)),this,SLOT(ToggleFri(bool)));
-        connect(ui->chkSat,SIGNAL(clicked(bool)),this,SLOT(ToggleSat(bool)));
-        connect(ui->chkSun,SIGNAL(clicked(bool)),this,SLOT(ToggleSun(bool)));
-        connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
-        connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
-        connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
-        connect(ui->VolumeSlider,SIGNAL(valueChanged(int)),CurAlarm,SLOT(SetVolume(int)));
-
-        connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomDate()));
+    ui->txtSoundPath->setText("");
+    ui->CustEdit->setDate(QDate::currentDate());
+    SetupClock();
 
 
-    }else{
-        //Error out and quit
-        QMessageBox::critical(this,"Abort","Unsupported Desktop Environment.  Exiting");
-        exit(EXIT_FAILURE);
-    }
+    //set up ui slots
+    connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
+    connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
+    connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
+    connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(Quit()));
+    connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
+    connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
+    connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(ShowSettings()));
+    connect(ui->timeEdit,SIGNAL(editingFinished()),this,SLOT(SetTime()));
+    connect(ui->CustEdit,SIGNAL(editingFinished()),this,SLOT(SetCustomTime()));
+    connect(ui->listAlmBtn,SIGNAL(clicked(QAbstractButton*)),this,SLOT(AddRemoveAlarm(QAbstractButton*)));
+    connect(ui->listWidget,SIGNAL(currentRowChanged(int)),this,SLOT(ShowActiveAlarm(int)));
+    connect(ui->chkMon,SIGNAL(clicked(bool)),this,SLOT(ToggleMon(bool)));
+    connect(ui->chkTues,SIGNAL(clicked(bool)),this,SLOT(ToggleTue(bool)));
+    connect(ui->chkWed,SIGNAL(clicked(bool)),this,SLOT(ToggleWed(bool)));
+    connect(ui->chkThurs,SIGNAL(clicked(bool)),this,SLOT(ToggleThur(bool)));
+    connect(ui->chkFri,SIGNAL(clicked(bool)),this,SLOT(ToggleFri(bool)));
+    connect(ui->chkSat,SIGNAL(clicked(bool)),this,SLOT(ToggleSat(bool)));
+    connect(ui->chkSun,SIGNAL(clicked(bool)),this,SLOT(ToggleSun(bool)));
+    connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
+    connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
+    connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
+    connect(ui->VolumeSlider,SIGNAL(valueChanged(int)),CurAlarm,SLOT(SetVolume(int)));
+
+    connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomDate()));
 }
 
 MainWindow::~MainWindow()

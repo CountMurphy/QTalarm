@@ -29,6 +29,7 @@ private:
     int _lastDeletedIndex;
     bool _isMilTime;
     bool _prevTimeWasMil;
+    bool _supportsTray;
     bool _WarnOnPm;
     void displayTimeMode();
 
