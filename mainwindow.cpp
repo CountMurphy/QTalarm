@@ -147,6 +147,12 @@ void MainWindow::SetTime()
     {
         PMWarning();
     }
+    if(ui->listWidget->currentIndex().column()==-1)
+    {
+        //There is no selected row. Enter was probably hit, the time registered, folowed by
+        //on change trigger, execpt the changes have already been logged
+        return;
+    }
     Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
     Active->SetTime(ui->timeEdit->time());
     UpdateListWidget();
