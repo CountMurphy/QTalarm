@@ -143,19 +143,19 @@ void MainWindow::ShowWindow()
 
 void MainWindow::SetTime()
 {
-    if(ui->timeEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
+
+    //If there is no selected row. Enter was probably hit, the time registered, folowed by
+    //on change trigger, execpt the changes have already been logged
+    if(ui->listWidget->currentIndex().column()!=-1)
     {
-        PMWarning();
+        if(ui->timeEdit->time().hour()>12 && !_isMilTime && _WarnOnPm)
+        {
+            PMWarning();
+        }
+        Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
+        Active->SetTime(ui->timeEdit->time());
+        UpdateListWidget();
     }
-    if(ui->listWidget->currentIndex().column()==-1)
-    {
-        //There is no selected row. Enter was probably hit, the time registered, folowed by
-        //on change trigger, execpt the changes have already been logged
-        return;
-    }
-    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
-    Active->SetTime(ui->timeEdit->time());
-    UpdateListWidget();
 }
 
 void MainWindow::SetCustomDate()
