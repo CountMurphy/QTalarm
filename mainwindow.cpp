@@ -160,14 +160,17 @@ void MainWindow::SetTime()
 
 void MainWindow::SetCustomDate()
 {
-    //Update date on the display
-    ui->CustEdit->setDate(ui->calendarWidget->selectedDate());
-    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
-    Active->SetTime(ui->timeEdit->time());
-    QDate CustomDate=ui->calendarWidget->selectedDate();
-    Active->SetCust(CustomDate);
-    if(Active->isCustomEnabled())
-        UpdateListWidget();
+    if(ui->listWidget->currentIndex().column()!=-1)
+    {
+        //Update date on the display
+        ui->CustEdit->setDate(ui->calendarWidget->selectedDate());
+        Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
+        Active->SetTime(ui->timeEdit->time());
+        QDate CustomDate=ui->calendarWidget->selectedDate();
+        Active->SetCust(CustomDate);
+        if(Active->isCustomEnabled())
+            UpdateListWidget();
+    }
 }
 
 void MainWindow::ToggleMon(bool isEnabled)
