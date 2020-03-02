@@ -19,6 +19,7 @@ Schedule::Schedule(QObject *parent) :
     this->_CustomAlarm=QDate::currentDate();
     this->SetCustomSound("");
     this->SetCustomSoundEnabled(false);
+    this->SetIsBastard(false);
 }
 
 void Schedule::SetCustEnabled(bool isEnabled)
@@ -52,6 +53,10 @@ void Schedule::SetCustomSound(QString SoundPath)
     this->_CustomSound=SoundPath;
 }
 
+void Schedule::SetIsBastard(bool isBast)
+{
+    this->_isBastard=isBast;
+}
 
 bool Schedule::GetCustomEnabled()
 {
@@ -68,6 +73,11 @@ bool Schedule::GetCustomSoundEnabled()
 QDate Schedule::GetCustomDate()
 {
     return this->_CustomAlarm;
+}
+
+bool Schedule::isBastard() const
+{
+    return this->_isBastard;
 }
 
 
@@ -187,6 +197,8 @@ QString Schedule::Name()
         name.append(" Sun");
     if(this->isCustomEnabled())
         name.append("  "+this->_CustomAlarm.toString());
+    if(this->isBastard())
+        name.append(" Σ");
 
     return name;
 }

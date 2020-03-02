@@ -13,6 +13,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    bastardsnooze.cpp \
         mainwindow.cpp \
     timer.cpp \
     alarm.cpp \
@@ -24,6 +25,7 @@ SOURCES += main.cpp\
     settingdialog.cpp
 
 HEADERS  += mainwindow.h \
+    bastardsnooze.h \
     timer.h \
     alarm.h \
     fileio.h \
@@ -35,6 +37,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
+    bastardsnooze.ui \
     snooze.ui \
     settingdialog.ui
 

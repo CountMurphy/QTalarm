@@ -31,12 +31,6 @@ bool FileIO::DelExtracted()
 
 QList<Schedule*> FileIO::LoadConfig()
 {
-    //Legacy save file check
-    if(this->_Settings.value("AlarmCount").isNull())
-    {
-        return LegacyRead();
-    }
-
     QList<Schedule*> scheduleList;
     QString indexStr;
 
@@ -61,6 +55,7 @@ QList<Schedule*> FileIO::LoadConfig()
         sched->setIsFriEnabled(this->_Settings.value(indexStr+"FriEnabled").toBool());
         sched->setIsSatEnabled(this->_Settings.value(indexStr+"SatEnabled").toBool());
         sched->setIsSunEnabled(this->_Settings.value(indexStr+"SunEnabled").toBool());
+        sched->SetIsBastard(this->_Settings.value(indexStr+"Bastard").toBool());
 
         sched->SetCustEnabled(this->_Settings.value(indexStr+"CustEnabled").toBool());
         sched->SetCust(this->_Settings.value(indexStr+"CustDate").toDate());
@@ -93,6 +88,7 @@ bool FileIO::Save(ScheduleCollection *Collection)
             this->_Settings.setValue(IndexStr+"FriEnabled",currentSche->isFriEnabled());
             this->_Settings.setValue(IndexStr+"SatEnabled",currentSche->isSatEnabled());
             this->_Settings.setValue(IndexStr+"SunEnabled",currentSche->isSunEnabled());
+            this->_Settings.setValue(IndexStr+"Bastard",currentSche->isBastard());
             this->_Settings.setValue(IndexStr+"Time",currentSche->GetTime());
             this->_Settings.setValue(IndexStr+"CustEnabled",currentSche->GetCustomEnabled());
             this->_Settings.setValue(IndexStr+"CustDate",currentSche->GetCustomDate());
@@ -109,6 +105,8 @@ bool FileIO::Save(ScheduleCollection *Collection)
 
     return true;
 }
+
+//static lazy loaded methods
 
 
 int FileIO::LoadVolume()
@@ -168,99 +166,20 @@ bool FileIO::LoadWarnOnPm()
     return settings.value("WarnOnPm").toBool();
 }
 
+bool FileIO::LoadSeenSolveText()
+{
+    QSettings settings;
+    return settings.value("SeenSolvedText").toBool();
+}
+
 void FileIO::SaveWarnOnPm(bool warn)
 {
     QSettings settings;
     settings.setValue("WarnOnPm",warn);
 }
 
-//to be removed in future versions
-QList<Schedule*> FileIO::LegacyRead()
+void FileIO::SaveSeenSolveText()
 {
-    QList<Schedule*> convertedSche;
-
-    for(int index=0;index<5;index++)
-    {
-
-        QString Index;
-        Index.setNum(index);
-        if(this->_Settings.value(Index+"WDEnabled").toBool())
-        {
-            Schedule *newSche=new Schedule;
-            newSche->setIsMonEnabled(true);
-            newSche->setIsTueEnabled(true);
-            newSche->setIsWedEnabled(true);
-            newSche->setIsThurEnabled(true);
-            newSche->setIsFriEnabled(true);
-
-            if(this->_Settings.value(Index+"WDTime").toTime().isNull())
-            {
-                QTime emptyTime;
-                emptyTime.setHMS(0,0,0,0);
-                newSche->SetTime(emptyTime);
-            }
-            else
-            {
-                newSche->SetTime(this->_Settings.value(Index+"WDTime").toTime());
-            }
-
-            if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
-            {
-                newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
-                newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
-            }
-            convertedSche.append(newSche);
-        }
-
-        if(this->_Settings.value(Index+"WEEnabled").toBool())
-        {
-            Schedule *newSche=new Schedule;
-            newSche->setIsSatEnabled(true);
-            newSche->setIsSunEnabled(true);
-
-            if(this->_Settings.value(Index+"WETime").toTime().isNull())
-            {
-                QTime emptyTime;
-                emptyTime.setHMS(0,0,0,0);
-                newSche->SetTime(emptyTime);
-            }
-            else
-            {
-                newSche->SetTime(this->_Settings.value(Index+"WETime").toTime());
-            }
-
-            if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
-            {
-                newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
-                newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
-            }
-            convertedSche.append(newSche);
-        }
-
-        if(this->_Settings.value(Index+"CustEnabled").toBool())
-        {
-            Schedule *newSche=new Schedule;
-            newSche->setIsCustomEnabled(true);
-            if(this->_Settings.value(Index+"CustTime").toDateTime().isNull())
-            {
-                QTime emptyTime;
-                emptyTime.setHMS(0,0,0,0);
-                newSche->SetTime(emptyTime);
-            }else
-            {
-                QDateTime val=this->_Settings.value(Index+"CustTime").toDateTime();
-                newSche->SetTime(val.time());
-                newSche->SetCust(val.date());
-            }
-            if(this->_Settings.value((Index+"CustomSoundEnabled")).isNull()==false)
-            {
-                newSche->SetCustomSound(this->_Settings.value(Index+"CustomSound").toString());
-                newSche->SetCustomSoundEnabled(this->_Settings.value(Index+"CustomSoundEnabled").toBool());
-            }
-            convertedSche.append(newSche);
-        }
-
-    }
-    return convertedSche;
-
+    QSettings settings;
+    settings.setValue("SeenSolvedText",true);
 }

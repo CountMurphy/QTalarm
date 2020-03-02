@@ -24,6 +24,7 @@ public slots:
 private slots:
     void DismissClicked();
     void SnoozeClicked();
+    void OtherAlarmCheck();
     void timerOut();
 
 private:
@@ -31,6 +32,7 @@ private:
     void SetupClock();
     Alarm *_curAlarm;
     QTimer *_snoozeTimer;
+    QTimer *_otherAlarmCheckTimer;
 };
 
 #endif // SNOOZE_H

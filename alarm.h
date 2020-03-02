@@ -10,14 +10,21 @@ class Alarm : public QObject
 {
     Q_OBJECT
 public:
-    explicit Alarm(QObject *parent = 0);
+    virtual ~Alarm(){};
+    static Alarm & GetInstance()
+    {
+        static Alarm instance;
+        return instance;
+    }
     void Start(bool useCustom);
     void Stop();
     bool isPlaying();
     bool canResume;
     void SetCustomPath(QString);
     bool UsingCustomPath;
+    bool isBastard;
 private:
+    explicit Alarm(QObject *parent = 0);
     QMediaPlayer * media;
     QString _DefaultPath;
     QString _CustPath;

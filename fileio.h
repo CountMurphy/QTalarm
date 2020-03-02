@@ -22,13 +22,14 @@ public:
     static void SaveWindowShow(bool);
     static bool isMilTime();
     static bool LoadisMono();
+    static bool LoadSeenSolveText();
     static void SaveisMono(bool);
+    static void SaveSeenSolveText();
     static void SaveisMilTime(bool isMilTime);
     static bool LoadWarnOnPm();
     static void SaveWarnOnPm(bool);
 private:
     QSettings _Settings;
-    QList<Schedule*> LegacyRead();
 signals:
     
 public slots:

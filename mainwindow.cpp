@@ -7,6 +7,7 @@
 #include "aboutdialog.h"
 #include "settingdialog.h"
 #include "snooze.h"
+#include "bastardsnooze.h"
 #include <QMessageBox>
 #include <QCheckBox>
 #include <QLabel>
@@ -19,6 +20,7 @@
 #include <QSystemTrayIcon>
 #include <QListWidgetItem>
 #include <QCalendarWidget>
+#include <QToolTip>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _Schedules->LoadSchedules();
     PopulateListWidget();
     DisablePanelIfNoSelection();
+    if(ui->listWidget->currentRow()==0)
+        ShowActiveAlarm(0);
 
     _isMilTime=FileIO::isMilTime();
     _WarnOnPm=FileIO::LoadWarnOnPm();
@@ -45,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Call Time keeper
     TimeKeeper=new Timer(this,_Schedules);
-    CurAlarm=new Alarm(this);
+    CurAlarm = &Alarm::GetInstance();
     TimeKeeper->StartTimer(CurAlarm);
 
     //Set Volume
@@ -64,18 +68,16 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(QAquit);
     trayIcon->setContextMenu(trayIconMenu);
-    if(FileIO::LoadisMono())
-    {
-        trayIcon->setIcon(QIcon(":/new/icons/mono.png"));
-    }else{
-        trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
-    }
-    trayIcon->setToolTip("QTalarm");
+    ChangeIconToDefault();
     trayIcon->show();
 
     ui->txtSoundPath->setText("");
     ui->CustEdit->setDate(QDate::currentDate());
     SetupClock();
+    ui->chkBastard->setToolTip("Only stop alarms after a random math problem has been solved.");
+    ui->chkSounds->setToolTip("Use a custom sound/video file to wake up to");
+
+
 
 
     //set up ui slots
@@ -98,9 +100,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->chkSun,SIGNAL(clicked(bool)),this,SLOT(ToggleSun(bool)));
     connect(ui->chkCustom,SIGNAL(clicked(bool)),this,SLOT(ToggleCust(bool)));
     connect(ui->chkSounds,SIGNAL(clicked(bool)),this,SLOT(OpenDiaglog(bool)));
+    connect(ui->chkBastard,SIGNAL(clicked(bool)),this,SLOT(ToggleBastard(bool)));
     connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
     connect(ui->VolumeSlider,SIGNAL(valueChanged(int)),CurAlarm,SLOT(SetVolume(int)));
-
     connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomDate()));
 }
 
@@ -138,7 +140,7 @@ void MainWindow::ToggleWindow(QSystemTrayIcon::ActivationReason Reason)
 
 void MainWindow::ToggleWindow()
 {
-    if(this->CurAlarm->isPlaying())
+    if(this->CurAlarm->isPlaying() && this->CurAlarm->isBastard==false)
     {
         this->CurAlarm->Stop();
     }
@@ -183,6 +185,15 @@ void MainWindow::SetCustomDate()
             UpdateListWidget();
         this->_Schedules->Save();
     }
+}
+
+void MainWindow::ToggleBastard(bool val)
+{
+    Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
+    Active->SetIsBastard(val);
+    UpdateListWidget();
+    this->_Schedules->Save();
+    SendTrayMessage(solveNotificationTitle,solveNotification);
 }
 
 void MainWindow::ToggleMon(bool isEnabled)
@@ -239,10 +250,17 @@ void MainWindow::ToggleCust(bool isEnabled)
 
 void MainWindow::Quit()
 {
-    this->_Schedules->Save();
-    FileIO::DelExtracted();
-    FileIO::SaveVolume(ui->VolumeSlider->value());
-    qApp->quit();
+    if(this->CurAlarm->isPlaying() && this->CurAlarm->isBastard)
+    {
+        //message box will cause app to exit even though we told it not too. wtf
+        //QMessageBox::warning(this,"Nope","you didn't think it was going to be that easy did you?");
+        return;
+    }else{
+        this->_Schedules->Save();
+        FileIO::DelExtracted();
+        FileIO::SaveVolume(ui->VolumeSlider->value());
+        qApp->quit();
+    }
 }
 
 void MainWindow::AddRemoveAlarm(QAbstractButton *button)
@@ -289,12 +307,14 @@ void MainWindow::ShowActiveAlarm(int index)
     ui->chkSat->setChecked(active->isSatEnabled());
     ui->chkSun->setChecked(active->isSunEnabled());
     ui->calendarWidget->setSelectedDate(active->GetCustomDate());
+    ui->chkBastard->setChecked(active->isBastard());
 }
 
 void MainWindow::timeCheck()
 {
     UpdateClock();
     SnoozeMenuCheck();
+    BastardMenuCheck();
     if(_isMilTime!=_prevTimeWasMil)
     {
         _prevTimeWasMil=_isMilTime;
@@ -330,20 +350,15 @@ void MainWindow::OpenDiaglog(bool isChecked)
 
 void MainWindow::TestAlarm()
 {
-    if(ui->TestBtn->text()=="Test" || ui->TestBtn->text()=="&Test")
+    if(ui->chkSounds->isChecked())
     {
-        if(ui->chkSounds->isChecked())
-        {
-            this->CurAlarm->SetCustomPath(ui->txtSoundPath->text());
-            this->CurAlarm->Start(true);
-        }else{
-            this->CurAlarm->Start(false);
-        }
-        ui->TestBtn->setText("Stop");
+        this->CurAlarm->SetCustomPath(ui->txtSoundPath->text());
+        this->CurAlarm->Start(true);
     }else{
-        this->CurAlarm->Stop();
-        ui->TestBtn->setText("Test");
+        this->CurAlarm->Start(false);
     }
+    CurAlarm->isBastard=this->ui->chkBastard->isChecked();
+    this->testrun=true;
 }
 
 void MainWindow::ShowAbout()
@@ -355,19 +370,34 @@ void MainWindow::ShowAbout()
 
 void MainWindow::SnoozeMenuCheck()
 {
-    if(this->CurAlarm->isPlaying() && this->CurAlarm->canResume && (ui->TestBtn->text()=="Test" || ui->TestBtn->text()=="&Test"))
+    if((this->testrun==true && this->CurAlarm->isBastard==false) || (this->CurAlarm->isPlaying() && this->CurAlarm->canResume && this->CurAlarm->isBastard==false))
     {
         //Create Snooze Menu object
         snooze *snMenu=new snooze(this,CurAlarm);
         snMenu->show();
-        if(this->_supportsTray)
+        if(this->_supportsTray && this->testrun==false)
         {
             this->hide();
         }
         this->CurAlarm->canResume=false;
+        this->testrun=false;
     }
 }
 
+void MainWindow::BastardMenuCheck()
+{
+    if((this->testrun==true && this->CurAlarm->isBastard==true) || (this->CurAlarm->isPlaying() && this->CurAlarm->canResume &&  this->CurAlarm->isBastard))
+    {
+        BastardSnooze *bsnooze= new BastardSnooze(this,this->CurAlarm);
+        bsnooze->show();
+        if(this->_supportsTray && this->testrun==false)
+        {
+            this->hide();
+        }
+        this->CurAlarm->canResume=false;
+        this->testrun=false;
+    }
+}
 
 void MainWindow::PMWarning()
 {
@@ -420,10 +450,12 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->chkWed->setEnabled(false);
         ui->CustEdit->setEnabled(false);
         ui->timeEdit->setEnabled(false);
+        ui->chkBastard->setEnabled(false);
 
         ui->chkCustom->setChecked(false);
         ui->chkFri->setChecked(false);
         ui->chkMon->setChecked(false);
+        ui->chkBastard->setChecked(false);
         ui->chkSat->setChecked(false);
         ui->chkSounds->setChecked(false);
         ui->chkSun->setChecked(false);
@@ -446,6 +478,7 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->chkWed->setEnabled(true);
         ui->CustEdit->setEnabled(true);
         ui->timeEdit->setEnabled(true);
+        ui->chkBastard->setEnabled(true);
     }
 }
 
@@ -455,4 +488,31 @@ void MainWindow::UpdateListWidget()
     PopulateListWidget();
     ui->listWidget->setCurrentRow(index);
     this->_Schedules->Save();
+}
+
+void MainWindow::SendTrayMessage(QString title, QString message)
+{
+    if(!FileIO::LoadSeenSolveText())
+    {
+        QIcon icon;
+        if(FileIO::LoadisMono())
+        {
+            icon = QIcon(":/new/icons/mono.png");
+        }else{
+            icon = QIcon(":/new/icons/Clock.png");
+        }
+        trayIcon->showMessage(title,message,icon);
+        FileIO::SaveSeenSolveText();
+    }
+}
+
+void MainWindow::ChangeIconToDefault()
+{
+    trayIcon->setToolTip("QTalarm");
+    if(FileIO::LoadisMono())
+    {
+        this->trayIcon->setIcon(QIcon(":/new/icons/mono.png"));
+    }else{
+        this->trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
+    }
 }

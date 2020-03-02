@@ -31,6 +31,7 @@ private:
     bool _prevTimeWasMil;
     bool _supportsTray;
     bool _WarnOnPm;
+    bool testrun=false;
     void displayTimeMode();
 
     void closeEvent(QCloseEvent*);
@@ -40,6 +41,10 @@ private:
     void PopulateListWidget();
     void DisablePanelIfNoSelection();
     void UpdateListWidget();
+    void ChangeIconToDefault();
+
+    QString solveNotificationTitle = "Solve To Silence";
+    QString solveNotification = "Solve to Silence is a new feature that prevents the user from dismissing snooze until they solve a math problem";
 
 private slots:
     void ToggleWindow();
@@ -56,13 +61,16 @@ private slots:
     void ToggleSat(bool);
     void ToggleSun(bool);
     void ToggleCust(bool);
+    void ToggleBastard(bool);
     void Quit();
     void OpenDiaglog(bool);
     void TestAlarm();
     void ShowAbout();
     void SnoozeMenuCheck();
+    void BastardMenuCheck();
     void timeCheck();
     void ShowSettings();
+    void SendTrayMessage(QString title, QString message);
 };
 
 #endif // MAINWINDOW_H

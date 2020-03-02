@@ -28,6 +28,7 @@ void Timer::AlarmCheck()
         Schedule *cur_sche;
         foreach(cur_sche,this->_Schedules->GetScheduleList())
         {
+            this->_CurAlarm->isBastard=cur_sche->isBastard();
             if(cur_sche->GetCustomSoundEnabled())
             {
                 this->_CurAlarm->SetCustomPath(cur_sche->GetCustomSound());
@@ -102,6 +103,7 @@ void Timer::AlarmCheck()
             {
                 //Set Condtion One!
                 this->_CurAlarm->Start(cur_sche->GetCustomSoundEnabled());
+                break;
             }
         }
     }

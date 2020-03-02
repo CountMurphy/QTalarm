@@ -6,6 +6,9 @@
 #include <QDateTime>
 #include <QString>
 
+//ew, why did I do this this way?
+//The entire scheduling class needs a rewrite.
+//Left over from my jr days....
 class Schedule : public QObject
 {
     Q_OBJECT
@@ -16,6 +19,7 @@ public:
     void SetCust(QDate);
     void SetCustomSound(QString);
     void SetCustomSoundEnabled(bool);
+    void SetIsBastard(bool);
 
     bool GetCustomEnabled();
     bool GetCustomSoundEnabled();
@@ -51,6 +55,7 @@ public:
 
     bool isCustomSoundEnabled() const;
     void setIsCustomSoundEnabled(bool isCustomSoundEnabled);
+    bool isBastard() const;
 
     QString Name();
 
@@ -67,6 +72,7 @@ private:
     bool _isSunEnabled;
     bool _isCustomEnabled;
     bool _isCustomSoundEnabled;
+    bool _isBastard;
     
 signals:
     

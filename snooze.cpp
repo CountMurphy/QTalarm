@@ -11,12 +11,14 @@ snooze::snooze(QWidget *parent,Alarm *curAlarm) :
     ui->setupUi(this);
     this->_curAlarm=curAlarm;
     this->_snoozeTimer=new QTimer(this);
+    this->_otherAlarmCheckTimer=new QTimer(this);
     this->isDismissed=false;
     SetupClock();
 
     //setup connections
     connect(ui->snzBtn,SIGNAL(clicked()),SLOT(SnoozeClicked()));
     connect(ui->DismissBtn,SIGNAL(clicked()),SLOT(DismissClicked()));
+    connect(this->_otherAlarmCheckTimer,SIGNAL(timeout()),SLOT(OtherAlarmCheck()));
     connect(this->_snoozeTimer,SIGNAL(timeout()),SLOT(timerOut()));
 
 }
@@ -47,6 +49,7 @@ void snooze::SnoozeClicked()
 {
     this->_snoozeTimer->start(300000);//5 minutes
     this->_curAlarm->Stop();
+    this->_otherAlarmCheckTimer->start(500);
 }
 
 void snooze::DismissClicked()
@@ -59,6 +62,18 @@ void snooze::DismissClicked()
 
 void snooze::timerOut()
 {
+    this->_otherAlarmCheckTimer->stop();
     this->_curAlarm->Start(this->_curAlarm->UsingCustomPath);
     this->_curAlarm->canResume=false;
+    this->_snoozeTimer->stop();
+}
+
+void snooze::OtherAlarmCheck()
+{
+    //If another alarm is playing, destroy this snooze
+    if(this->_curAlarm->isPlaying())
+    {
+        this->hide();
+        this->~snooze();
+    }
 }
