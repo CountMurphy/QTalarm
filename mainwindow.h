@@ -42,9 +42,9 @@ private:
     void UpdateListWidget();
 
 private slots:
-    void ShowWindow();
+    void ToggleWindow();
     void ShowActiveAlarm(int index);
-    void ShowWindow(QSystemTrayIcon::ActivationReason);
+    void ToggleWindow(QSystemTrayIcon::ActivationReason);
     void AddRemoveAlarm(QAbstractButton*);
     void SetTime();
     void SetCustomDate();

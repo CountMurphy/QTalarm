@@ -24,302 +24,186 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QCalendarWidget" name="calendarWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>296</width>
-      <height>207</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="timeEdit">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>310</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="displayFormat">
-     <string>hh:mm:ss:AP</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkCustom">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>350</y>
-      <width>121</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Custom Date:</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkSounds">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>390</y>
-      <width>101</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Use File</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>20</y>
-      <width>261</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="acceptDrops">
-     <bool>false</bool>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="title">
-     <string>Current Time:</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <widget class="QLabel" name="Clock">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>40</y>
-       <width>221</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>26</pointsize>
-      </font>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="txtSoundPath">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>400</y>
-      <width>501</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="TestBtn">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>310</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test</string>
-    </property>
-   </widget>
-   <widget class="QSlider" name="VolumeSlider">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>380</y>
-      <width>160</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>360</y>
-      <width>111</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Master Volume:</string>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>421</y>
-      <width>511</width>
-      <height>151</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QDateEdit" name="CustEdit">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>350</y>
-      <width>171</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>320</y>
-      <width>50</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Time:</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkMon">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>240</y>
-      <width>86</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Monday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkTues">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>240</y>
-      <width>86</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tuesday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkWed">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>240</y>
-      <width>91</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Wednesday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkThurs">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>240</y>
-      <width>86</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Thursday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkFri">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>270</y>
-      <width>86</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Friday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkSat">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>270</y>
-      <width>86</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Saturday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chkSun">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>270</y>
-      <width>86</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Sunday</string>
-    </property>
-   </widget>
-   <widget class="QDialogButtonBox" name="listAlmBtn">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>430</y>
-      <width>91</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="6">
+     <widget class="QCalendarWidget" name="calendarWidget"/>
+    </item>
+    <item row="0" column="6" colspan="3">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="title">
+       <string>Current Time:</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="Clock">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>26</pointsize>
+          </font>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QCheckBox" name="chkMon">
+      <property name="text">
+       <string>Monday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QCheckBox" name="chkTues">
+      <property name="text">
+       <string>Tuesday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4" colspan="2">
+     <widget class="QCheckBox" name="chkWed">
+      <property name="text">
+       <string>Wednesday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QCheckBox" name="chkThurs">
+      <property name="text">
+       <string>Thursday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="chkFri">
+      <property name="text">
+       <string>Friday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Time:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2" colspan="2">
+     <widget class="QTimeEdit" name="timeEdit">
+      <property name="displayFormat">
+       <string>hh:mm:ss:AP</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="7">
+     <widget class="QPushButton" name="TestBtn">
+      <property name="text">
+       <string>Test</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QCheckBox" name="chkCustom">
+      <property name="text">
+       <string>Custom Date:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2" colspan="2">
+     <widget class="QDateEdit" name="CustEdit"/>
+    </item>
+    <item row="4" column="7">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Master Volume:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" rowspan="2" colspan="2">
+     <widget class="QCheckBox" name="chkSounds">
+      <property name="text">
+       <string>Use File</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="7">
+     <widget class="QSlider" name="VolumeSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLabel" name="txtSoundPath">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="8">
+     <widget class="QListWidget" name="listWidget"/>
+    </item>
+    <item row="7" column="8">
+     <widget class="QDialogButtonBox" name="listAlmBtn">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QCheckBox" name="chkSat">
+      <property name="text">
+       <string>Saturday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QCheckBox" name="chkSun">
+      <property name="text">
+       <string>Sunday</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

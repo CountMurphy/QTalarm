@@ -75,8 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //set up ui slots
     connect(QAquit,SIGNAL(triggered()),this,SLOT(Quit()));
-    connect(QAshow,SIGNAL(triggered()),this,SLOT(ShowWindow()));
-    connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ShowWindow(QSystemTrayIcon::ActivationReason)));
+    connect(QAshow,SIGNAL(triggered()),this,SLOT(ToggleWindow()));
+    connect(trayIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(ToggleWindow(QSystemTrayIcon::ActivationReason)));
     connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(Quit()));
     connect(ui->actionAbout_QT,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
     connect(ui->actionAbout_QTalam,SIGNAL(triggered()),this,SLOT(ShowAbout()));
@@ -123,22 +123,27 @@ void MainWindow::SetupClock()
     CurrentTime->start(500);
 }
 
-void MainWindow::ShowWindow(QSystemTrayIcon::ActivationReason Reason)
+void MainWindow::ToggleWindow(QSystemTrayIcon::ActivationReason Reason)
 {
     if(Reason==QSystemTrayIcon::DoubleClick || Reason==QSystemTrayIcon::Trigger)
     {
-        ShowWindow();
+        ToggleWindow();
     }
 }
 
-void MainWindow::ShowWindow()
+void MainWindow::ToggleWindow()
 {
     if(this->CurAlarm->isPlaying())
     {
         this->CurAlarm->Stop();
     }
     ui->TestBtn->setText("Test");
-    this->show();
+    if(this->isHidden())
+    {
+        this->show();
+    }else{
+        this->hide();
+    }
 }
 
 void MainWindow::SetTime()
