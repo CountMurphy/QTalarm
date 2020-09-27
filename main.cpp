@@ -27,10 +27,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName("QTalarm");
     a.setOrganizationName("QTalarm");
-    //forcing default font size.
-    //QFont font = qApp->font();
-    //font.setPixelSize(10);
-    //qApp->setFont(font);
     MainWindow w;
     if(FileIO::LoadWindowShow() || !QSystemTrayIcon::isSystemTrayAvailable())
     {
