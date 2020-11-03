@@ -160,6 +160,7 @@ void MainWindow::SetTime()
         Schedule *Active=this->_Schedules->GetSchedule(ui->listWidget->currentRow());
         Active->SetTime(ui->timeEdit->time());
         UpdateListWidget();
+        this->_Schedules->Save();
     }
 }
 
@@ -175,6 +176,7 @@ void MainWindow::SetCustomDate()
         Active->SetCust(CustomDate);
         if(Active->isCustomEnabled())
             UpdateListWidget();
+        this->_Schedules->Save();
     }
 }
 
@@ -253,6 +255,7 @@ void MainWindow::AddRemoveAlarm(QAbstractButton *button)
         this->_Schedules->removeScheduleByIndex(ui->listWidget->currentRow());
         PopulateListWidget();
     }
+    this->_Schedules->Save();
 }
 
 
@@ -317,6 +320,7 @@ void MainWindow::OpenDiaglog(bool isChecked)
     }else{
         ui->txtSoundPath->setText("");
     }
+    this->_Schedules->Save();
 }
 
 void MainWindow::TestAlarm()
@@ -445,4 +449,5 @@ void MainWindow::UpdateListWidget()
     int index=ui->listWidget->currentRow();
     PopulateListWidget();
     ui->listWidget->setCurrentRow(index);
+    this->_Schedules->Save();
 }

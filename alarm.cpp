@@ -75,5 +75,6 @@ void Alarm::Resume()
 void Alarm::SetVolume(int Volume)
 {
     media->setVolume(Volume);
+    FileIO::SaveVolume(Volume);
 }
 
