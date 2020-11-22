@@ -143,7 +143,19 @@ bool FileIO::isMilTime()
     return settings.value("isMilTime").toBool();
 }
 
-void FileIO::SaveTimeMode(bool isMilTime)
+bool FileIO::LoadisMono()
+{
+    QSettings settings;
+    return settings.value("isMono").toBool();
+}
+
+void FileIO::SaveisMono(bool isMono)
+{
+    QSettings settings;
+    settings.setValue("isMono",isMono);
+}
+
+void FileIO::SaveisMilTime(bool isMilTime)
 {
     QSettings settings;
     settings.setValue("isMilTime",isMilTime);

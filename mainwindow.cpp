@@ -64,7 +64,12 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(QAquit);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
+    if(FileIO::LoadisMono())
+    {
+        trayIcon->setIcon(QIcon(":/new/icons/mono.png"));
+    }else{
+        trayIcon->setIcon(QIcon(":/new/icons/Clock.png"));
+    }
     trayIcon->setToolTip("QTalarm");
     trayIcon->show();
 
@@ -372,7 +377,7 @@ void MainWindow::PMWarning()
 
 void MainWindow::ShowSettings()
 {
-    SettingDialog *settingsPage=new SettingDialog(this,&_isMilTime, &_WarnOnPm);
+    SettingDialog *settingsPage=new SettingDialog(this,&_isMilTime, &_WarnOnPm, trayIcon);
     settingsPage->show();
 }
 

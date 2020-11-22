@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/new/icons">
         <file alias="Clock.png">Icons/1349069370_Alarm_Clock.png</file>
+        <file alias="mono.png">Icons/1349069370_Alarm_Clock_mono.png</file>
     </qresource>
     <qresource prefix="/new/sounds">
         <file alias="alarm.ogg">Sounds/condition_one.ogg</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

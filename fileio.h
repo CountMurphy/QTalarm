@@ -21,7 +21,9 @@ public:
     static bool LoadWindowShow();
     static void SaveWindowShow(bool);
     static bool isMilTime();
-    static void SaveTimeMode(bool isMilTime);
+    static bool LoadisMono();
+    static void SaveisMono(bool);
+    static void SaveisMilTime(bool isMilTime);
     static bool LoadWarnOnPm();
     static void SaveWarnOnPm(bool);
 private:

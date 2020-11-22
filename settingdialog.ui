@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>327</width>
-    <height>182</height>
+    <height>212</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,7 +53,14 @@
       <item>
        <widget class="QCheckBox" name="WarnBox">
         <property name="text">
-         <string>Warn on Pm alarms</string>
+         <string>Warn on Pm Alarms</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chk_mono">
+        <property name="text">
+         <string>Use Monochrome Icons</string>
         </property>
        </widget>
       </item>
