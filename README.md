@@ -24,14 +24,13 @@ Features
 ## Linux Build/Install
 
 ### Building
-1. You need QT5 installed on your system first.
-2. cd into the directory with the QTAlarm source files.
-3. In the termnal, type "qmake" This will create a "Makefile"
-4. type "make" When done, a new file called "qtalarm" should have been created. This is application itself. You can test it by typing "./qtalarm" in your terminal. The application should run. There will not be any entries for it in your start menu (or whatever that is called in your desktop environment at this point).
+1. Ensure QT5 is installed on your system.
+1. In the termnal, type `qmake` This will create a Makefile
+1. type `make`
  
 ### Installing
 
-1. copy qtalarm into /usr/bin (sudo cp qtalarm /usr/bin).
+1. copy the qtalarm binary into /usr/bin (sudo cp qtalarm /usr/bin).
 2. inside of the source code directory, there is a directory called "Icons." These icons need to be copied with the following commands:
    - `sudo cp 1349069370_Alarm_Clock.png /usr/share/icons/hicolor/48x48/apps/`
    - `sudo cp Icons/1349069370_Alarm_Clock24.png /usr/share/icons/hicolor/24x24/apps/1349069370_Alarm_Clock.png`
