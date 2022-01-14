@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
+    <width>810</width>
     <height>644</height>
    </rect>
   </property>
@@ -25,6 +25,108 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="7" column="8">
+     <widget class="QDialogButtonBox" name="listAlmBtn">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ignore|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="6">
+     <widget class="QCalendarWidget" name="calendarWidget"/>
+    </item>
+    <item row="2" column="4">
+     <widget class="QCheckBox" name="chkSun">
+      <property name="text">
+       <string>Sunday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLabel" name="txtSoundPath">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QCheckBox" name="chkSounds">
+      <property name="text">
+       <string>Use File</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QCheckBox" name="chkThurs">
+      <property name="text">
+       <string>Thursday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2" colspan="2">
+     <widget class="QTimeEdit" name="timeEdit">
+      <property name="displayFormat">
+       <string>hh:mm:ss:AP</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QCheckBox" name="chkMon">
+      <property name="text">
+       <string>Monday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QCheckBox" name="chkSat">
+      <property name="text">
+       <string>Saturday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QCheckBox" name="chkCustom">
+      <property name="text">
+       <string>Custom Date:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2">
+     <widget class="QCheckBox" name="chkBastard">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Force math questions to disable alarm"/>
+      </property>
+      <property name="text">
+       <string>Solve to Silence</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="7">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Master Volume:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QCheckBox" name="chkTues">
+      <property name="text">
+       <string>Tuesday</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="6" colspan="3">
      <widget class="QGroupBox" name="groupBox">
       <property name="enabled">
@@ -73,10 +175,37 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QCheckBox" name="chkTues">
+    <item row="3" column="7">
+     <widget class="QPushButton" name="TestBtn">
       <property name="text">
-       <string>Tuesday</string>
+       <string>Test</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="8">
+     <widget class="QListWidget" name="listWidget"/>
+    </item>
+    <item row="1" column="4" colspan="2">
+     <widget class="QCheckBox" name="chkWed">
+      <property name="text">
+       <string>Wednesday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2" colspan="2">
+     <widget class="QDateEdit" name="CustEdit"/>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="chkFri">
+      <property name="text">
+       <string>Friday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="lblTime">
+      <property name="text">
+       <string>Time:</string>
       </property>
      </widget>
     </item>
@@ -87,135 +216,6 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="7">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Master Volume:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="4" colspan="2">
-     <widget class="QCheckBox" name="chkWed">
-      <property name="text">
-       <string>Wednesday</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QCheckBox" name="chkFri">
-      <property name="text">
-       <string>Friday</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="8">
-     <widget class="QDialogButtonBox" name="listAlmBtn">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2" colspan="2">
-     <widget class="QTimeEdit" name="timeEdit">
-      <property name="displayFormat">
-       <string>hh:mm:ss:AP</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Time:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QCheckBox" name="chkSounds">
-      <property name="text">
-       <string>Use File</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QCheckBox" name="chkMon">
-      <property name="text">
-       <string>Monday</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="2" colspan="2">
-     <widget class="QDateEdit" name="CustEdit"/>
-    </item>
-    <item row="7" column="0" colspan="8">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
-    <item row="6" column="1">
-     <widget class="QLabel" name="txtSoundPath">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QCheckBox" name="chkCustom">
-      <property name="text">
-       <string>Custom Date:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="6">
-     <widget class="QCheckBox" name="chkThurs">
-      <property name="text">
-       <string>Thursday</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="7">
-     <widget class="QPushButton" name="TestBtn">
-      <property name="text">
-       <string>Test</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QCheckBox" name="chkSat">
-      <property name="text">
-       <string>Saturday</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QCheckBox" name="chkSun">
-      <property name="text">
-       <string>Sunday</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="6">
-     <widget class="QCalendarWidget" name="calendarWidget"/>
-    </item>
-    <item row="5" column="2">
-     <widget class="QCheckBox" name="chkBastard">
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="toolTip">
-       <string extracomment="Force math questions to disable alarm"/>
-      </property>
-      <property name="text">
-       <string>Solve to Silence</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -223,8 +223,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>696</width>
-     <height>22</height>
+     <width>810</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

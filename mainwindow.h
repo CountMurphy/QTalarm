@@ -26,7 +26,7 @@ private:
     Alarm *CurAlarm;
     ScheduleCollection *_Schedules;
 
-    int _lastDeletedIndex;
+    int _lastDeletedIndex=-1;
     bool _isMilTime;
     bool _prevTimeWasMil;
     bool _supportsTray;
@@ -42,6 +42,10 @@ private:
     void DisablePanelIfNoSelection();
     void UpdateListWidget();
     void ChangeIconToDefault();
+    void SetupSlots(QAction *,QAction *);
+    void SetupTrayIcon(QAction *,QAction*);
+    void SetupVolume();
+    void ConfigureButtons();
 
     QString solveNotificationTitle = "Solve To Silence";
     QString solveNotification = "Solve to Silence is a new feature that prevents the user from dismissing snooze until they solve a math problem";
