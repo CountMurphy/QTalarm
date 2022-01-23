@@ -2,11 +2,11 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QDate>
-#include "schedule.h"
-#include "schedulecollection.h"
+#include "schedulemodel.h"
+#include "schedules.h"
 #include "fileio.h"
 
-Timer::Timer(QObject *parent,ScheduleCollection *Collection) :
+Timer::Timer(QObject *parent,Schedules *Collection) :
     QObject(parent)
 {
     this->_Schedules=Collection;
@@ -25,65 +25,65 @@ void Timer::AlarmCheck()
     //Compare saved times with now time
     if(!this->_CurAlarm->isPlaying() && this->_CurAlarm->canResume)
     {
-        Schedule *cur_sche;
+        ScheduleModel *cur_sche;
         foreach(cur_sche,this->_Schedules->GetScheduleList())
         {
-            this->_CurAlarm->isBastard=cur_sche->isBastard();
-            if(cur_sche->GetCustomSoundEnabled())
+            this->_CurAlarm->isBastard=cur_sche->isBastard;
+            if(cur_sche->isCustomSoundEnabled)
             {
-                this->_CurAlarm->SetCustomPath(cur_sche->GetCustomSound());
+                this->_CurAlarm->SetCustomPath(cur_sche->CustomSoundPath);
             }
 
             QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
             bool soundAlarm=false;
 
-            if(cur_sche->GetTime().hour()==RightNow.time().hour() && cur_sche->GetTime().minute()==RightNow.time().minute())
+            if(cur_sche->AlarmTime.hour()==RightNow.time().hour() && cur_sche->AlarmTime.minute()==RightNow.time().minute())
             {
                 switch(RightNow.date().dayOfWeek())
                 {
                 //WeekDay Alarms
                 case 1:
-                    if(cur_sche->isMonEnabled())
+                    if(cur_sche->isMonEnabled)
                     {
                         soundAlarm=true;
                     }
                     break;
 
                 case 2:
-                    if(cur_sche->isTueEnabled())
+                    if(cur_sche->isTueEnabled)
                     {
                         soundAlarm=true;
                     }
                     break;
 
                 case 3:
-                    if(cur_sche->isWedEnabled())
+                    if(cur_sche->isWedEnabled)
                     {
                         soundAlarm=true;
                     }
                     break;
 
                 case 4:
-                    if(cur_sche->isThurEnabled())
+                    if(cur_sche->isThurEnabled)
                     {
                         soundAlarm=true;
                     }
                     break;
 
                 case 5:
-                    if(cur_sche->isFriEnabled())
+                    if(cur_sche->isFriEnabled)
                     {
                         soundAlarm=true;
                     }
                     break;
                 case 6:
-                    if(cur_sche->isSatEnabled())
+                    if(cur_sche->isSatEnabled)
                     {
                         soundAlarm=true;
                     }
                     break;
                 case 7:
-                    if(cur_sche->isSunEnabled())
+                    if(cur_sche->isSunEnabled)
                     {
                         soundAlarm=true;
                     }
@@ -92,9 +92,9 @@ void Timer::AlarmCheck()
                 }
             }
             //Check for Custom Date Alarms
-            if(cur_sche->GetCustomEnabled() && cur_sche->GetCustomDate()==RightNow.date() &&
-                    cur_sche->GetTime().minute()==RightNow.time().minute()
-                    && cur_sche->GetTime().hour()==RightNow.time().hour())
+            if(cur_sche->isCustomAlarmEnabled && cur_sche->CustomAlarm == RightNow.date() &&
+                    cur_sche->AlarmTime.minute() == RightNow.time().minute()
+                    && cur_sche->AlarmTime.hour() == RightNow.time().hour())
             {
                 soundAlarm=true;
             }
@@ -102,7 +102,7 @@ void Timer::AlarmCheck()
             if(soundAlarm)
             {
                 //Set Condtion One!
-                this->_CurAlarm->Start(cur_sche->GetCustomSoundEnabled());
+                this->_CurAlarm->Start(cur_sche->isCustomSoundEnabled);
                 break;
             }
         }

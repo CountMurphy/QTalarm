@@ -5,18 +5,18 @@
 #include <QDateTime>
 #include <QList>
 #include "alarm.h"
-#include "schedulecollection.h"
+#include "schedules.h"
 
 class Timer : public QObject
 {
     Q_OBJECT
 public:
     void StartTimer(Alarm*);
-    explicit Timer(QObject *parent = 0,ScheduleCollection* Collection=0);
+    explicit Timer(QObject *parent = 0,Schedules* Collection=0);
 
 private:
     Alarm *_CurAlarm;
-    ScheduleCollection *_Schedules;
+    Schedules *_Schedules;
 
 signals:
     

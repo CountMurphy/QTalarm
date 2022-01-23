@@ -15,22 +15,22 @@ TEMPLATE = app
 SOURCES += main.cpp\
     bastardsnooze.cpp \
         mainwindow.cpp \
+    schedulemodel.cpp \
     timer.cpp \
     alarm.cpp \
     fileio.cpp \
-    schedule.cpp \
-    schedulecollection.cpp \
+    schedules.cpp \
     aboutdialog.cpp \
     snooze.cpp \
     settingdialog.cpp
 
 HEADERS  += mainwindow.h \
     bastardsnooze.h \
+    schedulemodel.h \
     timer.h \
     alarm.h \
     fileio.h \
-    schedule.h \
-    schedulecollection.h \
+    schedules.h \
     aboutdialog.h \
     snooze.h \
     settingdialog.h

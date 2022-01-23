@@ -1,8 +1,8 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#include "schedulecollection.h"
-#include "schedule.h"
+#include "schedules.h"
+#include "schedulemodel.h"
 #include <QObject>
 #include <QSettings>
 #include <QList>
@@ -14,8 +14,8 @@ public:
     explicit FileIO(QObject *parent = 0);
     static bool ExtractAudio();
     static bool DelExtracted();
-    QList<Schedule *> LoadConfig();
-    bool Save(ScheduleCollection*);
+    QList<ScheduleModel *> LoadConfig();
+    bool Save(Schedules*);
     static int LoadVolume();
     static void SaveVolume(int);
     static bool LoadWindowShow();

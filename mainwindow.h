@@ -24,7 +24,7 @@ private:
     QMenu *trayIconMenu;
     Timer *TimeKeeper;
     Alarm *CurAlarm;
-    ScheduleCollection *_Schedules;
+    Schedules *_Schedules;
 
     int _lastDeletedIndex=-1;
     bool _isMilTime;
@@ -33,6 +33,7 @@ private:
     bool _WarnOnPm;
     bool testrun=false;
     void displayTimeMode();
+    void LoadOptions();
 
     void closeEvent(QCloseEvent*);
     void SetupClock();
