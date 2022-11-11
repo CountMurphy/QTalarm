@@ -64,7 +64,6 @@ void BastardSnooze::checkMath()
 BastardSnooze::~BastardSnooze()
 {
     delete ui;
-    this->deleteLater();
 }
 
 void BastardSnooze::closeEvent(QCloseEvent *event)
