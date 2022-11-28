@@ -1,3 +1,10 @@
+`ORG.XGT:`
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/X11-good-tools/qtalarm)
+![GitHub Release Date](https://img.shields.io/github/release-date/X11-good-tools/qtalarm)
+![GitHub repo size](https://img.shields.io/github/repo-size/X11-good-tools/qtalarm)
+![GitHub all releases](https://img.shields.io/github/downloads/X11-good-tools/qtalarm/total)
+![GitHub](https://img.shields.io/github/license/X11-good-tools/qtalarm)  
+
 QTalarm
 =======
 

@@ -12,35 +12,42 @@ TARGET = qtalarm
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-    bastardsnooze.cpp \
-        mainwindow.cpp \
-    schedulemodel.cpp \
-    timer.cpp \
-    alarm.cpp \
-    fileio.cpp \
-    schedules.cpp \
-    aboutdialog.cpp \
-    snooze.cpp \
-    settingdialog.cpp
+SOURCES += src/bastardsnooze.cpp \
+           src/mainwindow.cpp \
+           src/schedulemodel.cpp \
+           src/timer.cpp \
+           src/alarm.cpp \
+           src/fileio.cpp \
+           src/schedules.cpp \
+           src/aboutdialog.cpp \
+           src/snooze.cpp \
+           src/settingdialog.cpp \
+           src/main.cpp
 
-HEADERS  += mainwindow.h \
-    bastardsnooze.h \
-    schedulemodel.h \
-    timer.h \
-    alarm.h \
-    fileio.h \
-    schedules.h \
-    aboutdialog.h \
-    snooze.h \
-    settingdialog.h
+HEADERS += src/bastardsnooze.h \
+           src/schedulemodel.h \
+           src/timer.h \
+           src/alarm.h \
+           src/fileio.h \
+           src/schedules.h \
+           src/aboutdialog.h \
+           src/snooze.h \
+           src/settingdialog.h \
+           src/mainwindow.h
 
-FORMS    += mainwindow.ui \
-    aboutdialog.ui \
-    bastardsnooze.ui \
-    snooze.ui \
-    settingdialog.ui
+FORMS   += src/aboutdialog.ui \
+           src/bastardsnooze.ui \
+           src/snooze.ui \
+           src/settingdialog.ui \
+           src/mainwindow.ui
 
 RESOURCES += \
     Icons.qrc
 CONFIG += precompile_header
+
+# build dir
+UI_DIR  =     build
+MOC_DIR =     build
+RCC_DIR =     build
+OBJECTS_DIR = build
+mytarget.commands += $${QMAKE_MKDIR} build
