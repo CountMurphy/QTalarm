@@ -124,6 +124,10 @@ void FileIO::SaveVolume(int vol)
 bool FileIO::LoadWindowShow()
 {
     QSettings settings;
+    if(!settings.contains("ShowWindowDefault"))
+    {
+        return true;
+    }
     return settings.value("ShowWindowDefault").toBool();
 }
 
