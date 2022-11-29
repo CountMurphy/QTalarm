@@ -1,14 +1,21 @@
 QTalarm
 =======
 
-A handy alarm clock Program written in QT.
+[![Actions Status](https://github.com/CountMurphy/QTalarm/workflows/build/badge.svg)](https://github.com/CountMurphy/QTalarm/actions)
 
-Compile Instrustions for Linux and Mac:
-  Type: "qmake", "make", and then "make clean"
+A handy alarm clock program written in QT.
+
+Compile Instrustions for Linux and MacOS:
+
+```
+qmake
+make
+make clean
+```
 
 Windows users will have to compile the program with the QT creator IDE (or download the binaries off the downloads page)
 
-Screen shots and more information on the [offical web page!](https://random-hackery.net/page/qtalarm/)
+Screenshots and more information on the [official web page!](https://random-hackery.net/page/qtalarm/)
 
 Features
 ========
@@ -24,9 +31,10 @@ Features
 ## Linux Build/Install
 
 ### Building
+
 1. Ensure QT5 is installed on your system.
-1. In the termnal, type `qmake` This will create a Makefile
-1. type `make`
+1. In the termnal, type `qmake`. This will create a Makefile
+1. Type `make`
  
 ### Installing
 
@@ -55,5 +63,4 @@ Licensing
 ==========
 GPL V3
 
-
-Please Report any bugs to the github page at https://github.com/CountMurphy/QTalarm
+Please Report any bugs to the GitHub page at [https://github.com/CountMurphy/QTalarm](https://github.com/CountMurphy/QTalarm).
