@@ -1,19 +1,18 @@
 QTalarm
 =======
 
-[![Actions Status](https://github.com/CountMurphy/QTalarm/workflows/build/badge.svg)](https://github.com/CountMurphy/QTalarm/actions)
+[![Actions Status](https://github.com/CountMurphy/QTalarm/workflows/Build/badge.svg)](https://github.com/CountMurphy/QTalarm/actions)
 
 A handy alarm clock program written in QT.
 
-Compile Instrustions for Linux and MacOS:
-
+Compilation instructions for Linux and MacOS:
 ```
 qmake
 make
 make clean
 ```
 
-Windows users will have to compile the program with the QT creator IDE (or download the binaries off the downloads page)
+Windows users will have to compile the program with the QT creator IDE (or download the binaries off the downloads page).
 
 Screenshots and more information on the [official web page!](https://random-hackery.net/page/qtalarm/)
 
@@ -24,7 +23,7 @@ Features
 
 - Can wake up using the default sound, or any of audio / video file of your choosing.
 
-- Custom Date alarms
+- Custom date alarms
 
 - Completely Cross plateform
 
@@ -38,8 +37,8 @@ Features
  
 ### Installing
 
-1. copy the qtalarm binary into /usr/bin (sudo cp qtalarm /usr/bin).
-2. inside of the source code directory, there is a directory called "Icons." These icons need to be copied with the following commands:
+1. Copy the qtalarm binary into `/usr/bin` (`sudo cp qtalarm /usr/bin`).
+2. Inside of the source code directory, there is a directory called "Icons." These icons need to be copied with the following commands:
    - `sudo cp 1349069370_Alarm_Clock.png /usr/share/icons/hicolor/48x48/apps/`
    - `sudo cp Icons/1349069370_Alarm_Clock24.png /usr/share/icons/hicolor/24x24/apps/1349069370_Alarm_Clock.png`
    - `sudo cp 1349069370_Alarm_Clock16.png /usr/share/icons/hicolor/16x16/apps/1349069370_Alarm_Clock.png`
