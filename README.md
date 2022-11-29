@@ -1,6 +1,8 @@
 QTalarm
 =======
 
+[![Actions Status](https://github.com/CountMurphy/QTalarm/workflows/build/badge.svg)](https://github.com/CountMurphy/QTalarm/actions)
+
 A handy alarm clock Program written in QT.
 
 Compile Instrustions for Linux and Mac:
