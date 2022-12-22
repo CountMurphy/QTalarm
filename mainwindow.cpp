@@ -21,6 +21,8 @@
 #include <QListWidgetItem>
 #include <QCalendarWidget>
 #include <QToolTip>
+#include <QLocalSocket>
+#include <QLocalServer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         qInfo() << "No system tray detected. What a shitty DE"; //what is this 1993?
     }
+
+    TerminateIfRunning();
 
     //add buttons
     ConfigureButtons();
@@ -572,4 +576,40 @@ void MainWindow::LoadOptions()
     _WarnOnPm=FileIO::LoadWarnOnPm();
     _prevTimeWasMil=_isMilTime;
     displayTimeMode();
+}
+
+void MainWindow::TerminateIfRunning()
+{
+    const QString appKey = "qtalarmLocal";
+
+    QLocalSocket *socket = new QLocalSocket(this);
+    socket->connectToServer(appKey);
+
+    QLocalSocket::LocalSocketState status = socket->state();
+    if (status == QLocalSocket::ConnectedState)
+    {
+        socket->close();
+        socket->deleteLater();
+        qInfo() << "Application already running. Exiting";
+        exit(EXIT_FAILURE);
+    }
+    socket->deleteLater();
+
+
+    //used for process communication for duplicate processes
+    QLocalServer *m_server = new QLocalServer(this);
+    connect(m_server, SIGNAL(newConnection()), this, SLOT(handleLocalConnection()));
+    m_server->setSocketOptions(QLocalServer::UserAccessOption);
+
+    if (!m_server->listen(appKey))
+    {
+        qInfo() << "Unable to start Local Process Server";
+    } else {
+        qInfo() << "Local-only Process Server up and running";
+    }
+}
+
+void MainWindow::handleLocalConnection()
+{
+    this->show();
 }

@@ -20,6 +20,7 @@ Alarm::Alarm(QObject *parent) :
 
 void Alarm::Start(bool useCustom)
 {
+    qInfo() << "Starting alarm audio";
     if(useCustom)
     {
         media->setMedia(QUrl::fromLocalFile(this->_CustPath));
@@ -36,6 +37,7 @@ void Alarm::Start(bool useCustom)
 
 void Alarm::Stop()
 {
+    qInfo() << "Stopping alarm audio";
     media->stop();
     this->_Pause->start(60000);
     this->_isPlaying=false;

@@ -3,6 +3,7 @@
 #include "fileio.h"
 #include <QString>
 #include <QSettings>
+#include <QDebug>
 
 Schedules::Schedules(QObject *parent) :
     QObject(parent){}
@@ -31,10 +32,12 @@ QList<ScheduleModel*> Schedules::GetScheduleList()
 
 void Schedules::AddSchedule(ScheduleModel *scheToAdd)
 {
+    qInfo() << "Adding new alarm";
     this->_Collection.append(scheToAdd);
 }
 
 void Schedules::removeScheduleByIndex(int index)
 {
+    qInfo() << "Removing alarm";
     this->_Collection.removeAt(index);
 }

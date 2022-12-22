@@ -47,6 +47,7 @@ private:
     void SetupTrayIcon(QAction *,QAction*);
     void SetupVolume();
     void ConfigureButtons();
+    void TerminateIfRunning();
 
     QString solveNotificationTitle = "Solve To Silence";
     QString solveNotification = "Solve to Silence is a new feature that prevents the user from dismissing snooze until they solve a math problem";
@@ -76,6 +77,7 @@ private slots:
     void timeCheck();
     void ShowSettings();
     void SendTrayMessage(QString title, QString message);
+    void handleLocalConnection();
 };
 
 #endif // MAINWINDOW_H

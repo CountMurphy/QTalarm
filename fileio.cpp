@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <QTime>
 #include <QList>
+#include <QDebug>
 
 FileIO::FileIO(QObject *parent) :
     QObject(parent)
@@ -31,9 +32,11 @@ bool FileIO::DelExtracted()
 
 QList<ScheduleModel*> FileIO::LoadConfig()
 {
+
     QList<ScheduleModel*> scheduleList;
     QString indexStr;
 
+    qInfo() << "Loading Config values";
     for(int index=0;index<this->_Settings.value("AlarmCount").toInt();index++)
     {
         ScheduleModel *sched=new ScheduleModel(this);
@@ -77,6 +80,7 @@ bool FileIO::Save(Schedules *Collection)
         int index=0;
 
         this->_Settings.setValue("AlarmCount",SchedList.count());
+        qInfo() << "Saving settings";
         foreach(currentSche,SchedList)
         {
             QString IndexStr;
