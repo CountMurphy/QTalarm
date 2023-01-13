@@ -50,8 +50,9 @@ private:
     void TerminateIfRunning();
     void DisableGUIIfOneshot(bool);
 
-    QString solveNotificationTitle = "Solve To Silence";
-    QString solveNotification = "Solve to Silence is a new feature that prevents the user from dismissing snooze until they solve a math problem";
+    const QString solveNotificationTitle = "Solve To Silence";
+    const QString solveNotification = "Solve to Silence is a new feature that prevents the user from dismissing snooze until they solve a math problem";
+    bool toggleOnDuplicateProcess;
 
 private slots:
     void ToggleWindow();
