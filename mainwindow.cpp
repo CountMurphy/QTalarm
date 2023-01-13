@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ShowActiveAlarm(0);
 
     LoadOptions();
+    toggleOnDuplicateProcess = QApplication::arguments().count() > 1 ? QApplication::arguments().at(1) == "--toggleOnDup":false;
 
     //Setup threading
     TimeKeeper=new Timer(this,_Schedules);
@@ -611,5 +612,10 @@ void MainWindow::TerminateIfRunning()
 
 void MainWindow::handleLocalConnection()
 {
-    this->show();
+    if(toggleOnDuplicateProcess)
+    {
+        ToggleWindow();
+    }else{
+        this->show();
+    }
 }
