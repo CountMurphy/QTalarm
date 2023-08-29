@@ -2,15 +2,17 @@
 #include <QTime>
 #include "snooze.h"
 #include "alarm.h"
+#include "schedules.h"
 #include "ui_snooze.h"
 
-snooze::snooze(QWidget *parent,Alarm *curAlarm) :
+snooze::snooze(QWidget *parent,Alarm *curAlarm, Schedules * schedule_list) :
     QDialog(parent),
     ui(new Ui::snooze)
 {
     ui->setupUi(this);
     this->_curAlarm=curAlarm;
     this->_snoozeTimer=new QTimer(this);
+    this->_schedule_list = schedule_list;
     this->_otherAlarmCheckTimer=new QTimer(this);
     this->isDismissed=false;
     SetupClock();
@@ -56,6 +58,12 @@ void snooze::DismissClicked()
 {
     this->_snoozeTimer->stop();
     this->_curAlarm->Stop();
+
+    if(this->_curAlarm->isOneshot)
+    {
+        this->_schedule_list->removeScheduleByIndex(this->_curAlarm->listId);
+    }
+
     this->hide();
     this->~snooze();
 }

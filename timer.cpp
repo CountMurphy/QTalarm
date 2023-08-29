@@ -33,12 +33,16 @@ void Timer::AlarmCheck()
             {
                 this->_CurAlarm->SetCustomPath(cur_sche->CustomSoundPath);
             }
+            this->_CurAlarm->isOneshot=cur_sche->isOneshot;
+            this->_CurAlarm->listId = cur_sche->Index;
 
             QDateTime RightNow=QDateTime::currentDateTime();//We're in now, now...
             bool soundAlarm=false;
 
             if(cur_sche->AlarmTime.hour()==RightNow.time().hour() && cur_sche->AlarmTime.minute()==RightNow.time().minute())
             {
+                if(cur_sche->isOneshot)
+                    soundAlarm=true;
                 switch(RightNow.date().dayOfWeek())
                 {
                 //WeekDay Alarms

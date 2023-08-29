@@ -23,6 +23,8 @@ public:
     void SetCustomPath(QString);
     bool UsingCustomPath;
     bool isBastard;
+    bool isOneshot;
+    int listId;
 private:
     explicit Alarm(QObject *parent = 0);
     QMediaPlayer * media;

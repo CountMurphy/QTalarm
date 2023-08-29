@@ -20,6 +20,7 @@ ScheduleModel::ScheduleModel(QObject *parent) :
     this->CustomSoundPath = "";
     this->isCustomSoundEnabled = false;
     this->isBastard = false;
+    this->isOneshot = false;
 }
 
 
@@ -46,6 +47,8 @@ QString ScheduleModel::Name()
         name.append("  "+this->CustomAlarm.toString());
     if(this->isBastard)
         name.append(" Σ");
+    if(this->isOneshot)
+        name.append("💣");
 
     return name;
 }

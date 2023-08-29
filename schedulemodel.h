@@ -26,6 +26,7 @@ public:
     bool isFriEnabled;
     bool isSatEnabled;
     bool isSunEnabled;
+    bool isOneshot;
 
     QString CustomSoundPath;
     bool isCustomSoundEnabled;

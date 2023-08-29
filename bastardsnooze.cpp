@@ -1,11 +1,12 @@
 #include "bastardsnooze.h"
+#include "schedules.h"
 #include "ui_bastardsnooze.h"
 #include <QRandomGenerator>
 #include <QDateTime>
 #include <QMessageBox>
 #include <QCloseEvent>
 
-BastardSnooze::BastardSnooze(QWidget *parent, Alarm * curAlarm) :
+BastardSnooze::BastardSnooze(QWidget *parent, Alarm * curAlarm, Schedules * schedule_list) :
     QMainWindow(parent),
     ui(new Ui::BastardSnooze)
 {
@@ -31,6 +32,7 @@ BastardSnooze::BastardSnooze(QWidget *parent, Alarm * curAlarm) :
     }
 
     this->_curAlarm=curAlarm;
+    this->_schdule_list = schedule_list;
 
     //connect btn
     connect(ui->okbtn,SIGNAL(clicked()),this,SLOT(checkMath()));
@@ -54,6 +56,10 @@ void BastardSnooze::checkMath()
     if(retVal)
     {
         this->_curAlarm->Stop();
+        if(this->_curAlarm->isOneshot)
+        {
+            this->_schdule_list->removeScheduleByIndex(this->_curAlarm->listId);
+        }
         this->hide();
         this->~BastardSnooze();
     }else{

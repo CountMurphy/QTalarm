@@ -48,6 +48,7 @@ private:
     void SetupVolume();
     void ConfigureButtons();
     void TerminateIfRunning();
+    void DisableGUIIfOneshot(bool);
 
     QString solveNotificationTitle = "Solve To Silence";
     QString solveNotification = "Solve to Silence is a new feature that prevents the user from dismissing snooze until they solve a math problem";
@@ -68,6 +69,7 @@ private slots:
     void ToggleSun(bool);
     void ToggleCust(bool);
     void ToggleBastard(bool);
+    void ToggleOneshot(bool);
     void Quit();
     void OpenDiaglog(bool);
     void TestAlarm();

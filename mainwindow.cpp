@@ -118,6 +118,7 @@ void MainWindow::ToggleWindow()
     }else{
         this->hide();
     }
+    UpdateListWidget();
 }
 
 void MainWindow::SetTime()
@@ -215,6 +216,19 @@ void MainWindow::ToggleCust(bool isEnabled)
     UpdateListWidget();
 }
 
+void MainWindow::ToggleOneshot(bool isEnabled)
+{
+    ScheduleModel *Active = this->_Schedules->GetSchedule(this->ui->listWidget->currentRow());
+    Active->isOneshot = isEnabled;
+    UpdateListWidget();
+    if(isEnabled)
+    {
+        DisableGUIIfOneshot(true);
+    }else{
+        DisableGUIIfOneshot(false);
+    }
+}
+
 void MainWindow::Quit()
 {
     if(this->CurAlarm->isPlaying() && this->CurAlarm->isBastard)
@@ -237,7 +251,9 @@ void MainWindow::AddRemoveAlarm(QAbstractButton *button)
         ScheduleModel *scheToAdd=new ScheduleModel(this);
         this->_Schedules->AddSchedule(scheToAdd);
         ui->listWidget->addItem(scheToAdd->Name());
-        ui->listWidget->setCurrentRow(ui->listWidget->count()-1);
+        int listIndex = ui->listWidget->count()-1;
+        scheToAdd->Index = listIndex;
+        ui->listWidget->setCurrentRow(listIndex);
     }
     else if(button->text()=="&Remove")
     {
@@ -299,6 +315,22 @@ void MainWindow::ShowActiveAlarm(int index)
     ui->chkSun->setChecked(active->isSunEnabled);
     ui->calendarWidget->setSelectedDate(active->CustomAlarm);
     ui->chkBastard->setChecked(active->isBastard);
+
+    if(active->isOneshot)
+    {
+        DisableGUIIfOneshot(true);
+    }
+}
+
+void MainWindow::DisableGUIIfOneshot(bool value)
+{
+    ui->chkFri->setDisabled(value);
+    ui->chkThurs->setDisabled(value);
+    ui->chkWed->setDisabled(value);
+    ui->chkTues->setDisabled(value);
+    ui->chkMon->setDisabled(value);
+    ui->chkSun->setDisabled(value);
+    ui->chkSat->setDisabled(value);
 }
 
 void MainWindow::timeCheck()
@@ -364,7 +396,7 @@ void MainWindow::SnoozeMenuCheck()
     if((this->testrun==true && this->CurAlarm->isBastard==false) || (this->CurAlarm->isPlaying() && this->CurAlarm->canResume && this->CurAlarm->isBastard==false))
     {
         //Create Snooze Menu object
-        snooze *snMenu=new snooze(this,CurAlarm);
+        snooze *snMenu=new snooze(this,CurAlarm, this->_Schedules);
         snMenu->show();
         if(this->_supportsTray && this->testrun==false)
         {
@@ -379,7 +411,7 @@ void MainWindow::BastardMenuCheck()
 {
     if((this->testrun==true && this->CurAlarm->isBastard==true) || (this->CurAlarm->isPlaying() && this->CurAlarm->canResume &&  this->CurAlarm->isBastard))
     {
-        BastardSnooze *bsnooze= new BastardSnooze(this,this->CurAlarm);
+        BastardSnooze *bsnooze= new BastardSnooze(this,this->CurAlarm, this->_Schedules);
         bsnooze->show();
         if(this->_supportsTray && this->testrun==false)
         {
@@ -455,6 +487,7 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->chkTues->setChecked(false);
         ui->chkWed->setChecked(false);
         ui->txtSoundPath->setText("");
+        ui->chkOnshot->setEnabled(false);
 
     }
     else
@@ -472,6 +505,7 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->timeEdit->setEnabled(true);
         ui->chkBastard->setEnabled(true);
         ui->lblTime->setEnabled(true);
+        ui->chkOnshot->setEnabled(true);
     }
 }
 
@@ -537,6 +571,7 @@ void MainWindow::SetupSlots(QAction *QAquit, QAction *QAshow)
     connect(ui->TestBtn,SIGNAL(clicked()),this,SLOT(TestAlarm()));
     connect(ui->VolumeSlider,SIGNAL(valueChanged(int)),CurAlarm,SLOT(SetVolume(int)));
     connect(ui->calendarWidget,SIGNAL(clicked(QDate)),this,SLOT(SetCustomDate()));
+    connect(ui->chkOnshot,SIGNAL(clicked(bool)),this,SLOT(ToggleOneshot(bool)));
 
 }
 

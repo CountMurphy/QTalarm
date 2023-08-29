@@ -65,6 +65,8 @@ QList<ScheduleModel*> FileIO::LoadConfig()
 
         sched->isCustomSoundEnabled = this->_Settings.value(indexStr+"CustomSoundEnabled").toBool();
         sched->CustomSoundPath = this->_Settings.value(indexStr+"CustomSound").toString();
+        sched->Index = index;
+        sched->isOneshot = this->_Settings.value(indexStr+"isOneshot").toBool();
 
         scheduleList.append(sched);
     }
@@ -98,6 +100,7 @@ bool FileIO::Save(Schedules *Collection)
             this->_Settings.setValue(IndexStr+"CustDate",currentSche->CustomAlarm);
             this->_Settings.setValue(IndexStr+"CustomSoundEnabled",currentSche->isCustomSoundEnabled);
             this->_Settings.setValue(IndexStr+"CustomSound",currentSche->CustomSoundPath);
+            this->_Settings.setValue(IndexStr+"isOneshot",currentSche->isOneshot);
             this->_Settings.sync();
             index++;
         }
