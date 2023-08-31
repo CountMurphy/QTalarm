@@ -221,13 +221,13 @@ void MainWindow::ToggleOneshot(bool isEnabled)
 {
     ScheduleModel *Active = this->_Schedules->GetSchedule(this->ui->listWidget->currentRow());
     Active->isOneshot = isEnabled;
-    UpdateListWidget();
     if(isEnabled)
     {
         DisableGUIIfOneshot(true);
     }else{
         DisableGUIIfOneshot(false);
     }
+    UpdateListWidget();
 }
 
 void MainWindow::Quit()
@@ -316,6 +316,7 @@ void MainWindow::ShowActiveAlarm(int index)
     ui->chkSun->setChecked(active->isSunEnabled);
     ui->calendarWidget->setSelectedDate(active->CustomAlarm);
     ui->chkBastard->setChecked(active->isBastard);
+    ui->chkOnshot->setChecked(active->isOneshot);
 
     if(active->isOneshot)
     {
@@ -476,6 +477,7 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->timeEdit->setEnabled(false);
         ui->chkBastard->setEnabled(false);
         ui->lblTime->setEnabled(false);
+        ui->chkOnshot->setEnabled(false);
 
         ui->chkCustom->setChecked(false);
         ui->chkFri->setChecked(false);
@@ -488,7 +490,7 @@ void MainWindow::DisablePanelIfNoSelection()
         ui->chkTues->setChecked(false);
         ui->chkWed->setChecked(false);
         ui->txtSoundPath->setText("");
-        ui->chkOnshot->setEnabled(false);
+        ui->chkOnshot->setChecked(false);
 
     }
     else
