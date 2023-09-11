@@ -19,20 +19,24 @@ Screenshots and more information on the [official web page!](https://random-hack
 Features
 ========
 
-- Unlimted number of customizable alarms
+- Unlimited number of customizable alarms
 
 - Can wake up using the default sound, or any of audio / video file of your choosing.
 
 - Custom date alarms
 
-- Completely Cross plateform
+- Completely Cross platform
+
+- Support for one-time alarms
 
 ## Linux Build/Install
 
 ### Building
 
-1. Ensure QT5 is installed on your system.
-1. In the termnal, type `qmake`. This will create a Makefile
+1. Ensure the proper dependencies are met
+    1. Ensure QT5 is installed on your system. On Arch, the needed packages are `qt5-base` and `qt5-multimedia`
+    1. Optionally install `noto-fonts` to be able to properly see Unicode symbols in the alarm list widget
+1. In the terminal, type `qmake`. This will create a Makefile
 1. Type `make`
  
 ### Installing
@@ -57,6 +61,9 @@ Exec=qtalarm
 Categories=Application;Utility;
 ```
 4. QTalarm Should now be installed.
+
+## Waybar users
+It is possible to configure QTalarm to launch when clicking on the waybar clock. Such a configuration would launch the application each time the clock was clicked. Normally, when QTalarm has a second instance the duplicate process will shutdown and the main window would be shown on the original process. Configuring waybar to run QTalarm with the `--toggleOnDup` flag should force the application to toggle its main window when a duplicate process is launched.
 
 Licensing
 ==========
