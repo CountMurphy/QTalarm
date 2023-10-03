@@ -61,7 +61,7 @@ void BastardSnooze::checkMath()
             this->_schdule_list->removeScheduleByIndex(this->_curAlarm->listId);
         }
         this->hide();
-        this->~BastardSnooze();
+        this->deleteLater();
     }else{
         QMessageBox::critical(this,"WRONG","WRONG");
     }
