@@ -30,6 +30,7 @@ private:
     QMediaPlayer * media;
     QString _DefaultPath;
     QString _CustPath;
+    QAudioOutput *audioOutput;
 
     QTimer *_Pause;
 

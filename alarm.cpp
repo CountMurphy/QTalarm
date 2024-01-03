@@ -1,6 +1,8 @@
 #include "alarm.h"
 #include "fileio.h"
 #include <QMediaPlayer>
+#include <QSoundEffect>
+#include <QAudioOutput>
 #include <QString>
 #include <QDir>
 
@@ -14,6 +16,8 @@ Alarm::Alarm(QObject *parent) :
     this->_isPlaying=false;
     this->_Pause=new QTimer(this);
     this->canResume=true;
+    this->audioOutput = new QAudioOutput;
+    this->media->setAudioOutput(audioOutput);
 
     connect(this->_Pause,SIGNAL(timeout()),this,SLOT(Resume()));
 }
@@ -23,11 +27,11 @@ void Alarm::Start(bool useCustom)
     qInfo() << "Starting alarm audio";
     if(useCustom)
     {
-        media->setMedia(QUrl::fromLocalFile(this->_CustPath));
+        media->setSource(QUrl::fromLocalFile(this->_CustPath));
         this->UsingCustomPath=true;
     }else{
         FileIO::ExtractAudio();
-        media->setMedia(QUrl::fromLocalFile(this->_DefaultPath));
+        media->setSource(QUrl::fromLocalFile(this->_DefaultPath));
         this->UsingCustomPath=false;
     }
     media->play();
@@ -49,9 +53,9 @@ void Alarm::RepeatAllTheThings(QMediaPlayer::MediaStatus state)
     {
         if(this->UsingCustomPath)
         {
-            media->setMedia(QUrl::fromLocalFile(this->_CustPath));
+            media->setSource(QUrl::fromLocalFile(this->_CustPath));
         }else{
-            media->setMedia(QUrl::fromLocalFile(this->_DefaultPath));
+            media->setSource(QUrl::fromLocalFile(this->_DefaultPath));
         }
         media->play();
     }
@@ -76,7 +80,8 @@ void Alarm::Resume()
 
 void Alarm::SetVolume(int Volume)
 {
-    media->setVolume(Volume);
+    float newVol=(float)Volume/100;
+    this->audioOutput->setVolume(newVol);
     FileIO::SaveVolume(Volume);
 }
 
