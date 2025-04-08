@@ -16,7 +16,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
 
       - name: Build the Makefile using qmake
-        run: qmake6
+        run: qmake
 
       - name: Build the project using make
         run: make
