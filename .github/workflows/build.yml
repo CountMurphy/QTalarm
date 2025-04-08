@@ -16,7 +16,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.2.*'
-          modules: 'multimedia'
+          modules: 'qtmultimedia'
 
       - name: Build the Makefile using qmake
         run: qmake
