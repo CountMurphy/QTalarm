@@ -5,6 +5,7 @@
 #include <QString>
 #include <QMediaPlayer>
 #include <QTimer>
+#include <QAudioOutput>
 
 class Alarm : public QObject
 {
