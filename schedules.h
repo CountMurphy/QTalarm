@@ -16,6 +16,9 @@ public:
     void removeScheduleByIndex(int);
     void LoadSchedules();
     void Save();
+    // Reorder operations
+    void MoveRange(int start, int end, int destinationRow);
+    void Reindex();
 private:
     QList<ScheduleModel*> _Collection;
 signals:

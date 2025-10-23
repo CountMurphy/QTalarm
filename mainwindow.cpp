@@ -30,7 +30,25 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    if(!QSystemTrayIcon::isSystemTrayAvailable())
+    // Enable drag-and-drop reordering for the alarm list
+    ui->listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->listWidget->setDragEnabled(true);
+    ui->listWidget->setAcceptDrops(true);
+    ui->listWidget->setDropIndicatorShown(true);
+    ui->listWidget->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->listWidget->setDefaultDropAction(Qt::MoveAction);
+
+    // Persist reordering back to underlying data collection and indices
+    connect(ui->listWidget->model(), &QAbstractItemModel::rowsMoved,
+            this, [this](const QModelIndex & /*srcParent*/, int start, int end,
+                         const QModelIndex & /*dstParent*/, int destinationRow) {
+                if (this->_Schedules) {
+                    this->_Schedules->MoveRange(start, end, destinationRow);
+                    this->_Schedules->Save();
+                }
+            });
+
+   if(!QSystemTrayIcon::isSystemTrayAvailable())
     {
         qInfo() << "No system tray detected. What a shitty DE"; //what is this 1993?
     }
