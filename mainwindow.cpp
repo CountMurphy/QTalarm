@@ -30,8 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->_supportsTray = QSystemTrayIcon::isSystemTrayAvailable();
-    if(!this->_supportsTray)
+    if(!QSystemTrayIcon::isSystemTrayAvailable())
     {
         qInfo() << "No system tray detected. What a shitty DE"; //what is this 1993?
     }
@@ -82,7 +81,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent * event)
 {
     event->ignore();
-    if(this->_supportsTray)
+    if(QSystemTrayIcon::isSystemTrayAvailable())
     {
         this->hide();
     }else{
@@ -400,7 +399,7 @@ void MainWindow::SnoozeMenuCheck()
         //Create Snooze Menu object
         snooze *snMenu=new snooze(this,CurAlarm, this->_Schedules);
         snMenu->show();
-        if(this->_supportsTray && this->testrun==false)
+        if(QSystemTrayIcon::isSystemTrayAvailable() && this->testrun==false)
         {
             this->hide();
         }
@@ -415,7 +414,7 @@ void MainWindow::BastardMenuCheck()
     {
         BastardSnooze *bsnooze= new BastardSnooze(this,this->CurAlarm, this->_Schedules);
         bsnooze->show();
-        if(this->_supportsTray && this->testrun==false)
+        if(QSystemTrayIcon::isSystemTrayAvailable() && this->testrun==false)
         {
             this->hide();
         }
