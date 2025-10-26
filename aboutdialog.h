@@ -14,7 +14,7 @@ class AboutDialog : public QDialog
 public:
     explicit AboutDialog(QWidget *parent = 0);
     ~AboutDialog();
-    const QString version="3.0.0";
+    const QString version="3.0.1";
     
 private:
     Ui::AboutDialog *ui;
