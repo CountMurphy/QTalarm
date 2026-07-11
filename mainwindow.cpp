@@ -452,9 +452,14 @@ void MainWindow::PopulateListWidget()
 {
     ui->listWidget->clear();
     ScheduleModel *sche;
+    int count =0;
     foreach(sche,this->_Schedules->GetScheduleList())
     {
         ui->listWidget->addItem(sche->Name());
+        count++;
+    }
+    if(count==0){
+        this->ui->listAlmBtn->button(QDialogButtonBox::Cancel)->setDisabled(true);
     }
     ui->listWidget->setCurrentRow(this->_lastDeletedIndex);
 }
